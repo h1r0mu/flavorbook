@@ -17,39 +17,10 @@ const flavor_names = [
             "その他"
           ]
 
-class Service extends React.Component {
-  constructor(props) {
-    super(props);
-    const flavors = flavor_names.map(name => {
-      return {
-        name: name,
-        selected: false
-      }
-    });
-    this.state = {
-      flavors: flavors,
-    };
-  }
-
-  render() {
-    return (
-      <div className="service">
-        <div className="service-board">
-          <Wheel
-            flavors={this.state.flavors}
-          />
-        </div>
-        <div className="service-info">
-        </div>
-      </div>
-    );
-  }
-}
-
 const MainPage = (props) =>{
 	return(
 		<div className='Page{props.num}'> 
-			<h1>'coffe{props.num}'</h1>
+			<h1>'coffee{props.num}'</h1>
 			<NextButton page={props.next} />
 		</div>
 	);
@@ -78,7 +49,7 @@ const NextButton = (props) =>{
 		);
 };
 
-const App = () => {
+const Pagenation = () => {
 	return(
 		<div>
 			<BrowserRouter>
@@ -96,6 +67,37 @@ const App = () => {
 		</div>
    );
 };
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    const flavors = flavor_names.map(name => {
+      return {
+        name: name,
+        selected: false
+      }
+    });
+    this.state = {
+      flavors: flavors,
+    };
+  }
+
+  render() {
+    return (
+      <div className="service">
+        <div className="service-board">
+          <Wheel
+            flavors={this.state.flavors}
+          />
+        </div>
+        <div className="pagenation">
+          <Pagenation/>
+        </div>
+      </div>
+    );
+  }
+}
+
 // ========================================
 
 ReactDOM.render(<App />, document.getElementById("root"));
