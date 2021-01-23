@@ -18,26 +18,26 @@ ol, ul {
   margin-bottom: 10px;
 }
 
-.square {
+.flavor {
   background: #fff;
   border: 1px solid #999;
   float: left;
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;
-  height: 34px;
+  height: 160px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  width: 160px;
 }
 
-.square:focus {
+.flavor:focus {
   outline: none;
 }
 
-.kbd-navigation .square:focus {
+.kbd-navigation .flavor:focus {
   background: #ddd;
 }
 
