@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import Pagination from "./pagination.js";
 import Wheel from "./wheel.js";
+// import App2 from './level2';
 
 const flavor_names = [
   "野菜",
@@ -47,4 +48,5 @@ class App extends React.Component {
 
 // ========================================
 
+// ReactDOM.render(<App2 />, document.getElementById("root"));
 ReactDOM.render(<App />, document.getElementById("root"));
