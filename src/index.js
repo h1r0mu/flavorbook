@@ -20,7 +20,8 @@ const flavor_names = [
 const MainPage = (props) => {
   return (
     <div className="Page{props.num}">
-      <h1>coffee{props.num}</h1>
+      <h1>{props.num}ページ目</h1>
+      <p>感じない味覚を選択してください</p>
       <NextButton page={props.next} />
     </div>
   );
@@ -32,7 +33,8 @@ MainPage.propTypes = {
 const OtherPage = (props) => {
   return (
     <div className="Page{props.num}">
-      <h1>coffee{props.num}</h1>
+      <h1>{props.num}ページ目</h1>
+      <p>感じない味覚を選択してください</p>
       <BeforeButton page={props.before} />
       <NextButton page={props.next} />
     </div>
@@ -103,14 +105,28 @@ class App extends React.Component {
     });
     this.state = {
       flavors: flavors,
+      push_list: []
     };
   }
+
+handleClick(i){
+  const push_list_cp = this.state.push_list.slice();
+  push_list_cp.push(this.state.flavors[i].name);
+  const push_list_cp_reset = [...new Set(push_list_cp)];
+  this.setState({
+    push_list: push_list_cp_reset
+  });
+}
 
   render() {
     return (
       <div className="service">
         <div className="service-board">
-          <Wheel flavors={this.state.flavors} />
+          <Wheel 
+			flavors={this.state.flavors} 
+			onClick={i =>this.handleClick(i)}
+			/>
+			<li>{this.state.push_list}</li>
         </div>
         <div className="pagination">
           <Pagination />

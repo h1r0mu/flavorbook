@@ -5,7 +5,11 @@ import Flavor from "./flavor.js";
 
 class Wheel extends React.Component {
   renderFlavor(i) {
-    return <Flavor key={i} value={this.props.flavors[i].name} />;
+    return <Flavor 
+      key={i} 
+      value={this.props.flavors[i].name} 
+      onClick={() => this.props.onClick(i)}
+      />;
   }
 
   render() {
@@ -27,6 +31,7 @@ class Wheel extends React.Component {
 }
 Wheel.propTypes = {
   flavors: PropTypes.array,
+  onClick:PropTypes.func,
 };
 
 export default Wheel;
