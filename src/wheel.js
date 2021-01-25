@@ -5,14 +5,15 @@ import Flavor from "./flavor.js";
 
 class Wheel extends React.Component {
   renderFlavor(i) {
-    return <Flavor key={i} value={this.props.flavors[i].name} />;
+    return <Flavor key={i} value={this.props.flavors[i]} />;
   }
 
   render() {
     let flavors = [];
-    for (let i = 0; i < 3; i++) {
+    const num = this.props.flavors.length;
+    for (let i = 0; i < Math.floor(num / 3) + 1; i++) {
       let rows = [];
-      for (let j = 0; j < 3; j++) {
+      for (let j = 0; j < 3 && i * 3 + j < num; j++) {
         rows.push(this.renderFlavor(i * 3 + j));
       }
       flavors.push(
