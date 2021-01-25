@@ -9,6 +9,7 @@ class Wheel extends React.Component {
       <Flavor
         key={i}
         value={this.props.flavors[i].name}
+		onClick={() => this.props.onClick(i)}
       />
     );
   }

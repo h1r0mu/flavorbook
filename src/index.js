@@ -79,7 +79,16 @@ class App extends React.Component {
     });
     this.state = {
       flavors: flavors,
+      push_list:[] 
     };
+  }
+
+  handleClick(i){
+		 const push_list_copy = this.state.push_list.slice();
+         push_list_copy.push(this.state.flavors[i].name);
+		 this.setState({
+				 push_list:push_list_copy
+		 }); 
   }
 
   render() {
@@ -88,6 +97,7 @@ class App extends React.Component {
         <div className="service-board">
           <Wheel
             flavors={this.state.flavors}
+			onClick={i => this.handleClick(i)}
           />
         </div>
         <div className="pagenation">

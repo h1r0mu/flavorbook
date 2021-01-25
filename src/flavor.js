@@ -1,6 +1,7 @@
 function Flavor(props) {
+
   return (
-    <button className="flavor" >
+    <button className="flavor" onClick={props.onClick}>
       {props.value}
     </button>
   );
