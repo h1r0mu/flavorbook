@@ -12,7 +12,7 @@ class Wheel extends React.Component {
         selected={this.props.selectedFlavorNames.includes(
           this.props.flavorNames[i]
         )}
-        onClick={() => this.props.onClick(i)}
+        onClick={() => this.props.onClick(this.props.flavorNames[i])}
       />
     );
   }
