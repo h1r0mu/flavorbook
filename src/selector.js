@@ -6,12 +6,16 @@ import Wheel from "./wheel.js";
 
 class Selector extends React.Component {
   selectTilesAt(level) {
-    return this.props.tiles.filter((tile) => tile.flavor.level == level);
+    return this.props.tiles
+      .slice()
+      .filter((tile) => tile.flavor.level == level);
   }
 
-  handleClick(flavorName) {
+  handleClick(flavorName, level) {
     const tiles = this.props.tiles.slice();
-    const tile = tiles.find((tile) => tile.flavor.name == flavorName);
+    const tile = tiles.find(
+      (tile) => tile.flavor.name == flavorName && tile.flavor.level == level
+    );
     tile.selected = !tile.selected;
     this.setState({ tiles: tiles });
   }
@@ -34,9 +38,25 @@ class Selector extends React.Component {
       <Wheel
         flavorNames={flavorNames}
         selectedFlavorNames={selectedFlavorNames}
-        onClick={(i) => this.handleClick(i)}
+        level={this.props.page}
+        onClick={(flavorName, level) => this.handleClick(flavorName, level)}
       />
     );
+  }
+
+  resetSelection() {
+    const tiles = this.selectTilesAt(this.props.page)
+      .filter((tile) => tile.selected)
+      .filter(
+        (tile) =>
+          tile.flavor.level === this.props.page + 1 ||
+          tile.flavor.level === this.props.page
+      )
+      .map((tile) => {
+        tile.selected = false;
+        return tile;
+      });
+    this.setState({ tiles: tiles });
   }
 
   render() {
@@ -48,6 +68,7 @@ class Selector extends React.Component {
             page={this.props.page}
             prev={this.props.prev}
             next={this.props.next}
+            onClick={() => this.resetSelection()}
           />
         </div>
       </div>
@@ -60,6 +81,7 @@ Selector.propTypes = {
   page: PropTypes.number,
   prev: PropTypes.string,
   next: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 // ========================================

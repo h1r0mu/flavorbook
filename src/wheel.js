@@ -4,6 +4,10 @@ import React from "react";
 import Flavor from "./flavor.js";
 
 class Wheel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.width = 9;
+  }
   renderFlavor(i) {
     return (
       <Flavor
@@ -12,7 +16,9 @@ class Wheel extends React.Component {
         selected={this.props.selectedFlavorNames.includes(
           this.props.flavorNames[i]
         )}
-        onClick={() => this.props.onClick(this.props.flavorNames[i])}
+        onClick={() =>
+          this.props.onClick(this.props.flavorNames[i], this.props.level)
+        }
       />
     );
   }
@@ -20,10 +26,10 @@ class Wheel extends React.Component {
   render() {
     let flavors = [];
     const num = this.props.flavorNames.length;
-    for (let i = 0; i < Math.floor(num / 3) + 1; i++) {
+    for (let i = 0; i < Math.floor(num / this.width) + 1; i++) {
       let rows = [];
-      for (let j = 0; j < 3 && i * 3 + j < num; j++) {
-        rows.push(this.renderFlavor(i * 3 + j));
+      for (let j = 0; j < this.width && i * this.width + j < num; j++) {
+        rows.push(this.renderFlavor(i * this.width + j));
       }
       flavors.push(
         <div key={i} className="board-row">
@@ -39,6 +45,7 @@ Wheel.propTypes = {
   flavorNames: PropTypes.array,
   selectedFlavorNames: PropTypes.array,
   onClick: PropTypes.func,
+  level: PropTypes.number,
 };
 
 export default Wheel;
