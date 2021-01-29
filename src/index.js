@@ -2,51 +2,38 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "./index.css";
-import Pagination from "./pagination.js";
-import Wheel from "./wheel.js";
-// import App2 from './level2';
+import { BrowserRouter, Route } from "react-router-dom";
+import Selector from "./selector.js";
+import Result from "./result.js";
 
-const flavor_names = [
-  "野菜",
-  "酸味/発酵",
-  "フルーツ",
-  "花",
-  "甘味",
-  "ナッツココア",
-  "香辛料",
-  "焼き",
-  "その他",
-];
-
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    const flavors = flavor_names.map((name) => {
-      return {
-        name: name,
-        selected: false,
-      };
-    });
-    this.state = {
-      flavors: flavors,
-    };
-  }
-
-  render() {
-    return (
-      <div className="service">
-        <div className="service-board">
-          <Wheel flavors={this.state.flavors} />
+const App = () => {
+  return (
+    <div>
+      <BrowserRouter>
+        <div>
+          <Route
+            path="/"
+            exact
+            render={() => <Selector page={0} next="/page2" />}
+          />
+          <Route
+            path="/page2"
+            render={() => <Selector page={1} next="/page3" prev="/" />}
+          />
+          <Route
+            path="/page3"
+            render={() => <Selector page={2} next="/page4" prev="/page2" />}
+          />
+          <Route
+            path="/page4"
+            render={() => <Result page={3} next="/" prev="/page3" />}
+          />
         </div>
-        <div className="pagination">
-          <Pagination />
-        </div>
-      </div>
-    );
-  }
-}
+      </BrowserRouter>
+    </div>
+  );
+};
 
 // ========================================
 
-// ReactDOM.render(<App2 />, document.getElementById("root"));
 ReactDOM.render(<App />, document.getElementById("root"));
