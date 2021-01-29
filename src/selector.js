@@ -20,7 +20,7 @@ class Selector extends React.Component {
     this.setState({ tiles: tiles });
   }
 
-  renderWheel() {
+  getVisibleTiles() {
     let tiles = this.selectTilesAt(this.props.page);
     if (this.props.page > 0) {
       const selectedParentFlavorNames = this.selectTilesAt(this.props.page - 1)
@@ -30,6 +30,23 @@ class Selector extends React.Component {
         selectedParentFlavorNames.includes(tile.flavor.parentName)
       );
     }
+    return tiles;
+  }
+
+  componentDidMount() {
+    const isSelected = (tile) => tile.selected;
+    let tiles = this.getVisibleTiles();
+    tiles = tiles.some(isSelected)
+      ? tiles
+      : tiles.map((tile) => {
+          tile.selected = true;
+          return tile;
+        });
+    this.setState({ tiles: tiles });
+  }
+
+  renderWheel() {
+    const tiles = this.getVisibleTiles();
     const flavorNames = tiles.map((tile) => tile.flavor.name);
     const selectedFlavorNames = tiles
       .filter((tile) => tile.selected)
