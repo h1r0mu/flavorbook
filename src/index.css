@@ -9,7 +9,11 @@ ol, ul {
 }
 
 .board-row:after {
-  clear: both;
+  content: "";
+  display: table;
+}
+.app-board:after {
+	clear: both;
   content: "";
   display: table;
 }
