@@ -47,11 +47,7 @@ class Selector extends React.Component {
   resetSelection() {
     const tiles = this.selectTilesAt(this.props.page)
       .filter((tile) => tile.selected)
-      .filter(
-        (tile) =>
-          tile.flavor.level === this.props.page + 1 ||
-          tile.flavor.level === this.props.page
-      )
+      .filter((tile) => tile.flavor.level === this.props.page)
       .map((tile) => {
         tile.selected = false;
         return tile;

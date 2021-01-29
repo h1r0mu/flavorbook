@@ -26,14 +26,10 @@ class Wheel extends React.Component {
   render() {
     let flavors = [];
     const num = this.props.flavorNames.length;
-    for (let i = 0; i < Math.floor(num / this.width) + 1; i++) {
-      let rows = [];
-      for (let j = 0; j < this.width && i * this.width + j < num; j++) {
-        rows.push(this.renderFlavor(i * this.width + j));
-      }
+    for (let i = 0; i < num; i++) {
       flavors.push(
         <div key={i} className="board-row">
-          {rows}
+          {this.renderFlavor(i)}
         </div>
       );
     }
