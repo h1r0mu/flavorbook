@@ -2,9 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
-import Vege from './static/images/vegetable.jpg'
-import Sour from './static/images/sour.jpg'
-import Fluit from './static/images/fluit.jpg'
+import Vege from './images/vegetable.jpg'
+import Sour from './images/sour.jpg'
+import Fluit from './images/fluit.jpg'
 
 const images = [
   // 画像のURLとタイトル、幅を宣言してimagesというリストに格納
