@@ -14,10 +14,54 @@ class App extends React.Component {
       tiles: flavors.map((flavor) => {
         return {
           flavor: flavor,
-          selected: false,
+          selected: flavor.level == 0 ? true : false,
         };
       }),
     };
+  }
+
+  getTiles(page) {
+    return this.state.tiles.filter((tile) => tile.flavor.level == page);
+  }
+
+  getVisibleTiles(page) {
+    let tiles = this.getTiles(page);
+    if (page > 0) {
+      const selectedParentFlavorNames = this.getTiles(page - 1)
+        .filter((tile) => tile.selected)
+        .map((tile) => tile.flavor.name);
+      tiles = tiles.filter((tile) =>
+        selectedParentFlavorNames.includes(tile.flavor.parentName)
+      );
+    }
+    return tiles;
+  }
+
+  selectTile(page, flavorName) {
+    const tiles = this.getVisibleTiles(page).slice();
+    const tile = tiles.find((tile) => tile.flavor.name == flavorName);
+    tile.selected = !tile.selected;
+    this.setState(this.state.tiles.concat({ tiles: tiles }));
+  }
+
+  selectTiles(page) {
+    const tiles = this.getVisibleTiles(page)
+      .slice()
+      .map((tile) => {
+        tile.selected = true;
+        return tile;
+      });
+    this.setState(this.state.tiles.concat({ tiles: tiles }));
+  }
+
+  unselectTiles(page) {
+    const tiles = this.getVisibleTiles(page)
+      .slice()
+      .map((tile) => {
+        tile.selected = false;
+        return tile;
+      });
+    this.setState(this.state.tiles.concat({ tiles: tiles }));
   }
 
   render() {
@@ -32,7 +76,15 @@ class App extends React.Component {
               path="/page1"
               render={() => {
                 return (
-                  <Selector tiles={this.state.tiles} page={0} next="/page2" />
+                  <Selector
+                    tiles={this.getVisibleTiles(0)}
+                    page={0}
+                    next="/page2"
+                    onClickNext={() => this.selectTiles(1)}
+                    onClickTile={(page, flavorName) =>
+                      this.selectTile(page, flavorName)
+                    }
+                  />
                 );
               }}
             />
@@ -41,10 +93,15 @@ class App extends React.Component {
               render={() => {
                 return (
                   <Selector
-                    tiles={this.state.tiles}
+                    tiles={this.getVisibleTiles(1)}
                     page={1}
                     next="/page3"
                     prev="/page1"
+                    onClickPrev={() => this.unselectTiles(1)}
+                    onClickNext={() => this.selectTiles(2)}
+                    onClickTile={(page, flavorName) =>
+                      this.selectTile(page, flavorName)
+                    }
                   />
                 );
               }}
@@ -53,10 +110,14 @@ class App extends React.Component {
               path="/page3"
               render={() => (
                 <Selector
-                  tiles={this.state.tiles}
+                  tiles={this.getVisibleTiles(2)}
                   page={2}
                   next="/page4"
                   prev="/page2"
+                  onClickPrev={() => this.unselectTiles(2)}
+                  onClickTile={(page, flavorName) =>
+                    this.selectTile(page, flavorName)
+                  }
                 />
               )}
             />
@@ -64,7 +125,7 @@ class App extends React.Component {
               path="/page4"
               render={() => (
                 <Result
-                  tiles={this.state.tiles}
+                  tiles={this.state.tiles.filter((tile) => tile.selected)}
                   page={3}
                   next="/"
                   prev="/page3"
