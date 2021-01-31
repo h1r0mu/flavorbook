@@ -30,8 +30,12 @@ class Selector extends React.Component {
             page={this.props.page}
             prev={this.props.prev}
             next={this.props.next}
-            onClickPrev={() => this.props.onClickPrev()}
-            onClickNext={() => this.props.onClickNext()}
+            onClickPrev={() =>
+              this.props.onClickPrev ? this.props.onClickPrev() : null
+            }
+            onClickNext={() =>
+              this.props.onClickNext ? this.props.onClickNext() : null
+            }
           />
         </div>
       </div>
