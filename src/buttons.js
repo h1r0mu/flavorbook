@@ -12,7 +12,7 @@ const PrevButton = (props) => {
 const NextButton = (props) => {
   return (
     <Link to={props.page}>
-      <button>{"次へ"}</button>
+      <button onClick={props.onClick}>{"次へ"}</button>
     </Link>
   );
 };
@@ -20,11 +20,13 @@ const Pagination = (props) => {
   const buttons = [];
   if (props.prev !== undefined) {
     buttons.push(
-      <PrevButton key="prev" page={props.prev} onClick={props.onClick} />
+      <PrevButton key="prev" page={props.prev} onClick={props.onClickPrev} />
     );
   }
   if (props.next !== undefined) {
-    buttons.push(<NextButton key="next" page={props.next} />);
+    buttons.push(
+      <NextButton key="next" page={props.next} onClick={props.onClickNext} />
+    );
   }
   return buttons;
 };

@@ -17,7 +17,7 @@ class Wheel extends React.Component {
           this.props.flavorNames[i]
         )}
         onClick={() =>
-          this.props.onClick(this.props.flavorNames[i], this.props.level)
+          this.props.onClick(this.props.level, this.props.flavorNames[i])
         }
       />
     );
