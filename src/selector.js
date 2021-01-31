@@ -3,9 +3,9 @@ import React from "react";
 
 import Pagination from "./buttons.js";
 import Wheel from "./wheel.js";
-import ButtonBases from './complex_button.js'
-import Steppers from './stepper.js'
-import Tabs from './tab.js'
+import ButtonBases from "./complex_button.js";
+import Steppers from "./stepper.js";
+import Tabs from "./tab.js";
 
 class Selector extends React.Component {
   selectTilesAt(level) {
@@ -78,12 +78,12 @@ class Selector extends React.Component {
   render() {
     return (
       <div className="app">
-				<div className = 'tabs'>
-						<Tabs/>
-				</div>
-				<div className = 'complex_button'>
-						<ButtonBases/>
-				</div>
+        <div className="tabs">
+          <Tabs />
+        </div>
+        <div className="complex_button">
+          <ButtonBases />
+        </div>
         <div className="app-board">{this.renderWheel(this.props.page)}</div>
         <div className="pagination">
           <Pagination
@@ -93,9 +93,9 @@ class Selector extends React.Component {
             onClick={() => this.resetSelection()}
           />
         </div>
-				<div className = 'stepppers'>
-						<Steppers/>
-				</div>
+        <div className="stepppers">
+          <Steppers />
+        </div>
       </div>
     );
   }

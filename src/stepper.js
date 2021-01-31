@@ -1,14 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
-
-/*
+  /*
   const フック関数 = makeStyles((theme) => ({
   クラス: {
     プロパティ: 文字列の設定値,
@@ -19,13 +18,13 @@ const useStyles = makeStyles((theme) => ({
 */
 
   root: {
-		marginTop: 300,
-    width: '100%',
+    marginTop: 300,
+    width: "100%",
   },
 
   button: {
-		marginRight: 100,
-		// marginRight: theme.spacing(1),
+    marginRight: 100,
+    // marginRight: theme.spacing(1),
   },
 
   instructions: {
@@ -33,26 +32,29 @@ const useStyles = makeStyles((theme) => ({
     // marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
-
 }));
 
-
 function getSteps() {
-  return ['Select coffee flavers ( level1 )', 'Select coffee flavers ( level2 )', 'Select coffee flavers ( level3 )', 'Register coffee flavers'];
+  return [
+    "Select coffee flavers ( level1 )",
+    "Select coffee flavers ( level2 )",
+    "Select coffee flavers ( level3 )",
+    "Register coffee flavers",
+  ];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Select';
+      return "Select";
     case 1:
-      return 'Select';
+      return "Select";
     case 2:
-      return 'Select';
+      return "Select";
     case 3:
-      return 'Register!';
+      return "Register!";
     default:
-      return 'Unknown step';
+      return "Unknown step";
   }
 }
 
@@ -60,7 +62,7 @@ export default function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   // useState: 現在のstateの値とそれを更新するための関数をペアにして返す
-				//
+  //
   const [skipped, setSkipped] = React.useState(new Set());
   // Set(): 重複する値は認めないリスト
 
@@ -88,7 +90,6 @@ export default function HorizontalLinearStepper() {
   };
 
   const handleBack = () => {
-					
     // stateの値を更新
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -106,7 +107,6 @@ export default function HorizontalLinearStepper() {
       newSkipped.add(activeStep);
       return newSkipped;
     });
-
   };
 
   const handleReset = () => {
@@ -120,8 +120,10 @@ export default function HorizontalLinearStepper() {
           const stepProps = {};
           const labelProps = {};
           if (isStepOptional(index)) {
-						// 現在の状態が1の場合
-            labelProps.optional = <Typography variant="caption">Optional</Typography>;
+            // 現在の状態が1の場合
+            labelProps.optional = (
+              <Typography variant="caption">Optional</Typography>
+            );
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
@@ -133,47 +135,52 @@ export default function HorizontalLinearStepper() {
           );
         })}
       </Stepper>
-			<div>
-				{activeStep === steps.length ? (
-					<div>
-						<Typography className={classes.instructions}>
-							All steps completed - you&apos;re finished
-						</Typography>
-						<Button onClick={handleReset} className={classes.button}>
-							Reset
-						</Button>
-					</div>
-				) : (
-					<div>
-						<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-						<div>
-							<Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-								Back
-							</Button>
-							{isStepOptional(activeStep) && (
-								<Button
-									variant="contained"
-									color="primary"
-									onClick={handleSkip}
-									className={classes.button}
-								>
-									Skip
-								</Button>
-							)}
+      <div>
+        {activeStep === steps.length ? (
+          <div>
+            <Typography className={classes.instructions}>
+              All steps completed - you&apos;re finished
+            </Typography>
+            <Button onClick={handleReset} className={classes.button}>
+              Reset
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <Typography className={classes.instructions}>
+              {getStepContent(activeStep)}
+            </Typography>
+            <div>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                className={classes.button}
+              >
+                Back
+              </Button>
+              {isStepOptional(activeStep) && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSkip}
+                  className={classes.button}
+                >
+                  Skip
+                </Button>
+              )}
 
-							<Button
-								variant="contained"
-								color="primary"
-								onClick={handleNext}
-								className={classes.button}
-							>
-								{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-							</Button>
-						</div>
-					</div>
-				)}
-			</div>
-		</div>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                className={classes.button}
+              >
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
-
