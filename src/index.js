@@ -126,7 +126,7 @@ class App extends React.Component {
               path="/page4"
               render={() => (
                 <Result
-                  tiles={this.state.tiles}
+                  tiles={this.state.tiles.filter((tile) => tile.selected)}
                   page={3}
                   next="/"
                   prev="/page3"
