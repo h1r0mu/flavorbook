@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ReactDOM from "react-dom";
-
 import "./index.css";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import Selector from "./selector.js";

@@ -3,6 +3,9 @@ import React from "react";
 
 import Pagination from "./buttons.js";
 import Wheel from "./wheel.js";
+import ButtonBases from "./complex_button.js";
+import Steppers from "./stepper.js";
+import Tabs from "./tab.js";
 
 class Selector extends React.Component {
   renderWheel() {
@@ -24,7 +27,14 @@ class Selector extends React.Component {
   render() {
     return (
       <div className="app">
+        <div className="tabs">
+          <Tabs />
+        </div>
+        <div className="complex_button">
+          <ButtonBases />
+        </div>
         <div className="app-board">{this.renderWheel()}</div>
+
         <div className="pagination">
           <Pagination
             page={this.props.page}
@@ -37,6 +47,9 @@ class Selector extends React.Component {
               this.props.onClickNext ? this.props.onClickNext() : null
             }
           />
+        </div>
+        <div className="stepppers">
+          <Steppers />
         </div>
       </div>
     );
