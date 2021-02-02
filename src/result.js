@@ -6,8 +6,39 @@ import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
 
 class Result extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      store: null,
+      country: null,
+      region: null,
+      processing: null,
+      grind: null,
+      brewing: null,
+      days: null,
+      tiles: props.tiles.slice(),
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.save = this.save.bind(this);
+    this.restore = this.restore.bind(this);
+  }
+  save() {
+    const key = Object.keys(this.state)
+      .map((k) => {
+        return k != "tiles" ? this.state[k] : "";
+      })
+      .join("_");
+    let history = localStorage.getItem("flavorBook")
+      ? JSON.parse(localStorage.getItem("flavorBook"))
+      : {};
+    Object.assign(history, { [key]: { ...this.state } });
+    localStorage.setItem("flavorBook", JSON.stringify(history));
+  }
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
   renderWheel() {
-    const tiles = this.props.tiles;
+    const tiles = this.state.tiles;
     const flavorNames = tiles.map((tile) => tile.flavor.name);
     const selectedFlavorNames = tiles
       .filter((tile) => tile.selected)
@@ -20,13 +51,32 @@ class Result extends React.Component {
       />
     );
   }
+  restore(history) {
+    this.setState(history);
+  }
 
   renderResult() {
     return <div>{this.renderWheel()}</div>;
   }
+  renderHistory() {
+    if (!localStorage.getItem("flavorBook")) {
+      return;
+    }
+    const histories = JSON.parse(localStorage.getItem("flavorBook"));
+    const buttons = [];
+
+    Object.keys(histories).forEach((key) => {
+      buttons.push(
+        <button key={key} onClick={() => this.restore(histories[key])}>
+          {key}
+        </button>
+      );
+    });
+    return buttons;
+  }
 
   convert() {
-    const tiles = this.props.tiles;
+    const tiles = this.state.tiles;
     const top = tiles
       .filter((tile) => tile.flavor.level == 0)
       .map((tile) => tile.flavor.name)
@@ -59,9 +109,10 @@ class Result extends React.Component {
           <p>{this.convert()}</p>
         </div>
         <div>
-          <StoreInfo />
+          <StoreInfo handleChange={this.handleChange} />
         </div>
-        <button>保存</button>
+        <button onClick={this.save}>保存</button>
+        <div>{this.renderHistory()}</div>
         <div className="pagination">
           <Pagination
             page={this.props.page}
