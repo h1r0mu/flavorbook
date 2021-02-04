@@ -67,13 +67,13 @@ class ButtonAppBar extends React.Component {
 				this.state = {drawerIsOpen: false};
 		}
 
-		handleDrawerOpen = () => {
+		handleDrawerOpen(){
     this.setState({ drawerIsOpen: true });
-  };
+  }
 
-  handleDrawerClose = () => {
+  handleDrawerClose(){
     this.setState({ drawerIsOpen: false });
-  };
+  }
 
   render(){
 				return (
