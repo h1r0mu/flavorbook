@@ -1,39 +1,31 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
 import Vege from "./images/vegetable.jpg";
-import Sour from "./images/sour.jpg";
-import Fluit from "./images/fluit.jpg";
+// import Sour from "./images/sour.jpg";
+// import Fluit from "./images/fluit.jpg";
 
 const images = [
   // 画像のURLとタイトル、幅を宣言してimagesというリストに格納
   {
     url: Vege,
     title: "野菜",
-    width: "20%",
-  },
-  {
-    url: Sour,
-    title: "酸味",
-    width: "20%",
-  },
-  {
-    url: Fluit,
-    title: "フルーツ",
-    width: "20%",
+    width: "100%",
   },
 ];
 
 const useStyles = makeStyles((theme) => ({
   // css設定
   root: {
-    marginTop: 70,
-    marginLeft: 280,
-    display: "flex",
-    flexWrap: "wrap",
-    minWidth: 300,
-    width: "100%",
+		marginTop: 70,
+		marginLeft: 0,
+		marginBottom: 70,
+		display: "flex",
+		flexWrap: "wrap",
+		minWidth: 200,
+		width: "100%",
   },
   image: {
     position: "relative",
@@ -103,20 +95,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonBases() {
+function ButtonBases(props) {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       {images.map((image) => (
         <ButtonBase
           focusRipple
-          key={image.title}
-          className={classes.image}
+					key={props.value}
+					className={classes.image}
           focusVisibleClassName={classes.focusVisible}
           style={{
             width: image.width,
           }}
+          onClick={props.onClick}
         >
           <span
             className={classes.imageSrc}
@@ -132,7 +124,7 @@ export default function ButtonBases() {
               color="inherit"
               className={classes.imageTitle}
             >
-              {image.title}
+              {props.value}
               <span className={classes.imageMarked} />
             </Typography>
           </span>
@@ -141,3 +133,9 @@ export default function ButtonBases() {
     </div>
   );
 }
+
+ButtonBases.propTypes = {
+  value: PropTypes.string,
+  onClick: PropTypes.func,
+};
+export default ButtonBases;

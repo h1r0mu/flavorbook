@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+
 const PrevButton = (props) => {
   return (
     <Link to={props.page}>
@@ -28,7 +29,15 @@ const Pagination = (props) => {
       <NextButton key="next" page={props.next} onClick={props.onClickNext} />
     );
   }
-  return buttons;
+
+};
+
+Pagination.propTypes = {
+  page: PropTypes.number,
+  prev: PropTypes.string,
+  next: PropTypes.string,
+  onClickPrev: PropTypes.func,
+  onClickNext: PropTypes.func,
 };
 
 NextButton.propTypes = {

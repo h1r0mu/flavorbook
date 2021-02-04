@@ -36,7 +36,7 @@ class Wheel extends React.Component {
       );
     }
 
-    return <div>{flavors}</div>;
+    return <div className='flavors'>{flavors}</div>;
   }
 }
 Wheel.propTypes = {
