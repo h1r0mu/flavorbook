@@ -19,13 +19,13 @@ const images = [
 const useStyles = makeStyles((theme) => ({
   // css設定
   root: {
-		marginTop: 70,
-		marginLeft: 0,
-		marginBottom: 70,
-		display: "flex",
-		flexWrap: "wrap",
-		minWidth: 200,
-		width: "100%",
+    marginTop: 70,
+    marginLeft: 0,
+    marginBottom: 70,
+    display: "flex",
+    flexWrap: "wrap",
+    minWidth: 200,
+    width: "100%",
   },
   image: {
     position: "relative",
@@ -102,8 +102,8 @@ function ButtonBases(props) {
       {images.map((image) => (
         <ButtonBase
           focusRipple
-					key={props.value}
-					className={classes.image}
+          key={props.value}
+          className={classes.image}
           focusVisibleClassName={classes.focusVisible}
           style={{
             width: image.width,

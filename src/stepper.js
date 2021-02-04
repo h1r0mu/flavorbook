@@ -7,16 +7,16 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#795548',
+      main: "#795548",
     },
     secondary: {
-      main: '#f44336',
+      main: "#f44336",
     },
   },
 });
@@ -48,7 +48,6 @@ function getSteps() {
   ];
 }
 
-
 const PrevButton = (props) => {
   const classes = useStyles();
   return (
@@ -57,8 +56,8 @@ const PrevButton = (props) => {
         disabled={props.now === 0}
         onClick={props.onClick}
         className={classes.button}
-								color='primary'
-								variant="contained"
+        color="primary"
+        variant="contained"
       >
         {"Prev"}
       </Button>
@@ -73,8 +72,8 @@ const NextButton = (props) => {
       <Button
         onClick={props.onClick}
         className={classes.button}
-								color="primary"
-								variant="contained"
+        color="primary"
+        variant="contained"
       >
         {"Next"}
       </Button>
@@ -86,10 +85,7 @@ const ResetButton = (props) => {
   const classes = useStyles();
   return (
     <Link to={0}>
-      <Button
-        disabled={props.now === 0}
-        className={classes.button}
-      >
+      <Button disabled={props.now === 0} className={classes.button}>
         {"Reset"}
       </Button>
     </Link>
@@ -121,39 +117,35 @@ const HorizontalLinearStepper = (props) => {
     );
   }
   return (
-				<ThemeProvider theme={theme}>
-						<div className={classes.root}>
-								<Stepper activeStep={props.page}>
-										{steps.map((label) => {
-												const stepProps = {};
-												const labelProps = {};
-												return (
-														<Step key={label} {...stepProps}>
-																<StepLabel {...labelProps}>{label}</StepLabel>
-														</Step>
-												);
-										})}
-								</Stepper>
-								<div>
-										{props.page === steps.length ? (
-												<div>
-														<Typography className={classes.instructions}>
-																All steps completed - you&apos;re finished
-														</Typography>
-														<ResetButton 
-																key='reset'
-																now={props.page}
-														/>
-												
-												</div>
-										) : (
-												<div>
-														<div>{buttons}</div>
-												</div>
-										)}
-								</div>
-						</div>
-				</ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <Stepper activeStep={props.page}>
+          {steps.map((label) => {
+            const stepProps = {};
+            const labelProps = {};
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <div>
+          {props.page === steps.length ? (
+            <div>
+              <Typography className={classes.instructions}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <ResetButton key="reset" now={props.page} />
+            </div>
+          ) : (
+            <div>
+              <div>{buttons}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </ThemeProvider>
   );
 };
 

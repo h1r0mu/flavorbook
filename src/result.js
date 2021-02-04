@@ -61,13 +61,13 @@ class Result extends React.Component {
           <StoreInfo />
         </div>
         <button>保存</button>
-								<div className="stepppers">
-										<Steppers
-												page={this.props.page}
-												prev={this.props.prev}
-												next={this.props.next}
-										/>
-								</div>
+        <div className="stepppers">
+          <Steppers
+            page={this.props.page}
+            prev={this.props.prev}
+            next={this.props.next}
+          />
+        </div>
       </div>
     );
   }
