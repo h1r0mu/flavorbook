@@ -4,38 +4,48 @@ import React from "react";
 import Pagination from "./buttons.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
+import StoreInfoTable from "./tables.js";
 
 class Result extends React.Component {
   constructor(props) {
+    const histories = localStorage.getItem("flavorBook")
+      ? JSON.parse(localStorage.getItem("flavorBook"))
+      : {};
     super(props);
     this.state = {
-      store: null,
-      country: null,
-      region: null,
-      processing: null,
-      grind: null,
-      brewing: null,
-      days: null,
+      storeInfo: {
+        store: null,
+        country: null,
+        region: null,
+        processing: null,
+        grind: null,
+        brewing: null,
+        days: null,
+      },
       tiles: props.tiles.slice(),
+      histories: histories,
     };
     this.handleChange = this.handleChange.bind(this);
     this.save = this.save.bind(this);
     this.restore = this.restore.bind(this);
+    this.delimiter = ["などの複雑なフレーバー，", "の強い香りと"][
+      Math.floor(Math.random() * 2)
+    ];
   }
   save() {
-    const key = Object.keys(this.state)
-      .map((k) => {
-        return k != "tiles" ? this.state[k] : "";
-      })
-      .join("_");
-    let history = localStorage.getItem("flavorBook")
-      ? JSON.parse(localStorage.getItem("flavorBook"))
-      : {};
-    Object.assign(history, { [key]: { ...this.state } });
-    localStorage.setItem("flavorBook", JSON.stringify(history));
+    const key = Object.values(this.state.storeInfo).join("_");
+    let histories = { ...this.state.histories };
+    histories = { ...histories, [key]: { ...this.state } };
+    this.setState({ histories: histories });
+    localStorage.setItem("flavorBook", JSON.stringify(histories));
   }
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      storeInfo: {
+        ...this.state.storeInfo,
+        [event.target.name]: event.target.value,
+      },
+    });
   }
   renderWheel() {
     const tiles = this.state.tiles;
@@ -52,22 +62,21 @@ class Result extends React.Component {
     );
   }
   restore(history) {
-    this.setState(history);
+    const newState = { storeInfo: history.storeInfo, tiles: history.tiles };
+    this.setState(newState);
   }
 
   renderResult() {
     return <div>{this.renderWheel()}</div>;
   }
   renderHistory() {
-    if (!localStorage.getItem("flavorBook")) {
-      return;
-    }
-    const histories = JSON.parse(localStorage.getItem("flavorBook"));
     const buttons = [];
-
-    Object.keys(histories).forEach((key) => {
+    Object.keys(this.state.histories).forEach((key) => {
       buttons.push(
-        <button key={key} onClick={() => this.restore(histories[key])}>
+        <button
+          key={key}
+          onClick={() => this.restore(this.state.histories[key])}
+        >
           {key}
         </button>
       );
@@ -89,11 +98,8 @@ class Result extends React.Component {
       .filter((tile) => tile.flavor.level == 2)
       .map((tile) => tile.flavor.name)
       .join("，");
-    const delimiter = ["などの複雑なフレーバー，", "の強い香りと"][
-      Math.floor(Math.random() * 2)
-    ];
     let notes = top;
-    notes += middle ? delimiter + middle : "";
+    notes += middle ? this.delimiter + middle : "";
     notes += bottom ? `，微かに${bottom}` : "";
     notes += "の香りを感じます．";
     return notes;
@@ -113,6 +119,7 @@ class Result extends React.Component {
         </div>
         <button onClick={this.save}>保存</button>
         <div>{this.renderHistory()}</div>
+        <StoreInfoTable rows={this.state.storeInfo} />
         <div className="pagination">
           <Pagination
             page={this.props.page}
