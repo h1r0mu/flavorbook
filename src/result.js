@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-
-import Pagination from "./buttons.js";
+import Steppers from "./stepper.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
 
@@ -62,8 +61,8 @@ class Result extends React.Component {
           <StoreInfo />
         </div>
         <button>保存</button>
-        <div className="pagination">
-          <Pagination
+        <div className="stepppers">
+          <Steppers
             page={this.props.page}
             prev={this.props.prev}
             next={this.props.next}

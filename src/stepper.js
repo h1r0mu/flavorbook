@@ -5,182 +5,172 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#795548",
+    },
+    secondary: {
+      main: "#f44336",
+    },
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
-  /*
-  const フック関数 = makeStyles((theme) => ({
-  クラス: {
-    プロパティ: 文字列の設定値,
-    // 他のプロパティの定め
-  },
-  // 他のクラス
-}));
-*/
-
   root: {
-    marginTop: 300,
+    marginTop: 80,
     width: "100%",
   },
 
   button: {
+    marginTop: 50,
     marginRight: 100,
     // marginRight: theme.spacing(1),
   },
 
   instructions: {
     marginTop: 100,
-    // marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
 }));
 
 function getSteps() {
   return [
-    "Select coffee flavers ( level1 )",
-    "Select coffee flavers ( level2 )",
-    "Select coffee flavers ( level3 )",
-    "Register coffee flavers",
+    "Select Coffee Flavers ( Level1 )",
+    "Select Coffee Flavers ( Level2 )",
+    "Select Coffee Flavers ( Level3 )",
+    "Register Coffee Flavers",
   ];
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return "Select";
-    case 1:
-      return "Select";
-    case 2:
-      return "Select";
-    case 3:
-      return "Register!";
-    default:
-      return "Unknown step";
-  }
-}
-
-export default function HorizontalLinearStepper() {
+const PrevButton = (props) => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  // useState: 現在のstateの値とそれを更新するための関数をペアにして返す
-  //
-  const [skipped, setSkipped] = React.useState(new Set());
-  // Set(): 重複する値は認めないリスト
-
-  const steps = getSteps();
-
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
-
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      // 現在のstateの状態がskippedの中に含まれている場合
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    // stateとskippedの値を更新
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
-  };
-
-  const handleBack = () => {
-    // stateの値を更新
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return (
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          if (isStepOptional(index)) {
-            // 現在の状態が1の場合
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
-            );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
-              </Button>
-              {isStepOptional(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )}
-
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    <Link to={props.page}>
+      <Button
+        disabled={props.now === 0}
+        onClick={props.onClick}
+        className={classes.button}
+        color="primary"
+        variant="contained"
+      >
+        {"Prev"}
+      </Button>
+    </Link>
   );
-}
+};
+
+const NextButton = (props) => {
+  const classes = useStyles();
+  return (
+    <Link to={props.page}>
+      <Button
+        onClick={props.onClick}
+        className={classes.button}
+        color="primary"
+        variant="contained"
+      >
+        {"Next"}
+      </Button>
+    </Link>
+  );
+};
+
+const ResetButton = (props) => {
+  const classes = useStyles();
+  return (
+    <Link to={0}>
+      <Button disabled={props.now === 0} className={classes.button}>
+        {"Reset"}
+      </Button>
+    </Link>
+  );
+};
+
+const HorizontalLinearStepper = (props) => {
+  const classes = useStyles();
+  const steps = getSteps();
+  const buttons = [];
+  if (props.prev !== undefined) {
+    buttons.push(
+      <PrevButton
+        key="prev"
+        page={props.prev}
+        now={props.page}
+        onClick={props.onClickPrev}
+      />
+    );
+  }
+  if (props.next !== undefined) {
+    buttons.push(
+      <NextButton
+        key="next"
+        page={props.next}
+        now={props.page}
+        onClick={props.onClickNext}
+      />
+    );
+  }
+  return (
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <Stepper activeStep={props.page}>
+          {steps.map((label) => {
+            const stepProps = {};
+            const labelProps = {};
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <div>
+          {props.page === steps.length ? (
+            <div>
+              <Typography className={classes.instructions}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <ResetButton key="reset" now={props.page} />
+            </div>
+          ) : (
+            <div>
+              <div>{buttons}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </ThemeProvider>
+  );
+};
+
+HorizontalLinearStepper.propTypes = {
+  page: PropTypes.number,
+  prev: PropTypes.string,
+  next: PropTypes.string,
+  onClickPrev: PropTypes.func,
+  onClickNext: PropTypes.func,
+};
+
+ResetButton.propTypes = {
+  now: PropTypes.number,
+};
+
+NextButton.propTypes = {
+  page: PropTypes.string,
+  now: PropTypes.number,
+  onClick: PropTypes.func,
+};
+
+PrevButton.propTypes = {
+  page: PropTypes.string,
+  now: PropTypes.number,
+  onClick: PropTypes.func,
+};
+
+export default HorizontalLinearStepper;

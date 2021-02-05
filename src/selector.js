@@ -1,11 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-
-import Pagination from "./buttons.js";
+import AppBar from "./appBar.js";
 import Wheel from "./wheel.js";
-import ButtonBases from "./complex_button.js";
 import Steppers from "./stepper.js";
-import Tabs from "./tab.js";
 
 class Selector extends React.Component {
   renderWheel() {
@@ -28,15 +25,11 @@ class Selector extends React.Component {
     return (
       <div className="app">
         <div className="tabs">
-          <Tabs />
-        </div>
-        <div className="complex_button">
-          <ButtonBases />
+          <AppBar />
         </div>
         <div className="app-board">{this.renderWheel()}</div>
-
-        <div className="pagination">
-          <Pagination
+        <div className="stepppers">
+          <Steppers
             page={this.props.page}
             prev={this.props.prev}
             next={this.props.next}
@@ -47,9 +40,6 @@ class Selector extends React.Component {
               this.props.onClickNext ? this.props.onClickNext() : null
             }
           />
-        </div>
-        <div className="stepppers">
-          <Steppers />
         </div>
       </div>
     );
