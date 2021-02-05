@@ -21,6 +21,9 @@ ol, ul {
 .status {
   margin-bottom: 10px;
 }
+.flavors{
+				display:flex;
+}
 
 .flavor {
   background: #fff;

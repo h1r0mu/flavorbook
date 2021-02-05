@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-
-import Pagination from "./buttons.js";
+import Steppers from "./stepper.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
 import StoreInfoTable from "./tables.js";
@@ -117,11 +116,12 @@ class Result extends React.Component {
         <div>
           <StoreInfo handleChange={this.handleChange} />
         </div>
+
         <button onClick={this.save}>保存</button>
         <div>{this.renderHistory()}</div>
         <StoreInfoTable rows={this.state.storeInfo} />
-        <div className="pagination">
-          <Pagination
+        <div className="stepppers">
+          <Steppers
             page={this.props.page}
             prev={this.props.prev}
             next={this.props.next}
