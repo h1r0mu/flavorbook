@@ -62,8 +62,8 @@ const styles = {
 class ButtonAppBar extends React.Component {
   constructor() {
     super();
-				this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
-				this.handleDrawerClose = this.handleDrawerClose.bind(this);
+    this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
+    this.handleDrawerClose = this.handleDrawerClose.bind(this);
     this.state = { drawerIsOpen: false };
   }
 
