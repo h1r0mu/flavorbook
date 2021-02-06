@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
+
 import Steppers from "./stepper.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
 import StoreInfoTable from "./tables.js";
 import AppBar from "./appBar.js";
+import SaveButton from "./buttons/save.js";
 
 class Result extends React.Component {
   constructor(props) {
@@ -17,8 +19,9 @@ class Result extends React.Component {
         date: null,
         store: null,
         country: null,
+        farm: null,
         region: null,
-        processing: null,
+        process: null,
         grind: null,
         brewing: null,
         days: null,
@@ -111,10 +114,12 @@ class Result extends React.Component {
           <p>{this.convert()}</p>
         </div>
         <div>
-          <StoreInfo handleChange={this.handleChange} />
+          <StoreInfo
+            storeInfo={this.state.storeInfo}
+            handleChange={this.handleChange}
+          />
         </div>
-
-        <button onClick={this.save}>保存</button>
+        <SaveButton onClick={this.save} />
         <StoreInfoTable
           headers={Object.keys(this.state.storeInfo)}
           rows={this.state.histories}
