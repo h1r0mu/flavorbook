@@ -14,6 +14,7 @@ class Result extends React.Component {
     super(props);
     this.state = {
       storeInfo: {
+        date: null,
         store: null,
         country: null,
         region: null,
@@ -33,9 +34,11 @@ class Result extends React.Component {
     ];
   }
   save() {
-    const key = Object.values(this.state.storeInfo).join("_");
+    const key = new Date(Date.now()).toISOString();
     let histories = { ...this.state.histories };
-    histories = { ...histories, [key]: { ...this.state } };
+    const state = { ...this.state };
+    state.storeInfo.date = key;
+    histories = { ...histories, [key]: state };
     this.setState({ histories: histories });
     localStorage.setItem("flavorBook", JSON.stringify(histories));
   }
@@ -63,6 +66,9 @@ class Result extends React.Component {
       />
     );
   }
+  handleClick(tiles) {
+    this.setState({ tiles: tiles });
+  }
   restore(history) {
     const newState = { storeInfo: history.storeInfo, tiles: history.tiles };
     this.setState(newState);
@@ -71,21 +77,6 @@ class Result extends React.Component {
   renderResult() {
     return <div>{this.renderWheel()}</div>;
   }
-  renderHistory() {
-    const buttons = [];
-    Object.keys(this.state.histories).forEach((key) => {
-      buttons.push(
-        <button
-          key={key}
-          onClick={() => this.restore(this.state.histories[key])}
-        >
-          {key}
-        </button>
-      );
-    });
-    return buttons;
-  }
-
   convert() {
     const tiles = this.state.tiles;
     const top = tiles
@@ -124,8 +115,11 @@ class Result extends React.Component {
         </div>
 
         <button onClick={this.save}>保存</button>
-        <div>{this.renderHistory()}</div>
-        <StoreInfoTable rows={this.state.storeInfo} />
+        <StoreInfoTable
+          headers={Object.keys(this.state.storeInfo)}
+          rows={this.state.histories}
+          onClick={(tiles) => this.handleClick(tiles)}
+        />
         <div className="stepppers">
           <Steppers
             page={this.props.page}
