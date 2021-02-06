@@ -16,6 +16,7 @@ class Wheel extends React.Component {
         selected={this.props.selectedFlavorNames.includes(
           this.props.flavorNames[i]
         )}
+								url={this.props.url[i]}
         onClick={() =>
           this.props.onClick
             ? this.props.onClick(this.props.level, this.props.flavorNames[i])
@@ -44,6 +45,7 @@ Wheel.propTypes = {
   selectedFlavorNames: PropTypes.array,
   onClick: PropTypes.func,
   level: PropTypes.number,
+		url:PropTypes.array,
 };
 
 export default Wheel;

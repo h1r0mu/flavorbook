@@ -4,6 +4,7 @@ import Steppers from "./stepper.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
 import StoreInfoTable from "./tables.js";
+import AppBar from "./appBar.js";
 
 class Result extends React.Component {
   constructor(props) {
@@ -49,6 +50,7 @@ class Result extends React.Component {
   renderWheel() {
     const tiles = this.state.tiles;
     const flavorNames = tiles.map((tile) => tile.flavor.name);
+    const url = tiles.map((tile) => tile.flavor.url);
     const selectedFlavorNames = tiles
       .filter((tile) => tile.selected)
       .map((tile) => tile.flavor.name);
@@ -57,6 +59,7 @@ class Result extends React.Component {
         flavorNames={flavorNames}
         selectedFlavorNames={selectedFlavorNames}
         level={this.props.page}
+								url={url}
       />
     );
   }
@@ -107,6 +110,9 @@ class Result extends React.Component {
   render() {
     return (
       <div className="app">
+        <div className="tabs">
+          <AppBar />
+        </div>
         <h1>あなたの感じた香り一覧</h1>
         <div className="app-board">{this.renderResult()}</div>
         <h1>バリスタ語への翻訳結果</h1>
