@@ -4,50 +4,6 @@ import AppBar from "./appBar.js";
 import Wheel from "./wheel.js";
 import Steppers from "./stepper.js";
 
-class Selector extends React.Component {
-  renderWheel() {
-    const tiles = this.props.tiles;
-    const flavorNames = tiles.map((tile) => tile.flavor.name);
-    const url = tiles.map((tile) => tile.flavor.url);
-    const selectedFlavorNames = tiles
-      .filter((tile) => tile.selected)
-      .map((tile) => tile.flavor.name);
-    return (
-      <Wheel
-        flavorNames={flavorNames}
-        selectedFlavorNames={selectedFlavorNames}
-        level={this.props.page}
-        url={url}
-        onClick={(page, flavorName) => this.props.onClickTile(page, flavorName)}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <div className="app">
-        <div className="tabs">
-          <AppBar />
-        </div>
-        <div className="app-board">{this.renderWheel()}</div>
-        <div className="stepppers">
-          <Steppers
-            page={this.props.page}
-            prev={this.props.prev}
-            next={this.props.next}
-            onClickPrev={() =>
-              this.props.onClickPrev ? this.props.onClickPrev() : null
-            }
-            onClickNext={() =>
-              this.props.onClickNext ? this.props.onClickNext() : null
-            }
-          />
-        </div>
-      </div>
-    );
-  }
-}
-
 Selector.propTypes = {
   tiles: PropTypes.array,
   page: PropTypes.number,
@@ -61,22 +17,18 @@ Selector.propTypes = {
 // ========================================
 
 export default function Selector(props) {
-
   return (
     <div className="app">
       <div className="tabs">
         <AppBar />
       </div>
       <div className="app-board">
-      <Wheel
-        flavorNames={props.tiles.map((tile) => tile.flavor.name)}
-        selectedFlavorNames={props.tiles
-          .filter((tile) => tile.selected)
-          .map((tile) => tile.flavor.name)}
-        level={props.page}
-        onClick={(page, flavorName) => props.onClickTile(page, flavorName)}
-      />
-			</div>
+        <Wheel
+          tiles={props.tiles}
+          level={props.page}
+          onClick={props.onClickTile}
+        />
+      </div>
       <div className="stepppers">
         <Steppers
           page={props.page}
