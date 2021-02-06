@@ -17,7 +17,7 @@ class Selector extends React.Component {
         flavorNames={flavorNames}
         selectedFlavorNames={selectedFlavorNames}
         level={this.props.page}
-								url={url}
+        url={url}
         onClick={(page, flavorName) => this.props.onClickTile(page, flavorName)}
       />
     );

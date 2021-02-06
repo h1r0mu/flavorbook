@@ -59,7 +59,7 @@ class Result extends React.Component {
         flavorNames={flavorNames}
         selectedFlavorNames={selectedFlavorNames}
         level={this.props.page}
-								url={url}
+        url={url}
       />
     );
   }

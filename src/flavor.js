@@ -13,7 +13,7 @@ function Flavor(props) {
       style={style}
       onClick={props.onClick}
       value={props.value}
-						url={props.url}
+      url={props.url}
     />
   );
 }
@@ -21,6 +21,6 @@ Flavor.propTypes = {
   value: PropTypes.string,
   onClick: PropTypes.func,
   selected: PropTypes.bool,
-		url: PropTypes.string,
+  url: PropTypes.string,
 };
 export default Flavor;

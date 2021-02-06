@@ -113,8 +113,7 @@ function ButtonBases(props) {
           <span
             className={classes.imageSrc}
             style={{
-              backgroundImage: `url(${process.env.PUBLIC_URL + props.url})`,
-              // backgroundImage: `url(${image.url})`,
+              backgroundImage: `url(${props.url})`,
             }}
           />
           <span className={classes.imageBackdrop} />
@@ -138,6 +137,6 @@ function ButtonBases(props) {
 ButtonBases.propTypes = {
   value: PropTypes.string,
   onClick: PropTypes.func,
-		url:PropTypes.string,
+  url: PropTypes.string,
 };
 export default ButtonBases;
