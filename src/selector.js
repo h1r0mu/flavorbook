@@ -62,27 +62,21 @@ Selector.propTypes = {
 
 export default function Selector(props) {
 
-  function renderWheel() {
-    const flavorNames = props.tiles.map((tile) => tile.flavor.name);
-    const selectedFlavorNames = props.tiles
-      .filter((tile) => tile.selected)
-      .map((tile) => tile.flavor.name);
-    return (
-      <Wheel
-        flavorNames={flavorNames}
-        selectedFlavorNames={selectedFlavorNames}
-        level={props.page}
-        onClick={(page, flavorName) => props.onClickTile(page, flavorName)}
-      />
-    );
-  }
-
   return (
     <div className="app">
       <div className="tabs">
         <AppBar />
       </div>
-      <div className="app-board">{renderWheel()}</div>
+      <div className="app-board">
+      <Wheel
+        flavorNames={props.tiles.map((tile) => tile.flavor.name)}
+        selectedFlavorNames={props.tiles
+          .filter((tile) => tile.selected)
+          .map((tile) => tile.flavor.name)}
+        level={props.page}
+        onClick={(page, flavorName) => props.onClickTile(page, flavorName)}
+      />
+			</div>
       <div className="stepppers">
         <Steppers
           page={props.page}

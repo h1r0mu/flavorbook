@@ -48,4 +48,23 @@ Wheel.propTypes = {
   url: PropTypes.array,
 };
 
-export default Wheel;
+export default function Wheel(props) {
+  return (
+    <div className="flavors">
+      {props.flavorNames.map((flavorName) => (
+        <div key={flavorName} className="flavor-row">
+          <Flavor
+            key={flavorName}
+            value={flavorName}
+            selected={props.selectedFlavorNames.includes(flavorName)}
+            onClick={
+              props.onClick
+                ? () => props.onClick(props.level, flavorName)
+                : null
+            }
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
