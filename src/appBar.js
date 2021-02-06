@@ -83,7 +83,7 @@ class ButtonAppBar extends React.Component {
             <Toolbar>
               <IconButton
                 edge="start"
-                clssName={this.props.classes.menuButton}
+                className={this.props.classes.menuButton}
                 color="inherit"
                 aria-label="menu"
                 onClick={this.handleDrawerOpen}

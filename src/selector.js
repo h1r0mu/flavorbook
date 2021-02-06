@@ -8,6 +8,7 @@ class Selector extends React.Component {
   renderWheel() {
     const tiles = this.props.tiles;
     const flavorNames = tiles.map((tile) => tile.flavor.name);
+    const url = tiles.map((tile) => tile.flavor.url);
     const selectedFlavorNames = tiles
       .filter((tile) => tile.selected)
       .map((tile) => tile.flavor.name);
@@ -16,6 +17,7 @@ class Selector extends React.Component {
         flavorNames={flavorNames}
         selectedFlavorNames={selectedFlavorNames}
         level={this.props.page}
+        url={url}
         onClick={(page, flavorName) => this.props.onClickTile(page, flavorName)}
       />
     );
