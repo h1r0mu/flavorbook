@@ -21,10 +21,10 @@ StoreInfo.propTypes = {
 const createMenuItem = (value, label) => ({ value, label });
 
 const processes = [
-  createMenuItem("WASHED", "WASHED"),
-  createMenuItem("NATURAL", "NATURAL"),
-  createMenuItem("HONEY/PULPED NATURAL", "HONEY/PULPED NATURAL"),
-];
+  ["WASHED", "WASHED"],
+  ["NATURAL", "NATURAL"],
+  ["HONEY/PULPED NATURAL", "HONEY/PULPED NATURAL"],
+].map((attr) => createMenuItem(attr));
 
 export default function StoreInfo(props) {
   const classes = useStyles();
