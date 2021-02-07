@@ -53,32 +53,12 @@ class Result extends React.Component {
       },
     });
   }
-  renderWheel() {
-    const tiles = this.state.tiles;
-    const flavorNames = tiles.map((tile) => tile.flavor.name);
-    const url = tiles.map((tile) => tile.flavor.url);
-    const selectedFlavorNames = tiles
-      .filter((tile) => tile.selected)
-      .map((tile) => tile.flavor.name);
-    return (
-      <Wheel
-        flavorNames={flavorNames}
-        selectedFlavorNames={selectedFlavorNames}
-        level={this.props.page}
-        url={url}
-      />
-    );
-  }
   handleClick(tiles) {
     this.setState({ tiles: tiles });
   }
   restore(history) {
     const newState = { storeInfo: history.storeInfo, tiles: history.tiles };
     this.setState(newState);
-  }
-
-  renderResult() {
-    return <div>{this.renderWheel()}</div>;
   }
   convert() {
     const tiles = this.state.tiles;
@@ -108,7 +88,9 @@ class Result extends React.Component {
           <AppBar />
         </div>
         <h1>あなたの感じた香り一覧</h1>
-        <div className="app-board">{this.renderResult()}</div>
+        <div className="app-board">
+          <Wheel tiles={this.state.tiles} level={this.props.page} />
+        </div>
         <h1>バリスタ語への翻訳結果</h1>
         <div>
           <p>{this.convert()}</p>
