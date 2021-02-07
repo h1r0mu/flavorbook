@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+import SaveIcon from "@material-ui/icons/Save";
+
 import Steppers from "./stepper.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
-import History from "./tables.js";
+import History from "./components/History.js";
 import AppBar from "./appBar.js";
-import SaveButton from "./buttons/save.js";
+import Button from "./components/Button.js";
 
 export default class Result extends React.Component {
   constructor(props) {
@@ -114,7 +116,7 @@ export default class Result extends React.Component {
             handleChange={this.handleChange}
           />
         </div>
-        <SaveButton onClick={this.save} />
+        <Button icon={<SaveIcon />} onClick={this.save} text={"保存する"} />
         <History
           headers={Object.keys(this.state.storeInfo)}
           rows={this.state.histories}
