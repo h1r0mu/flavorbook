@@ -4,11 +4,11 @@ import React from "react";
 import Steppers from "./stepper.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
-import StoreInfoTable from "./tables.js";
+import History from "./tables.js";
 import AppBar from "./appBar.js";
 import SaveButton from "./buttons/save.js";
 
-class Result extends React.Component {
+export default class Result extends React.Component {
   constructor(props) {
     const histories = localStorage.getItem("flavorBook")
       ? JSON.parse(localStorage.getItem("flavorBook"))
@@ -44,6 +44,19 @@ class Result extends React.Component {
     histories = { ...histories, [key]: state };
     this.setState({ histories: histories });
     localStorage.setItem("flavorBook", JSON.stringify(histories));
+  }
+  delete(target) {
+    const histories = Object.keys(this.state.histories).reduce(
+      (object, key) => {
+        history;
+        if (key !== target.storeInfo.date) {
+          object[key] = this.state.histories[key];
+        }
+        return object;
+      },
+      {}
+    );
+    this.setState({ histories: histories });
   }
   handleChange(event) {
     this.setState({
@@ -102,10 +115,11 @@ class Result extends React.Component {
           />
         </div>
         <SaveButton onClick={this.save} />
-        <StoreInfoTable
+        <History
           headers={Object.keys(this.state.storeInfo)}
           rows={this.state.histories}
           onClick={(tiles) => this.handleClick(tiles)}
+          onClickDelete={(history) => this.delete(history)}
         />
         <div className="stepppers">
           <Steppers
@@ -126,5 +140,3 @@ Result.propTypes = {
   onClickPrev: PropTypes.func,
   onClickNext: PropTypes.func,
 };
-
-export default Result;

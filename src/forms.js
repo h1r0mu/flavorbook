@@ -31,7 +31,12 @@ export default function StoreInfo(props) {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="store" label="店の名前" onChange={props.handleChange} />
+      <TextField
+        id="store"
+        name="store"
+        label="店の名前"
+        onChange={props.handleChange}
+      />
       <TextField
         id="country"
         name="country"

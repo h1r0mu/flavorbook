@@ -2,13 +2,15 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
-import TableHead from "@material-ui/core/TableHead";
-import Paper from "@material-ui/core/Paper";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import FolderIcon from "@material-ui/icons/Folder";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles({
   table: {
@@ -17,38 +19,42 @@ const useStyles = makeStyles({
 });
 
 const parseDate = (date) => new Date(date).toLocaleString();
-const parseStoreInfo = (row) => ({ ...row, date: parseDate(row.date) });
 
-export default function StoreInfoTable(props) {
+export default function History(props) {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="store info table">
-        <TableHead>
-          <TableRow>
-            {props.headers.map((column) => (
-              <TableCell key={column}>{column}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.entries(props.rows).map(([date, row]) => (
-            <TableRow key={date} onClick={() => props.onClick(row.tiles)}>
-              {props.headers.map((column) => (
-                <TableCell key={date + column} align="center">
-                  {parseStoreInfo(row.storeInfo)[column]}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className={classes.demo}>
+      <List>
+        {Object.entries(props.rows).map(([date, row]) => (
+          <ListItem key={date} onClick={() => props.onClick(row.tiles)}>
+            <ListItemAvatar>
+              <Avatar>
+                <FolderIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary={`${parseDate(date)} ${row.storeInfo.store}`}
+              secondary={row.storeInfo.country}
+            />
+            <ListItemSecondaryAction>
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={() => props.onClickDelete(row)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        ))}
+      </List>
+    </div>
   );
 }
-StoreInfoTable.propTypes = {
+History.propTypes = {
   headers: PropTypes.array,
   rows: PropTypes.object,
   onClick: PropTypes.func,
+  onClickDelete: PropTypes.func,
 };
