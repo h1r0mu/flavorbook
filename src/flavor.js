@@ -14,9 +14,9 @@ const useStyles = makeStyles(() => ({
     minWidth: 200,
     width: "100%",
   },
-		flavor:{
-				dsplay:'flex',
-		}
+  flavor: {
+    dsplay: "flex",
+  },
 }));
 
 function Flavor(props) {

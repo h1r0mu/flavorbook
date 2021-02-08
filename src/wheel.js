@@ -5,8 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   list: {
-				display:'flex',
-				flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap",
   },
 };
 
@@ -38,15 +38,13 @@ class Wheel extends React.Component {
     const num = this.props.flavorNames.length;
     for (let i = 0; i < num; i++) {
       flavors.push(
-										<div key={i} className="board-row">
-												{this.renderFlavor(i)}
-										</div>
+        <div key={i} className="board-row">
+          {this.renderFlavor(i)}
+        </div>
       );
     }
 
-    return (
-								<div className={this.props.classes.list}>{flavors}</div>
-				);
+    return <div className={this.props.classes.list}>{flavors}</div>;
   }
 }
 Wheel.propTypes = {
