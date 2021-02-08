@@ -3,6 +3,8 @@ import React from "react";
 import AppBar from "./appBar.js";
 import Wheel from "./wheel.js";
 import Steppers from "./stepper.js";
+import Grid from '@material-ui/core/Grid';
+
 
 class Selector extends React.Component {
   renderWheel() {
@@ -29,7 +31,11 @@ class Selector extends React.Component {
         <div className="tabs">
           <AppBar />
         </div>
-        <div className="app-board">{this.renderWheel()}</div>
+								<Grid container spacing={3}>
+										<Grid item xs={12}>
+												<div className='app-board'>{this.renderWheel()}</div>
+										</Grid>
+								</Grid>
         <div className="stepppers">
           <Steppers
             page={this.props.page}

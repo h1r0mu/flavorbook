@@ -22,7 +22,7 @@ ol, ul {
   margin-bottom: 10px;
 }
 .flavors{
-				display:flex;
+				/* display:flex; */
 }
 
 .flavor {

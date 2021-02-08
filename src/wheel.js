@@ -1,7 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
-
 import Flavor from "./flavor.js";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  list: {
+				display:'flex',
+				flexWrap: 'wrap',
+  },
+};
 
 class Wheel extends React.Component {
   constructor(props) {
@@ -31,13 +38,15 @@ class Wheel extends React.Component {
     const num = this.props.flavorNames.length;
     for (let i = 0; i < num; i++) {
       flavors.push(
-        <div key={i} className="board-row">
-          {this.renderFlavor(i)}
-        </div>
+										<div key={i} className="board-row">
+												{this.renderFlavor(i)}
+										</div>
       );
     }
 
-    return <div className="flavors">{flavors}</div>;
+    return (
+								<div className={this.props.classes.list}>{flavors}</div>
+				);
   }
 }
 Wheel.propTypes = {
@@ -46,6 +55,7 @@ Wheel.propTypes = {
   onClick: PropTypes.func,
   level: PropTypes.number,
   url: PropTypes.array,
+  classes: PropTypes.object.isRequired,
 };
 
-export default Wheel;
+export default withStyles(styles)(Wheel);
