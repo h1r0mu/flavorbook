@@ -5,52 +5,34 @@ import Wheel from "./wheel.js";
 import Steppers from "./stepper.js";
 import Grid from "@material-ui/core/Grid";
 
-class Selector extends React.Component {
-  renderWheel() {
-    const tiles = this.props.tiles;
-    const flavorNames = tiles.map((tile) => tile.flavor.name);
-    const url = tiles.map((tile) => tile.flavor.url);
-    const selectedFlavorNames = tiles
-      .filter((tile) => tile.selected)
-      .map((tile) => tile.flavor.name);
-    return (
-      <Wheel
-        flavorNames={flavorNames}
-        selectedFlavorNames={selectedFlavorNames}
-        level={this.props.page}
-        url={url}
-        onClick={(page, flavorName) => this.props.onClickTile(page, flavorName)}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <div className="app">
-        <div className="tabs">
-          <AppBar />
-        </div>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <div className="app-board">{this.renderWheel()}</div>
-          </Grid>
-        </Grid>
-        <div className="stepppers">
-          <Steppers
-            page={this.props.page}
-            prev={this.props.prev}
-            next={this.props.next}
-            onClickPrev={() =>
-              this.props.onClickPrev ? this.props.onClickPrev() : null
-            }
-            onClickNext={() =>
-              this.props.onClickNext ? this.props.onClickNext() : null
-            }
-          />
-        </div>
+export default function Selector(props) {
+  return (
+    <div className="app">
+      <div className="tabs">
+        <AppBar />
       </div>
-    );
-  }
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <div className="app-board">
+            <Wheel
+              tiles={props.tiles}
+              level={props.page}
+              onClick={props.onClickTile}
+            />
+          </div>
+        </Grid>
+      </Grid>
+      <div className="stepppers">
+        <Steppers
+          page={props.page}
+          prev={props.prev}
+          next={props.next}
+          onClickPrev={() => (props.onClickPrev ? props.onClickPrev() : null)}
+          onClickNext={() => (props.onClickNext ? props.onClickNext() : null)}
+        />
+      </div>
+    </div>
+  );
 }
 
 Selector.propTypes = {
@@ -62,7 +44,3 @@ Selector.propTypes = {
   onClickPrev: PropTypes.func,
   onClickNext: PropTypes.func,
 };
-
-// ========================================
-
-export default Selector;

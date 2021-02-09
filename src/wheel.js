@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
 import React from "react";
 import Flavor from "./flavor.js";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
     flexWrap: "wrap",
   },
 }));
+
 export default function Wheel(props) {
   const selectedFlavorNames = props.tiles
     .filter((tile) => tile.selected)
