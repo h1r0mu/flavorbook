@@ -2,6 +2,8 @@ import React from "react";
 import Flavor from "./flavor.js";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+import { GridListTile } from "@material-ui/core";
+import { GridList } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -19,21 +21,24 @@ export default function Wheel(props) {
 
   return (
     <div className="flavors">
-      {props.tiles.map((tile) => (
-        <div key={tile.flavor.name} className={classes.list}>
-          <Flavor
-            key={tile.flavor.name}
-            value={tile.flavor.name}
-            selected={selectedFlavorNames.includes(tile.flavor.name)}
-            url={tile.flavor.url}
-            onClick={
-              props.onClick
-                ? () => props.onClick(props.level, tile.flavor.name)
-                : null
-            }
-          />
-        </div>
-      ))}
+      <GridList cellHeight="auto" cols="auto">
+        {props.tiles.map((tile) => (
+          <GridListTile key={tile.flavor.name} cols="1">
+            <Flavor
+              className={classes.list}
+              key={tile.flavor.name}
+              value={tile.flavor.name}
+              selected={selectedFlavorNames.includes(tile.flavor.name)}
+              url={tile.flavor.url}
+              onClick={
+                props.onClick
+                  ? () => props.onClick(props.level, tile.flavor.name)
+                  : null
+              }
+            />
+          </GridListTile>
+        ))}
+      </GridList>
     </div>
   );
 }
