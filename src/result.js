@@ -1,12 +1,16 @@
 import PropTypes from "prop-types";
 import React from "react";
+
+import SaveIcon from "@material-ui/icons/Save";
+
 import Steppers from "./stepper.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
-import StoreInfoTable from "./tables.js";
+import History from "./components/History.js";
 import AppBar from "./appBar.js";
+import Button from "./components/Button.js";
 
-class Result extends React.Component {
+export default class Result extends React.Component {
   constructor(props) {
     const histories = localStorage.getItem("flavorBook")
       ? JSON.parse(localStorage.getItem("flavorBook"))
@@ -14,10 +18,12 @@ class Result extends React.Component {
     super(props);
     this.state = {
       storeInfo: {
+        date: null,
         store: null,
         country: null,
+        farm: null,
         region: null,
-        processing: null,
+        process: null,
         grind: null,
         brewing: null,
         days: null,
@@ -33,11 +39,26 @@ class Result extends React.Component {
     ];
   }
   save() {
-    const key = Object.values(this.state.storeInfo).join("_");
+    const key = new Date(Date.now()).toISOString();
     let histories = { ...this.state.histories };
-    histories = { ...histories, [key]: { ...this.state } };
+    const state = { ...this.state };
+    state.storeInfo.date = key;
+    histories = { ...histories, [key]: state };
     this.setState({ histories: histories });
     localStorage.setItem("flavorBook", JSON.stringify(histories));
+  }
+  delete(target) {
+    const histories = Object.keys(this.state.histories).reduce(
+      (object, key) => {
+        history;
+        if (key !== target.storeInfo.date) {
+          object[key] = this.state.histories[key];
+        }
+        return object;
+      },
+      {}
+    );
+    this.setState({ histories: histories });
   }
   handleChange(event) {
     this.setState({
@@ -47,45 +68,13 @@ class Result extends React.Component {
       },
     });
   }
-  renderWheel() {
-    const tiles = this.state.tiles;
-    const flavorNames = tiles.map((tile) => tile.flavor.name);
-    const url = tiles.map((tile) => tile.flavor.url);
-    const selectedFlavorNames = tiles
-      .filter((tile) => tile.selected)
-      .map((tile) => tile.flavor.name);
-    return (
-      <Wheel
-        flavorNames={flavorNames}
-        selectedFlavorNames={selectedFlavorNames}
-        level={this.props.page}
-        url={url}
-      />
-    );
+  handleClick(tiles) {
+    this.setState({ tiles: tiles });
   }
   restore(history) {
     const newState = { storeInfo: history.storeInfo, tiles: history.tiles };
     this.setState(newState);
   }
-
-  renderResult() {
-    return <div>{this.renderWheel()}</div>;
-  }
-  renderHistory() {
-    const buttons = [];
-    Object.keys(this.state.histories).forEach((key) => {
-      buttons.push(
-        <button
-          key={key}
-          onClick={() => this.restore(this.state.histories[key])}
-        >
-          {key}
-        </button>
-      );
-    });
-    return buttons;
-  }
-
   convert() {
     const tiles = this.state.tiles;
     const top = tiles
@@ -114,18 +103,26 @@ class Result extends React.Component {
           <AppBar />
         </div>
         <h1>あなたの感じた香り一覧</h1>
-        <div className="app-board">{this.renderResult()}</div>
+        <div className="app-board">
+          <Wheel tiles={this.state.tiles} level={this.props.page} />
+        </div>
         <h1>バリスタ語への翻訳結果</h1>
         <div>
           <p>{this.convert()}</p>
         </div>
         <div>
-          <StoreInfo handleChange={this.handleChange} />
+          <StoreInfo
+            storeInfo={this.state.storeInfo}
+            handleChange={this.handleChange}
+          />
         </div>
-
-        <button onClick={this.save}>保存</button>
-        <div>{this.renderHistory()}</div>
-        <StoreInfoTable rows={this.state.storeInfo} />
+        <Button icon={<SaveIcon />} onClick={this.save} text={"保存する"} />
+        <History
+          headers={Object.keys(this.state.storeInfo)}
+          rows={this.state.histories}
+          onClick={(tiles) => this.handleClick(tiles)}
+          onClickDelete={(history) => this.delete(history)}
+        />
         <div className="stepppers">
           <Steppers
             page={this.props.page}
@@ -145,5 +142,3 @@ Result.propTypes = {
   onClickPrev: PropTypes.func,
   onClickNext: PropTypes.func,
 };
-
-export default Result;

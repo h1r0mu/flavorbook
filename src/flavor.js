@@ -29,6 +29,7 @@ function Flavor(props) {
       onClick={props.onClick}
       value={props.value}
       url={props.url}
+      disabled={!props.onClick ? true : false}
     />
   );
 }
