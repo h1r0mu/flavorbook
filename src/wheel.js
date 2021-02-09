@@ -1,24 +1,26 @@
-import PropTypes from "prop-types";
 import React from "react";
-
 import Flavor from "./flavor.js";
+import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
-Wheel.propTypes = {
-  tiles: PropTypes.array,
-  onClick: PropTypes.func,
-  level: PropTypes.number,
-  url: PropTypes.array,
-};
+const useStyles = makeStyles(() => ({
+  list: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+}));
 
 export default function Wheel(props) {
   const selectedFlavorNames = props.tiles
     .filter((tile) => tile.selected)
     .map((tile) => tile.name);
 
+  const classes = useStyles();
+
   return (
     <div className="flavors">
       {props.tiles.map((tile) => (
-        <div key={tile.flavor.name} className="flavor-row">
+        <div key={tile.flavor.name} className={classes.list}>
           <Flavor
             key={tile.flavor.name}
             value={tile.flavor.name}
@@ -35,3 +37,10 @@ export default function Wheel(props) {
     </div>
   );
 }
+
+Wheel.propTypes = {
+  tiles: PropTypes.array,
+  onClick: PropTypes.func,
+  level: PropTypes.number,
+  url: PropTypes.array,
+};
