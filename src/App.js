@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { BrowserRouter, Redirect, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import Selector from "./selector.js";
 import Result from "./result.js";
+import Login from "./login.js";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -67,7 +68,7 @@ export default class App extends React.Component {
         <BrowserRouter>
           <div>
             <Route exact path="/">
-              {<Redirect to="/page1" />}
+              <Login />
             </Route>
             <Route
               path="/page1"

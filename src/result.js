@@ -1,16 +1,64 @@
 import PropTypes from "prop-types";
 import React from "react";
-
 import SaveIcon from "@material-ui/icons/Save";
-
 import Steppers from "./stepper.js";
 import Wheel from "./wheel.js";
 import StoreInfo from "./forms.js";
 import History from "./components/History.js";
 import AppBar from "./appBar.js";
 import Button from "./components/Button.js";
+import { ThemeProvider } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import "typeface-roboto";
 
-export default class Result extends React.Component {
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#795548",
+    },
+    secondary: {
+      main: "#f44336",
+    },
+  },
+  typography: {
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+    h1: {
+      marginTop: 40,
+      fontSize: 50,
+    },
+    h2: {
+      marginTop: 20,
+      fontSize: 50,
+    },
+  },
+});
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  storeButton: {
+    marginBottom: 30,
+  },
+  history: {
+    marginTop: 30,
+  },
+};
+
+class Result extends React.Component {
   constructor(props) {
     const histories = localStorage.getItem("flavorBook")
       ? JSON.parse(localStorage.getItem("flavorBook"))
@@ -98,42 +146,52 @@ export default class Result extends React.Component {
 
   render() {
     return (
-      <div className="app">
-        <div className="tabs">
-          <AppBar />
+      <ThemeProvider theme={theme}>
+        <div className="app">
+          <div className="tabs">
+            <AppBar />
+          </div>
+          <Typography variant="h1" gutterBottom>
+            あなたの感じた香り一覧
+          </Typography>
+          <div className="app-board">
+            <Wheel tiles={this.state.tiles} level={this.props.page} />
+          </div>
+          <Typography variant="h2" gutterBottom>
+            バリスタ語への翻訳結果
+          </Typography>
+          <div>
+            <p>{this.convert()}</p>
+          </div>
+          <div className={this.props.classes.storeButton}>
+            <StoreInfo
+              storeInfo={this.state.storeInfo}
+              handleChange={this.handleChange}
+            />
+          </div>
+          <Button icon={<SaveIcon />} onClick={this.save} text={"保存する"} />
+          <div className={this.props.classes.history}>
+            <History
+              headers={Object.keys(this.state.storeInfo)}
+              rows={this.state.histories}
+              onClick={(tiles) => this.handleClick(tiles)}
+              onClickDelete={(history) => this.delete(history)}
+              className={this.props.classes.history}
+            />
+          </div>
+          <div className="stepppers">
+            <Steppers
+              page={this.props.page}
+              prev={this.props.prev}
+              next={this.props.next}
+            />
+          </div>
         </div>
-        <h1>あなたの感じた香り一覧</h1>
-        <div className="app-board">
-          <Wheel tiles={this.state.tiles} level={this.props.page} />
-        </div>
-        <h1>バリスタ語への翻訳結果</h1>
-        <div>
-          <p>{this.convert()}</p>
-        </div>
-        <div>
-          <StoreInfo
-            storeInfo={this.state.storeInfo}
-            handleChange={this.handleChange}
-          />
-        </div>
-        <Button icon={<SaveIcon />} onClick={this.save} text={"保存する"} />
-        <History
-          headers={Object.keys(this.state.storeInfo)}
-          rows={this.state.histories}
-          onClick={(tiles) => this.handleClick(tiles)}
-          onClickDelete={(history) => this.delete(history)}
-        />
-        <div className="stepppers">
-          <Steppers
-            page={this.props.page}
-            prev={this.props.prev}
-            next={this.props.next}
-          />
-        </div>
-      </div>
+      </ThemeProvider>
     );
   }
 }
+
 Result.propTypes = {
   tiles: PropTypes.array,
   page: PropTypes.number,
@@ -141,4 +199,7 @@ Result.propTypes = {
   next: PropTypes.string,
   onClickPrev: PropTypes.func,
   onClickNext: PropTypes.func,
+  classes: PropTypes.object.isRequired,
 };
+
+export default withStyles(styles)(Result);
