@@ -26,22 +26,22 @@ export default function History(props) {
   return (
     <div className={classes.demo}>
       <List>
-        {Object.entries(props.rows).map(([date, row]) => (
-          <ListItem key={date} onClick={() => props.onClick(row.tiles)}>
+        {Object.entries(props.histories).map(([date, history]) => (
+          <ListItem key={date} onClick={() => props.onClick(history)}>
             <ListItemAvatar>
               <Avatar>
                 <FolderIcon />
               </Avatar>
             </ListItemAvatar>
             <ListItemText
-              primary={`${parseDate(date)} ${row.storeInfo.store}`}
-              secondary={row.storeInfo.country}
+              primary={`${parseDate(date)} ${history.storeInfo.store}`}
+              secondary={history.storeInfo.country}
             />
             <ListItemSecondaryAction>
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => props.onClickDelete(row)}
+                onClick={() => props.onClickDelete(history)}
               >
                 <DeleteIcon />
               </IconButton>
@@ -54,7 +54,7 @@ export default function History(props) {
 }
 History.propTypes = {
   headers: PropTypes.array,
-  rows: PropTypes.object,
+  histories: PropTypes.object,
   onClick: PropTypes.func,
   onClickDelete: PropTypes.func,
 };
