@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
-import FileSystemNavigator from "./FileSystemNavigator.js";
+import TreeSelector from "./tree_selecter.js";
 
 const theme = createMuiTheme({
   palette: {
@@ -34,13 +34,14 @@ const useStyles = makeStyles(() => ({
     filter: "grayscale(80%)",
   },
   h1: {
-    marginTop: 100,
+    marginTop: 50,
     marginLeft: 20,
     fontSize: 100,
   },
   start: {
-    marginTop: 300,
-    marginLeft: 680,
+    position: "relative",
+    marginTop: 200,
+    marginLeft: 900,
   },
 }));
 
@@ -58,9 +59,8 @@ export default function Login() {
         ></video>
         <h1 className={classes.h1}> Coffee Flavors</h1>
         <div className={classes.start}>
-          <FileSystemNavigator />
+          <TreeSelector />
         </div>
-        <FileSystemNavigator />
       </ThemeProvider>
     </div>
   );
