@@ -24,7 +24,33 @@ const processes = [
   ["WASHED", "WASHED"],
   ["NATURAL", "NATURAL"],
   ["HONEY/PULPED NATURAL", "HONEY/PULPED NATURAL"],
-].map((attr) => createMenuItem(attr));
+].map((attr) => createMenuItem(...attr));
+
+const countries = [
+  ["エチオピア", "エチオピア"],
+  ["ケニア", "ケニア"],
+  ["ブルンジ", "ブルンジ"],
+  ["ルワンダ", "ルワンダ"],
+  ["イエメン", "イエメン"],
+  ["インドネシア", "インドネシア"],
+  ["インド", "インド"],
+  ["東ティモール", "東ティモール"],
+  ["ハワイ(アメリカ)", "ハワイ(アメリカ)"],
+  ["メキシコ", "メキシコ"],
+  ["グアテマラ", "グアテマラ"],
+  ["コスタリカ", "コスタリカ"],
+  ["パナマ", "パナマ"],
+  ["ジャマイカ", "ジャマイカ"],
+  ["エルサルバドル", "エルサルバドル"],
+  ["キューバ", "キューバ"],
+  ["ドミニカ", "ドミニカ"],
+  ["コロンビア", "コロンビア"],
+  ["タンザニア", "タンザニア"],
+  ["ホンジュラス", "ホンジュラス"],
+  ["エルサルバドル", "エルサルバドル"],
+  ["ブラジル", "ブラジル"],
+  ["ペルー", "ペルー"],
+].map((attr) => createMenuItem(...attr));
 
 export default function StoreInfo(props) {
   const classes = useStyles();
@@ -38,11 +64,21 @@ export default function StoreInfo(props) {
         onChange={props.handleChange}
       />
       <TextField
+        select
         id="country"
         name="country"
         label="産地 (国名)"
         onChange={props.handleChange}
-      />
+      >
+        <MenuItem value={null}>
+          <em>なし</em>
+        </MenuItem>
+        {countries.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
       <TextField
         id="region"
         name="region"
@@ -63,7 +99,7 @@ export default function StoreInfo(props) {
         value={props.storeInfo.process ? props.storeInfo.process : ""}
         onChange={props.handleChange}
       >
-        <MenuItem value="">
+        <MenuItem value={null}>
           <em>わからない</em>
         </MenuItem>
         {processes.map((option) => (
