@@ -10,6 +10,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexWrap: "wrap",
   },
+  flavors: {},
 }));
 
 export default function Wheel(props) {
@@ -20,7 +21,7 @@ export default function Wheel(props) {
   const classes = useStyles();
 
   return (
-    <div className="flavors">
+    <div className={classes.flavors}>
       <GridList cellHeight="auto" cols="auto">
         {props.tiles.map((tile) => (
           <GridListTile key={tile.flavor.name} cols="1">

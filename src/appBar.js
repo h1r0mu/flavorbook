@@ -12,11 +12,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import EmojiFoodBeverageIcon from "@material-ui/icons/EmojiFoodBeverage";
+import LaptopMacIcon from "@material-ui/icons/LaptopMac";
+import ShareIcon from "@material-ui/icons/Share";
+import ChatIcon from "@material-ui/icons/Chat";
+import StoreIcon from "@material-ui/icons/Store";
 
 const theme = createMuiTheme({
   palette: {
@@ -32,6 +34,7 @@ const theme = createMuiTheme({
 const styles = {
   root: {
     flexGrow: 1,
+    backgroundColor: "transparent",
   },
   menuButton: {
     marginRight: 20,
@@ -94,7 +97,7 @@ class ButtonAppBar extends React.Component {
                 Coffee Flavors
                 <EmojiFoodBeverageIcon className={this.props.classes.coffee} />
               </Typography>
-              <Button color="inherit">Login</Button>
+              <Button color="inherit">Login(coming soon)</Button>
             </Toolbar>
           </AppBar>
           <Drawer
@@ -111,16 +114,27 @@ class ButtonAppBar extends React.Component {
             </div>
             <div className={this.props.classes.drawerInner}>
               <List>
-                {["Inbox", "Starred", "Send email", "Drafts"].map(
-                  (text, index) => (
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  )
-                )}
+                {[
+                  "豆の香りを調べる",
+                  "メンバーの香りをみてみる(近日公開)",
+                  "メンバー同士で話しあう(近日公開)",
+                  "豆のお店を探す(近日公開)",
+                ].map((text, index) => (
+                  <ListItem button key={text}>
+                    <ListItemIcon>
+                      {index % 4 === 0 ? (
+                        <LaptopMacIcon />
+                      ) : index % 4 === 1 ? (
+                        <ShareIcon />
+                      ) : index % 4 === 2 ? (
+                        <ChatIcon />
+                      ) : (
+                        <StoreIcon />
+                      )}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                ))}
               </List>
             </div>
           </Drawer>
