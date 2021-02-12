@@ -78,6 +78,7 @@ class Result extends React.Component {
       },
       tiles: props.tiles.slice(),
       histories: histories,
+      saved: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.save = this.save.bind(this);
@@ -92,7 +93,7 @@ class Result extends React.Component {
     const state = { ...this.state };
     state.storeInfo.date = key;
     histories = { ...histories, [key]: state };
-    this.setState({ histories: histories });
+    this.setState({ histories: histories, saved: true });
     localStorage.setItem("flavorBook", JSON.stringify(histories));
   }
   delete(target) {
@@ -116,12 +117,11 @@ class Result extends React.Component {
       },
     });
   }
-  handleClick(tiles) {
-    this.setState({ tiles: tiles });
-  }
   restore(history) {
-    const newState = { storeInfo: history.storeInfo, tiles: history.tiles };
-    this.setState(newState);
+    if (this.state.saved === false) {
+      return;
+    }
+    this.setState({ storeInfo: history.storeInfo, tiles: history.tiles });
   }
   convert() {
     const tiles = this.state.tiles;
@@ -167,16 +167,16 @@ class Result extends React.Component {
             <StoreInfo
               storeInfo={this.state.storeInfo}
               handleChange={this.handleChange}
+              readOnly={this.state.saved}
             />
           </div>
           <Button icon={<SaveIcon />} onClick={this.save} text={"保存する"} />
           <div className={this.props.classes.history}>
             <History
               headers={Object.keys(this.state.storeInfo)}
-              rows={this.state.histories}
-              onClick={(tiles) => this.handleClick(tiles)}
+              histories={this.state.histories}
+              onClick={(history) => this.restore(history)}
               onClickDelete={(history) => this.delete(history)}
-              className={this.props.classes.history}
             />
           </div>
           <div className="stepppers">
