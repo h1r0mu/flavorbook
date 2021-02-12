@@ -40,7 +40,7 @@ export default function FileSystemNavigator() {
             nodeId="3"
             label={<Typography className={classes.start}>Login</Typography>}
           />
-          <Link to={"/page1"} style={{ color: "black" }}>
+          <Link to={"/selection"} style={{ color: "black" }}>
             <TreeItem
               nodeId="4"
               label={

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import SaveIcon from "@material-ui/icons/Save";
 import Steppers from "./stepper.js";
-import Wheel from "./wheel.js";
+import Wheel from "./components/Wheel.js";
 import StoreInfo from "./forms.js";
 import History from "./components/History.js";
 import AppBar from "./appBar.js";
@@ -155,7 +155,7 @@ class Result extends React.Component {
             あなたの感じた香り一覧
           </Typography>
           <div className="app-board">
-            <Wheel tiles={this.state.tiles} level={this.props.page} />
+            <Wheel tiles={this.state.tiles} level={this.props.level} />
           </div>
           <Typography variant="h2" gutterBottom>
             バリスタ語への翻訳結果
@@ -181,7 +181,7 @@ class Result extends React.Component {
           </div>
           <div className="stepppers">
             <Steppers
-              page={this.props.page}
+              level={this.props.level}
               prev={this.props.prev}
               next={this.props.next}
             />
@@ -194,7 +194,7 @@ class Result extends React.Component {
 
 Result.propTypes = {
   tiles: PropTypes.array,
-  page: PropTypes.number,
+  level: PropTypes.number,
   prev: PropTypes.string,
   next: PropTypes.string,
   onClickPrev: PropTypes.func,

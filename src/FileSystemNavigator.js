@@ -26,7 +26,7 @@ export default function FileSystemNavigator() {
       <TreeItem nodeId="1" label="Start">
         <TreeItem nodeId="2" label="Register (Coming Soon)" />
         <TreeItem nodeId="3" label="Login (Coming Soon)" />
-        <Link to={"/page1"} color="black">
+        <Link to={"/selection"} color="black">
           <TreeItem nodeId="4" label="Select Coffee Flavors" />
         </Link>
       </TreeItem>

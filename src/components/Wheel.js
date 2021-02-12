@@ -1,9 +1,10 @@
-import React from "react";
-import Flavor from "./flavor.js";
-import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { GridListTile } from "@material-ui/core";
 import { GridList } from "@material-ui/core";
+
+import Tile from "./Tile.js";
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -14,6 +15,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Wheel(props) {
+
   const selectedFlavorNames = props.tiles
     .filter((tile) => tile.selected)
     .map((tile) => tile.name);
@@ -25,7 +27,7 @@ export default function Wheel(props) {
       <GridList cellHeight="auto" cols="auto">
         {props.tiles.map((tile) => (
           <GridListTile key={tile.flavor.name} cols="1">
-            <Flavor
+            <Tile
               className={classes.list}
               key={tile.flavor.name}
               value={tile.flavor.name}

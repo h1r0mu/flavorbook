@@ -1,31 +1,41 @@
 import PropTypes from "prop-types";
-import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
-import Selector from "./selector.js";
+import React, { useState } from "react";
+import { Link, BrowserRouter, Route } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+
+import AppBar from "./appBar.js";
 import Result from "./result.js";
 import Login from "./login.js";
+import Steppers from "./stepper.js";
+import Button from "./components/Button.js";
+import Wheel from "./components/Wheel.js";
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tiles: flavors.map((flavor) => {
-        return {
-          flavor: flavor,
-          selected: flavor.level == 0 ? true : false,
-        };
-      }),
-    };
-  }
+const useStyles = makeStyles(() => ({
+  app: {
+    backgroundColor: "transparent",
+  },
+}));
 
-  getTiles(page) {
-    return this.state.tiles.filter((tile) => tile.flavor.level == page);
-  }
+export default function App() {
+  const [tiles, setTiles] = useState(
+    flavors.map((flavor) => ({
+      flavor: flavor,
+      selected: flavor.level == 0 ? true : false,
+    }))
+  );
+  const [level, setLevel] = useState(0);
+  const classes = useStyles();
 
-  getVisibleTiles(page) {
-    let tiles = this.getTiles(page);
-    if (page > 0) {
-      const selectedParentFlavorNames = this.getTiles(page - 1)
+  const getTiles = (level) => {
+    console.log(tiles)
+    return tiles.filter((tile) => tile.flavor.level == level);
+  };
+
+  const getVisibleTiles = (level) => {
+    let tiles = getTiles(level);
+    if (level > 0) {
+      const selectedParentFlavorNames = getTiles(level - 1)
         .filter((tile) => tile.selected)
         .map((tile) => tile.flavor.name);
       tiles = tiles.filter((tile) =>
@@ -33,108 +43,84 @@ export default class App extends React.Component {
       );
     }
     return tiles;
-  }
+  };
 
-  selectTile(page, flavorName) {
-    const tiles = this.getVisibleTiles(page).slice();
-    const tile = tiles.find((tile) => tile.flavor.name == flavorName);
+  const selectTile = (level, flavorName) => {
+    const visibleTiles = getVisibleTiles(level).slice();
+    const tile = visibleTiles.find((tile) => tile.flavor.name == flavorName);
     tile.selected = !tile.selected;
-    this.setState(this.state.tiles.concat({ tiles: tiles }));
-  }
+    console.log(tiles, tile, visibleTiles)
+    setTiles(tiles.concat(visibleTiles));
+  };
 
-  selectTiles(page) {
-    const tiles = this.getVisibleTiles(page)
+  const selectTiles = (level) => {
+    const tiles = getVisibleTiles(level)
       .slice()
       .map((tile) => {
         tile.selected = true;
         return tile;
       });
-    this.setState(this.state.tiles.concat({ tiles: tiles }));
-  }
+    setTiles(tiles.concat({ tiles: tiles }));
+  };
 
-  unselectTiles(page) {
-    const tiles = this.getVisibleTiles(page)
+  const unselectTiles = (level) => {
+    const tiles = getVisibleTiles(level)
       .slice()
       .map((tile) => {
         tile.selected = false;
         return tile;
       });
-    this.setState(this.state.tiles.concat({ tiles: tiles }));
-  }
+    setTiles(tiles.concat({ tiles: tiles }));
+  };
 
-  render() {
-    return (
-      <div>
-        <BrowserRouter>
-          <div>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route
-              path="/page1"
-              render={() => {
-                return (
-                  <Selector
-                    tiles={this.getVisibleTiles(0)}
-                    page={0}
-                    next="/page2"
-                    onClickNext={() => this.selectTiles(1)}
-                    onClickTile={(page, flavorName) =>
-                      this.selectTile(page, flavorName)
-                    }
-                  />
-                );
-              }}
+  const handlePrev = () => {
+    setLevel(level - 1);
+    if (level > 0) {
+      unselectTiles(level);
+    }
+  };
+
+  const handleNext = () => {
+    setLevel(level + 1);
+    if (level < 2) {
+      selectTiles(level);
+    }
+  };
+
+  return (
+    <div className={classes.root}>
+      <BrowserRouter>
+        <div>
+          <AppBar />
+          <Typography variant="h1" gutterBottom>
+            感じない香りを選択してください
+          </Typography>
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route path="/selection">
+            <Wheel
+              tiles={getVisibleTiles(level)}
+              level={level}
+              onClick={selectTile}
             />
-            <Route
-              path="/page2"
-              render={() => {
-                return (
-                  <Selector
-                    tiles={this.getVisibleTiles(1)}
-                    page={1}
-                    next="/page3"
-                    prev="/page1"
-                    onClickPrev={() => this.unselectTiles(1)}
-                    onClickNext={() => this.selectTiles(2)}
-                    onClickTile={(page, flavorName) =>
-                      this.selectTile(page, flavorName)
-                    }
-                  />
-                );
-              }}
-            />
-            <Route
-              path="/page3"
-              render={() => (
-                <Selector
-                  tiles={this.getVisibleTiles(2)}
-                  page={2}
-                  next="/page4"
-                  prev="/page2"
-                  onClickPrev={() => this.unselectTiles(2)}
-                  onClickTile={(page, flavorName) =>
-                    this.selectTile(page, flavorName)
-                  }
-                />
-              )}
-            />
-            <Route
-              path="/page4"
-              render={() => (
-                <Result
-                  tiles={this.state.tiles.filter((tile) => tile.selected)}
-                  page={3}
-                  next="/"
-                  prev="/page3"
-                />
-              )}
-            />
-          </div>
-        </BrowserRouter>
-      </div>
-    );
-  }
+          </Route>
+          <Route path="/result">
+            <Result tiles={tiles.filter((tile) => tile.selected)} />
+          </Route>
+          <Steppers level={level}>
+            {level > 0 && <Button onClick={handlePrev} text={"Prev"} />}
+            {level < 2 && <Button onClick={handleNext} text={"Next"} />}
+            {level == 2 && (
+              <Link to="/result">
+                <Button text={"Finish"} />
+              </Link>
+            )}
+          </Steppers>
+        </div>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 App.propTypes = {
