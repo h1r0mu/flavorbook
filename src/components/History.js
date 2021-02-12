@@ -27,7 +27,7 @@ export default function History(props) {
     <div className={classes.demo}>
       <List>
         {Object.entries(props.histories).map(([date, history]) => (
-          <ListItem key={date} onClick={() => props.onClick(history)}>
+          <ListItem button key={date} onClick={() => props.onClick(history)}>
             <ListItemAvatar>
               <Avatar>
                 <FolderIcon />
