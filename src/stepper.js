@@ -23,12 +23,13 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: 80,
+    marginTop: 8,
     width: "100%",
   },
 
   button: {
     marginTop: 50,
+    marginLeft: 100,
     marginRight: 100,
     // marginRight: theme.spacing(1),
   },
@@ -41,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    "Select Coffee Flavers ( Level1 )",
-    "Select Coffee Flavers ( Level2 )",
-    "Select Coffee Flavers ( Level3 )",
-    "Register Coffee Flavers",
+    "Select Coffee Flavors ( Level1 )",
+    "Select Coffee Flavors ( Level2 )",
+    "Select Coffee Flavors ( Level3 )",
+    "Register Coffee Flavors",
   ];
 }
 
@@ -59,7 +60,7 @@ const PrevButton = (props) => {
         color="primary"
         variant="contained"
       >
-        {"Prev"}
+        {"Back"}
       </Button>
     </Link>
   );

@@ -101,10 +101,12 @@ class ButtonAppBar extends React.Component {
             </Toolbar>
           </AppBar>
           <Drawer
-            variant="persistent"
+            variant="temporary"
             classes={{
               paper: this.props.classes.drawerPaper,
             }}
+            onEscapeKeyDown={this.handleDrawerClose}
+            onBackdropClick={this.handleDrawerClose}
             open={this.state.drawerIsOpen}
           >
             <div className={this.props.classes.drawerHeader}>

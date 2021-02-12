@@ -14,7 +14,8 @@ const theme = createMuiTheme({
   typography: {
     h1: {
       marginTop: 40,
-      fontSize: 50,
+      marginLeft: 40,
+      fontSize: 35,
     },
   },
 });
