@@ -1,19 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import TreeSelector from "./TreeSelector.js";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#795548",
-    },
-    secondary: {
-      main: "#f44336",
-    },
-  },
-});
 const useStyles = makeStyles(() => ({
   content: {
     position: "relative",
@@ -49,7 +38,6 @@ export default function Login() {
   const classes = useStyles();
   return (
     <div>
-      <ThemeProvider theme={theme}>
         <video
           src="/static/videos/coffee.mp4"
           loop
@@ -61,7 +49,6 @@ export default function Login() {
         <div className={classes.start}>
           <TreeSelector />
         </div>
-      </ThemeProvider>
     </div>
   );
 }

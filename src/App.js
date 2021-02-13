@@ -1,28 +1,61 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Link, BrowserRouter, Route } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { ThemeProvider } from "@material-ui/styles";
 
 import AppBar from "./components/AppBar.js";
-import Steppers from "./components/Stepper.js";
+import Stepper from "./components/Stepper.js";
 import Button from "./components/Button.js";
 import Login from "./components/Login.js";
 import Result from "./components/Result.js";
 import Wheel from "./components/Wheel.js";
 import { flavorData } from "./data/flavors";
+import { GlobalStyles } from "./GlobalStyles";
 
-const useStyles = makeStyles(() => ({
-  app: {
-    backgroundColor: "transparent",
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      "Segoe UI",
+      "Roboto",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif",
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol",
+    ].join(","),
+    h1: {
+      marginTop: 40,
+      marginLeft: 40,
+      fontSize: 35,
+    },
+    h2: {
+      marginTop: 20,
+      fontSize: 50,
+    },
   },
-}));
+  palette: {
+    primary: {
+      main: "#795548",
+    },
+    secondary: {
+      main: "#f44336",
+    },
+    background: {
+      paper: "#ffe4c4",
+      default: "#ffe4c4",
+    },
+  },
+});
 
 export default function App() {
   const [tiles, setTiles] = useState(createTiles(flavorData));
   const [level, setLevel] = useState(0);
   const [finish, setFinish] = useState(false);
-  const classes = useStyles();
 
   const handleClick = (tile) => {
     const newTiles = tiles.slice();
@@ -78,51 +111,54 @@ export default function App() {
   const setUnselected = (tile) => (tile.selected = false);
 
   return (
-    <div className={classes.root}>
-      <BrowserRouter>
-        <div>
-          <AppBar />
-          <Typography variant="h1" gutterBottom>
-            {finish
-              ? "あなたの感じた香り一覧"
-              : "感じない香りを選択してください"}
-          </Typography>
-          <Route exact path="/">
-            <Login />
-          </Route>
-          <Route path="/selection">
-            <Wheel
-              tiles={tiles.filter(isVisible)}
-              level={level}
-              onClick={handleClick}
-            />
-          </Route>
-          <Route path="/result">
-            <Result tiles={tiles.filter(isSelected)} />
-          </Route>
-          <Steppers level={level}>
-            <div>
-              {level > 0 && !finish && (
-                <Button onClick={handlePrev} text={"戻る"} />
-              )}
-              {level < 2 && !finish && (
-                <Button onClick={handleNext} text={"次へ"} />
-              )}
-              {level == 2 && !finish && (
-                <Link to="/result">
-                  <Button onClick={handleFinish} text={"結果を見る"} />
-                </Link>
-              )}
-              {level == 2 && finish && (
-                <Link to="/selection">
-                  <Button onClick={handleBack} text={"選択に戻る"} />
-                </Link>
-              )}
-            </div>
-          </Steppers>
-        </div>
-      </BrowserRouter>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <BrowserRouter>
+          <GlobalStyles />
+          <div>
+            <AppBar />
+            <Typography variant="h1" gutterBottom>
+              {finish
+                ? "あなたの感じた香り一覧"
+                : "感じない香りを選択してください"}
+            </Typography>
+            <Route exact path="/">
+              <Login />
+            </Route>
+            <Route path="/selection">
+              <Wheel
+                tiles={tiles.filter(isVisible)}
+                level={level}
+                onClick={handleClick}
+              />
+            </Route>
+            <Route path="/result">
+              <Result tiles={tiles.filter(isSelected)} />
+            </Route>
+            <Stepper level={level}>
+              <div>
+                {level > 0 && !finish && (
+                  <Button onClick={handlePrev} text={"戻る"} />
+                )}
+                {level < 2 && !finish && (
+                  <Button onClick={handleNext} text={"次へ"} />
+                )}
+                {level == 2 && !finish && (
+                  <Link to="/result">
+                    <Button onClick={handleFinish} text={"結果を見る"} />
+                  </Link>
+                )}
+                {level == 2 && finish && (
+                  <Link to="/selection">
+                    <Button onClick={handleBack} text={"選択に戻る"} />
+                  </Link>
+                )}
+              </div>
+            </Stepper>
+          </div>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -13,23 +13,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
 import EmojiFoodBeverageIcon from "@material-ui/icons/EmojiFoodBeverage";
 import LaptopMacIcon from "@material-ui/icons/LaptopMac";
 import ShareIcon from "@material-ui/icons/Share";
 import ChatIcon from "@material-ui/icons/Chat";
 import StoreIcon from "@material-ui/icons/Store";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#795548",
-    },
-    secondary: {
-      main: "#f44336",
-    },
-  },
-});
 
 const styles = {
   root: {
@@ -80,7 +69,6 @@ class ButtonAppBar extends React.Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
         <div className={this.props.classes.root}>
           <AppBar position="static">
             <Toolbar>
@@ -141,7 +129,6 @@ class ButtonAppBar extends React.Component {
             </div>
           </Drawer>
         </div>
-      </ThemeProvider>
     );
   }
 }

@@ -5,18 +5,6 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import PropTypes from "prop-types";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#795548",
-    },
-    secondary: {
-      main: "#f44336",
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 50,
     marginLeft: 100,
     marginRight: 100,
-    // marginRight: theme.spacing(1),
   },
 
   instructions: {
@@ -47,7 +34,6 @@ const HorizontalLinearStepper = (props) => {
     "Register Coffee Flavors",
   ];
   return (
-    <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <Stepper activeStep={props.level}>
           {steps.map((label) => (
@@ -58,7 +44,6 @@ const HorizontalLinearStepper = (props) => {
         </Stepper>
         <div>{props.children}</div>
       </div>
-    </ThemeProvider>
   );
 };
 

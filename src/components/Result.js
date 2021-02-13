@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import SaveIcon from "@material-ui/icons/Save";
-import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -13,42 +12,13 @@ import StoreInfo from "./Form.js";
 import History from "./History.js";
 import Wheel from "./Wheel.js";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#795548",
-    },
-    secondary: {
-      main: "#f44336",
-    },
-  },
-  typography: {
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
+const styles = {
+  root: {
+    flexGrow: 1,
     h1: {
       marginTop: 40,
       fontSize: 50,
     },
-    h2: {
-      marginTop: 20,
-      fontSize: 50,
-    },
-  },
-});
-
-const styles = {
-  root: {
-    flexGrow: 1,
   },
   storeButton: {
     marginBottom: 30,
@@ -146,7 +116,6 @@ class Result extends React.Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
         <div className="app">
           <div className="app-board">
             <Wheel tiles={this.state.tiles} level={this.props.level} />
@@ -174,7 +143,6 @@ class Result extends React.Component {
             />
           </div>
         </div>
-      </ThemeProvider>
     );
   }
 }
