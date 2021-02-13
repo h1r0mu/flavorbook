@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import "typeface-roboto";
 
 import Steppers from "./Stepper.js";
-import AppBar from "../appBar.js";
 import Button from "./Button.js";
 import StoreInfo from "./Form.js";
 import History from "./History.js";

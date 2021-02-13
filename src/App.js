@@ -4,7 +4,7 @@ import { Link, BrowserRouter, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-import AppBar from "./appBar.js";
+import AppBar from "./components/AppBar.js";
 import Steppers from "./components/Stepper.js";
 import Button from "./components/Button.js";
 import Login from "./components/Login.js";
