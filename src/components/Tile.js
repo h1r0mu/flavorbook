@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import ButtonBases from "../complex_button.js";
+import ButtonBases from "./ComplexButton.js";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
@@ -31,7 +31,7 @@ function Tile(props) {
       style={style}
       onClick={props.onClick}
       value={props.value}
-      url={props.url}
+      url={props.imageUrl}
       disabled={props.onClick === undefined}
     />
   );

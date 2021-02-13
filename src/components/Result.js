@@ -1,17 +1,18 @@
 import PropTypes from "prop-types";
 import React from "react";
 import SaveIcon from "@material-ui/icons/Save";
-import Steppers from "./stepper.js";
-import Wheel from "./components/Wheel.js";
-import StoreInfo from "./forms.js";
-import History from "./components/History.js";
-import AppBar from "./appBar.js";
-import Button from "./components/Button.js";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import "typeface-roboto";
+
+import Steppers from "./Stepper.js";
+import AppBar from "../appBar.js";
+import Button from "./Button.js";
+import StoreInfo from "./Form.js";
+import History from "./History.js";
+import Wheel from "./Wheel.js";
 
 const theme = createMuiTheme({
   palette: {
@@ -148,12 +149,6 @@ class Result extends React.Component {
     return (
       <ThemeProvider theme={theme}>
         <div className="app">
-          <div className="tabs">
-            <AppBar />
-          </div>
-          <Typography variant="h1" gutterBottom>
-            あなたの感じた香り一覧
-          </Typography>
           <div className="app-board">
             <Wheel tiles={this.state.tiles} level={this.props.level} />
           </div>
@@ -177,13 +172,6 @@ class Result extends React.Component {
               histories={this.state.histories}
               onClick={(history) => this.restore(history)}
               onClickDelete={(history) => this.delete(history)}
-            />
-          </div>
-          <div className="stepppers">
-            <Steppers
-              level={this.props.level}
-              prev={this.props.prev}
-              next={this.props.next}
             />
           </div>
         </div>

@@ -26,16 +26,16 @@ export default function Wheel(props) {
     <div className={classes.flavors}>
       <GridList cellHeight="auto" cols="auto">
         {props.tiles.map((tile) => (
-          <GridListTile key={tile.flavor.name} cols="1">
+          <GridListTile key={tile.flavor.key} cols="1">
             <Tile
               className={classes.list}
-              key={tile.flavor.name}
+              key={tile.flavor.key}
               value={tile.flavor.name}
-              selected={selectedFlavorNames.includes(tile.flavor.name)}
-              url={tile.flavor.url}
+              selected={tile.flavor.selected}
+              imageUrl={tile.flavor.imageUrl}
               onClick={
                 props.onClick
-                  ? () => props.onClick(props.level, tile.flavor.name)
+                  ? () => props.onClick(tile)
                   : null
               }
             />
@@ -50,5 +50,5 @@ Wheel.propTypes = {
   tiles: PropTypes.array,
   onClick: PropTypes.func,
   level: PropTypes.number,
-  url: PropTypes.array,
+  imageUrl: PropTypes.string,
 };

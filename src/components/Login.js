@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
-import TreeSelector from "./tree_selecter.js";
+import TreeSelector from "../tree_selecter.js";
 
 const theme = createMuiTheme({
   palette: {
