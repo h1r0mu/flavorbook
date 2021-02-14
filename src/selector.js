@@ -56,6 +56,7 @@ export default function Selector(props) {
 }
 
 Selector.propTypes = {
+  cols: PropTypes.number,
   tiles: PropTypes.array,
   page: PropTypes.number,
   prev: PropTypes.string,
