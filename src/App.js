@@ -3,7 +3,11 @@ import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import Selector from "./selector.js";
 import Result from "./result.js";
+import Start from "./start.js";
 import Login from "./login.js";
+import Signup from "./sign-up.js";
+import ForgotPassword from "./forgot_password.js";
+import { AuthProvider } from "./contexts/auth-context.js";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -66,71 +70,82 @@ export default class App extends React.Component {
     return (
       <div>
         <BrowserRouter>
-          <div>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route
-              path="/page1"
-              render={() => {
-                return (
+          <AuthProvider>
+            <div>
+              <Route exact path="/">
+                <Start />
+              </Route>
+              <Route path="/sign-up">
+                <Signup />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/forgot-password">
+                <ForgotPassword />
+              </Route>
+              <Route
+                path="/page1"
+                render={() => {
+                  return (
+                    <Selector
+                      tiles={this.getVisibleTiles(0)}
+                      page={0}
+                      next="/page2"
+                      onClickNext={() => this.selectTiles(1)}
+                      onClickTile={(page, flavorName) =>
+                        this.selectTile(page, flavorName)
+                      }
+                    />
+                  );
+                }}
+              />
+              <Route
+                path="/page2"
+                render={() => {
+                  return (
+                    <Selector
+                      tiles={this.getVisibleTiles(1)}
+                      page={1}
+                      next="/page3"
+                      prev="/page1"
+                      onClickPrev={() => this.unselectTiles(1)}
+                      onClickNext={() => this.selectTiles(2)}
+                      onClickTile={(page, flavorName) =>
+                        this.selectTile(page, flavorName)
+                      }
+                    />
+                  );
+                }}
+              />
+              <Route
+                path="/page3"
+                render={() => (
                   <Selector
-                    tiles={this.getVisibleTiles(0)}
-                    page={0}
-                    next="/page2"
-                    onClickNext={() => this.selectTiles(1)}
+                    tiles={this.getVisibleTiles(2)}
+                    page={2}
+                    next="/page4"
+                    prev="/page2"
+                    onClickPrev={() => this.unselectTiles(2)}
                     onClickTile={(page, flavorName) =>
                       this.selectTile(page, flavorName)
                     }
                   />
-                );
-              }}
-            />
-            <Route
-              path="/page2"
-              render={() => {
-                return (
-                  <Selector
-                    tiles={this.getVisibleTiles(1)}
-                    page={1}
-                    next="/page3"
-                    prev="/page1"
-                    onClickPrev={() => this.unselectTiles(1)}
-                    onClickNext={() => this.selectTiles(2)}
-                    onClickTile={(page, flavorName) =>
-                      this.selectTile(page, flavorName)
-                    }
+                )}
+              />
+              <Route
+                path="/page4"
+                render={() => (
+                  <Result
+                    tiles={this.state.tiles.filter((tile) => tile.selected)}
+                    page={3}
+                    next="/"
+                    prev="/page3"
                   />
-                );
-              }}
-            />
-            <Route
-              path="/page3"
-              render={() => (
-                <Selector
-                  tiles={this.getVisibleTiles(2)}
-                  page={2}
-                  next="/page4"
-                  prev="/page2"
-                  onClickPrev={() => this.unselectTiles(2)}
-                  onClickTile={(page, flavorName) =>
-                    this.selectTile(page, flavorName)
-                  }
-                />
-              )}
-            />
-            <Route
-              path="/page4"
-              render={() => (
-                <Result
-                  tiles={this.state.tiles.filter((tile) => tile.selected)}
-                  page={3}
-                  next="/"
-                  prev="/page3"
-                />
-              )}
-            />
-          </div>
+                )}
+              />
+            </div>
+          </AuthProvider>
         </BrowserRouter>
       </div>
     );

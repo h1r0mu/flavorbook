@@ -32,14 +32,18 @@ export default function FileSystemNavigator() {
           nodeId="1"
           label={<Typography className={classes.start}>Start</Typography>}
         >
-          <TreeItem
-            nodeId="2"
-            label={<Typography className={classes.start}>Register</Typography>}
-          />
-          <TreeItem
-            nodeId="3"
-            label={<Typography className={classes.start}>Login</Typography>}
-          />
+          <Link to={"/sign-up"} style={{ color: "black" }}>
+            <TreeItem
+              nodeId="2"
+              label={<Typography className={classes.start}>Sign up</Typography>}
+            />
+          </Link>
+          <Link to={"/login"} style={{ color: "black" }}>
+            <TreeItem
+              nodeId="3"
+              label={<Typography className={classes.start}>Login</Typography>}
+            />
+          </Link>
           <Link to={"/page1"} style={{ color: "black" }}>
             <TreeItem
               nodeId="4"

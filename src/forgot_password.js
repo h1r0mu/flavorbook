@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {  makeStyles} from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,32 +10,32 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import { useAuth } from "./contexts/auth-context.js";
 
-const useStyles = makeStyles((theme) => ({
-				container: {
-						display: "flex",
-						flexWrap: "wrap",
-						width: 400,
-						margin: `${theme.spacing(0)} auto`,
-				},
-				loginBtn: {
-						marginTop: theme.spacing(2),
-						flexGrow: 1,
-				},
-				header: {
-						textAlign: "center",
-						background: "#212121",
-						color: "#fff",
-				},
-				card: {
-						marginTop: theme.spacing(10),
-				},
-		})
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+      width: 400,
+      margin: `${theme.spacing(0)} auto`,
+    },
+    forgotpasswordBtn: {
+      marginTop: theme.spacing(2),
+      flexGrow: 1,
+    },
+    header: {
+      textAlign: "center",
+      background: "#212121",
+      color: "#fff",
+    },
+    card: {
+      marginTop: theme.spacing(10),
+    },
+  })
 );
 
+//state type
 type State = {
   email: string,
-  password: string,
-  passwordconfirm: string,
   isButtonDisabled: boolean,
   helperText: string,
   isError: boolean,
@@ -43,8 +43,6 @@ type State = {
 
 const initialState: State = {
   email: "",
-  password: "",
-  passwordconfirm: "",
   isButtonDisabled: true,
   helperText: "",
   isError: false,
@@ -52,11 +50,9 @@ const initialState: State = {
 
 type Action =
   | { type: "setEmail", payload: string }
-  | { type: "setPassword", payload: string }
-  | { type: "setPasswordConfirm", payload: string }
   | { type: "setIsButtonDisabled", payload: boolean }
-  | { type: "loginSuccess", payload: string }
-  | { type: "loginFailed", payload: string }
+  | { type: "forgotpasswordSuccess", payload: string }
+  | { type: "forgotpasswordFailed", payload: string }
   | { type: "setIsError", payload: boolean };
 
 const reducer = (state: State, action: Action): State => {
@@ -66,28 +62,18 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         email: action.payload,
       };
-    case "setPassword":
-      return {
-        ...state,
-        password: action.payload,
-      };
-    case "setPasswordConfirm":
-      return {
-        ...state,
-        passwordconfirm: action.payload,
-      };
     case "setIsButtonDisabled":
       return {
         ...state,
         isButtonDisabled: action.payload,
       };
-    case "loginSuccess":
+    case "forgotpasswordSuccess":
       return {
         ...state,
         helperText: action.payload,
         isError: false,
       };
-    case "loginFailed":
+    case "forgotpasswordFailed":
       return {
         ...state,
         helperText: action.payload,
@@ -103,16 +89,16 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const Login = () => {
+const ForgotPassword = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { login } = useAuth();
+  const { resetPassword } = useAuth();
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit, errors, trigger } = useForm();
 
   useEffect(() => {
-    if (state.email.trim() && state.password.trim()) {
+    if (state.email.trim()) {
       dispatch({
         type: "setIsButtonDisabled",
         payload: false,
@@ -123,9 +109,9 @@ const Login = () => {
         payload: true,
       });
     }
-  }, [state.email, state.password]);
+  }, [state.email]);
 
-  async function handleLogin() {
+  async function handleForgotPassword() {
     // async function handleLogin(data) {
     try {
       setError("");
@@ -135,10 +121,10 @@ const Login = () => {
         payload: true,
       });
 
-      await login(state.email, state.password);
+      await resetPassword(state.email, state.password);
       dispatch({
-        type: "loginSuccess",
-        payload: "Login Successfully",
+        type: "forgotpasswordSuccess",
+        payload: "ForgotPassword Successfully",
       });
 
       dispatch({
@@ -146,7 +132,7 @@ const Login = () => {
         payload: false,
       });
 
-      setSuccessMessage("ログインに成功しました");
+      setSuccessMessage("パスワードを初期化しました");
     } catch (e) {
       console.log(e);
 
@@ -155,9 +141,6 @@ const Login = () => {
           setError(
             "通信がエラーになったのか、またはタイムアウトになりました。通信環境がいいところでやり直してください"
           );
-          break;
-        case "auth/weak-password":
-          setError("パスワードが短すぎます。6文字以上を入力してください。");
           break;
         case "auth/invalid-email":
           setError("メールアドレスまたはパスワードが正しくありません");
@@ -170,7 +153,7 @@ const Login = () => {
           break;
         default:
           setError(
-            "アカウントの作成に失敗しました。通信環境にいい所でやりなしてください。"
+            "処理に失敗しました。通信環境がいい所で再度やり直してください。"
           );
       }
       dispatch({
@@ -187,7 +170,7 @@ const Login = () => {
         if (errors) {
           <div>error</div>;
         } else {
-          handleLogin();
+          handleForgotPassword();
         }
       }
     }
@@ -207,19 +190,10 @@ const Login = () => {
     });
   };
 
-  const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    dispatch({
-      type: "setPassword",
-      payload: event.target.value,
-    });
-  };
-
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Login" />
+        <CardHeader className={classes.header} title="ForgotPassword" />
         <CardContent>
           <div>
             {error && <div variant="danger">{error}</div>}
@@ -244,38 +218,19 @@ const Login = () => {
                 メールアドレスの形式で入力されていません
               </div>
             )}
-            <TextField
-              error={state.isError}
-              fullWidth
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="Password"
-              margin="normal"
-              helperText={state.helperText}
-              onChange={handlePasswordChange}
-              onKeyPress={handleKeyPress}
-            />
-            {errors.password?.type === "minLength" && (
-              <div style={{ color: "red" }}>
-                パスワードは6文字以上で入力してください
-              </div>
-            )}
           </div>
           アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
-          パスワードを忘れた場合は<Link to="/forgot-password">こちら</Link>
         </CardContent>
         <CardActions>
           <Button
             variant="contained"
             size="large"
             color="secondary"
-            className={classes.loginBtn}
-            onClick={handleSubmit(handleLogin)}
+            className={classes.forgotpasswordBtn}
+            onClick={handleSubmit(handleForgotPassword)}
             disabled={state.isButtonDisabled}
           >
-            Login
+            ForgotPassword
           </Button>
         </CardActions>
       </Card>
@@ -283,4 +238,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
