@@ -1,54 +1,24 @@
 import PropTypes from "prop-types";
 import React from "react";
 import SaveIcon from "@material-ui/icons/Save";
-import Steppers from "./stepper.js";
-import Wheel from "./wheel.js";
-import StoreInfo from "./forms.js";
-import History from "./components/History.js";
-import AppBar from "./appBar.js";
-import Button from "./components/Button.js";
-import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import "typeface-roboto";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#795548",
-    },
-    secondary: {
-      main: "#f44336",
-    },
-  },
-  typography: {
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
-    h1: {
-      marginTop: 40,
-      fontSize: 50,
-    },
-    h2: {
-      marginTop: 20,
-      fontSize: 50,
-    },
-  },
-});
+import Steppers from "./Stepper.js";
+import Button from "./Button.js";
+import StoreInfo from "./Form.js";
+import History from "./History.js";
+import Wheel from "./Wheel.js";
 
 const styles = {
   root: {
     flexGrow: 1,
+    h1: {
+      marginTop: 40,
+      fontSize: 50,
+    },
   },
   storeButton: {
     marginBottom: 30,
@@ -146,16 +116,9 @@ class Result extends React.Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
         <div className="app">
-          <div className="tabs">
-            <AppBar />
-          </div>
-          <Typography variant="h1" gutterBottom>
-            あなたの感じた香り一覧
-          </Typography>
           <div className="app-board">
-            <Wheel tiles={this.state.tiles} level={this.props.page} />
+            <Wheel tiles={this.state.tiles} level={this.props.level} />
           </div>
           <Typography variant="h2" gutterBottom>
             バリスタ語への翻訳結果
@@ -179,22 +142,14 @@ class Result extends React.Component {
               onClickDelete={(history) => this.delete(history)}
             />
           </div>
-          <div className="stepppers">
-            <Steppers
-              page={this.props.page}
-              prev={this.props.prev}
-              next={this.props.next}
-            />
-          </div>
         </div>
-      </ThemeProvider>
     );
   }
 }
 
 Result.propTypes = {
   tiles: PropTypes.array,
-  page: PropTypes.number,
+  level: PropTypes.number,
   prev: PropTypes.string,
   next: PropTypes.string,
   onClickPrev: PropTypes.func,

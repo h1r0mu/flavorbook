@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Button as MuiButton } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
   button: {
