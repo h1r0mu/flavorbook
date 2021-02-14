@@ -5,14 +5,14 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { ThemeProvider } from "@material-ui/styles";
 
-import AppBar from "./components/AppBar.js";
-import Stepper from "./components/Stepper.js";
-import Button from "./components/Button.js";
-import Login from "./components/Login.js";
-import Result from "./components/Result.js";
-import Wheel from "./components/Wheel.js";
-import { flavorData } from "./data/flavors";
-import { GlobalStyles } from "./GlobalStyles";
+import AppBar from "./AppBar.js";
+import Stepper from "./Stepper.js";
+import Button from "./Button.js";
+import Login from "./Login.js";
+import Result from "./Result.js";
+import Wheel from "./Wheel.js";
+import { flavorData } from "../data/flavors";
+import { GlobalStyles } from "../GlobalStyles";
 
 const theme = createMuiTheme({
   typography: {
