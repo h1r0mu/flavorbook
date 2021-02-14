@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,30 +10,27 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import { useAuth } from "./contexts/auth-context.js";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      display: "flex",
-      flexWrap: "wrap",
-      width: 400,
-      margin: `${theme.spacing(0)} auto`,
-    },
-    loginBtn: {
-      marginTop: theme.spacing(2),
-      flexGrow: 1,
-    },
-    header: {
-      textAlign: "center",
-      background: "#212121",
-      color: "#fff",
-    },
-    card: {
-      marginTop: theme.spacing(10),
-    },
-  })
-);
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+    width: 400,
+    margin: `${theme.spacing(0)} auto`,
+  },
+  loginBtn: {
+    marginTop: theme.spacing(2),
+    flexGrow: 1,
+  },
+  header: {
+    textAlign: "center",
+    background: "#212121",
+    color: "#fff",
+  },
+  card: {
+    marginTop: theme.spacing(10),
+  },
+}));
 
-//state type
 type State = {
   email: string,
   password: string,
