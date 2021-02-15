@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import SaveIcon from "@material-ui/icons/Save";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
@@ -28,14 +29,12 @@ const styles = {
   },
 };
 
-class Result extends React.Component {
-  constructor(props) {
-    const histories = localStorage.getItem("flavorBook")
-      ? JSON.parse(localStorage.getItem("flavorBook"))
-      : {};
-    super(props);
-    this.state = {
-      storeInfo: {
+const selectHistories = state => state.histories.histories
+
+function Result (props) {
+	const histories = useSelector(selectHistories)
+  const dispatch = useDispatch()
+	const [storeInfo, setStoreInfo] = useState({
         date: null,
         store: null,
         country: null,
@@ -45,56 +44,49 @@ class Result extends React.Component {
         grind: null,
         brewing: null,
         days: null,
-      },
-      tiles: props.tiles.slice(),
-      histories: histories,
-      saved: false,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.save = this.save.bind(this);
-    this.restore = this.restore.bind(this);
-    this.delimiter = ["などの複雑なフレーバー，", "の強い香りと"][
-      Math.floor(Math.random() * 2)
-    ];
+      })
+	const [saved, setSaved] = useState(false)
+	const [tiles, setTiles] = useState(props.tiles.slice())
+	const delimiter = ["などの複雑なフレーバー，", "の強い香りと"][ Math.floor(Math.random() * 2) ];
+
+  const save = () => {
+		dispatch({ 
+			type: 'histories/historyAdded', 
+			payload: {
+				key: new Date(Date.now()).toISOString(),
+				state: {
+				storeInfo: storeInfo,
+				tiles: tiles,
+				}
+			}
+		})
+    setSaved(true);
   }
-  save() {
-    const key = new Date(Date.now()).toISOString();
-    let histories = { ...this.state.histories };
-    const state = { ...this.state };
-    state.storeInfo.date = key;
-    histories = { ...histories, [key]: state };
-    this.setState({ histories: histories, saved: true });
-    localStorage.setItem("flavorBook", JSON.stringify(histories));
+
+  const remove = (target) => {
+		dispatch({ 
+			type: 'histories/historyDeleted', 
+			payload: {
+				key: target.storeInfo.date,
+			}
+		})
   }
-  delete(target) {
-    const histories = Object.keys(this.state.histories).reduce(
-      (object, key) => {
-        history;
-        if (key !== target.storeInfo.date) {
-          object[key] = this.state.histories[key];
-        }
-        return object;
-      },
-      {}
-    );
-    this.setState({ histories: histories });
-  }
-  handleChange(event) {
-    this.setState({
-      storeInfo: {
-        ...this.state.storeInfo,
+  const handleChange = (event) => {
+    setStoreInfo(
+       {
+        ...storeInfo,
         [event.target.name]: event.target.value,
-      },
-    });
+      }
+    );
   }
-  restore(history) {
-    if (this.state.saved === false) {
+  const restore = (history) => {
+    if (saved === false) {
       return;
     }
-    this.setState({ storeInfo: history.storeInfo, tiles: history.tiles });
+    setStoreInfo(history.storeInfo);
+			setTiles(history.tiles);
   }
-  convert() {
-    const tiles = this.state.tiles;
+  const convert = () => {
     const top = tiles
       .filter((tile) => tile.flavor.level == 0)
       .map((tile) => tile.flavor.name)
@@ -108,43 +100,41 @@ class Result extends React.Component {
       .map((tile) => tile.flavor.name)
       .join("，");
     let notes = top;
-    notes += middle ? this.delimiter + middle : "";
+    notes += middle ? delimiter + middle : "";
     notes += bottom ? `，微かに${bottom}` : "";
     notes += "の香りを感じます．";
     return notes;
   }
 
-  render() {
     return (
         <div className="app">
           <div className="app-board">
-            <Wheel tiles={this.state.tiles} level={this.props.level} />
+            <Wheel tiles={tiles} level={props.level} />
           </div>
-          <Typography variant="h2" gutterBottom>
-            バリスタ語への翻訳結果
-          </Typography>
-          <div>
-            <p>{this.convert()}</p>
-          </div>
-          <div className={this.props.classes.storeButton}>
+					<Typography variant="h2" gutterBottom>
+						バリスタ語への翻訳結果
+					</Typography>
+					<div>
+						<p>{convert()}</p>
+					</div>
+          <div className={props.classes.storeButton}>
             <StoreInfo
-              storeInfo={this.state.storeInfo}
-              handleChange={this.handleChange}
-              readOnly={this.state.saved}
+              storeInfo={storeInfo}
+              handleChange={handleChange}
+              readOnly={saved}
             />
           </div>
-          <Button icon={<SaveIcon />} onClick={this.save} text={"保存する"} />
-          <div className={this.props.classes.history}>
+          <Button icon={<SaveIcon />} onClick={save} text={"保存する"} />
+          <div className={props.classes.history}>
             <History
-              headers={Object.keys(this.state.storeInfo)}
-              histories={this.state.histories}
-              onClick={(history) => this.restore(history)}
-              onClickDelete={(history) => this.delete(history)}
+              headers={Object.keys(storeInfo)}
+              histories={histories}
+              onClick={(history) => restore(history)}
+              onClickDelete={(history) => remove(history)}
             />
           </div>
         </div>
     );
-  }
 }
 
 Result.propTypes = {

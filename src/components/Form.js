@@ -26,7 +26,6 @@ const processes = [
   ["NATURAL", "NATURAL"],
   ["HONEY/PULPED NATURAL", "HONEY/PULPED NATURAL"],
 ].map((attr) => createMenuItem(...attr));
-console.log(processes);
 
 export default function StoreInfo(props) {
   const classes = useStyles();
