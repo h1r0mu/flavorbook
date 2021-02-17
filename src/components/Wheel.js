@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Wheel(props) {
-
   const selectedFlavorNames = props.tiles
     .filter((tile) => tile.selected)
     .map((tile) => tile.name);
@@ -33,11 +32,7 @@ export default function Wheel(props) {
               value={tile.flavor.name}
               selected={tile.flavor.selected}
               imageUrl={tile.flavor.imageUrl}
-              onClick={
-                props.onClick
-                  ? () => props.onClick(tile)
-                  : null
-              }
+              onClick={props.onClick ? () => props.onClick(tile) : null}
             />
           </GridListTile>
         ))}

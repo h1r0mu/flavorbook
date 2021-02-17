@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     position: "relative",
     height: 200,
-		width: "100%",
+    width: "100%",
     [theme.breakpoints.down("xs")]: {
       width: "100% !mportant", // Overrides inline-style
       height: 100,
@@ -88,32 +88,32 @@ function ButtonBases(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-        <ButtonBase
-          focusRipple
-          key={props.value}
-          className={classes.image}
-          focusVisibleClassName={classes.focusVisible}
-          onClick={props.onClick}
-        >
-          <span
-            className={classes.imageSrc}
-            style={{
-              backgroundImage: `url(${props.url})`,
-            }}
-          />
-          <span className={classes.imageBackdrop} />
-          <span className={classes.imageButton}>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              className={classes.imageTitle}
-            >
-              {props.value}
-              <span className={classes.imageMarked} />
-            </Typography>
-          </span>
-        </ButtonBase>
+      <ButtonBase
+        focusRipple
+        key={props.value}
+        className={classes.image}
+        focusVisibleClassName={classes.focusVisible}
+        onClick={props.onClick}
+      >
+        <span
+          className={classes.imageSrc}
+          style={{
+            backgroundImage: `url(${props.url})`,
+          }}
+        />
+        <span className={classes.imageBackdrop} />
+        <span className={classes.imageButton}>
+          <Typography
+            component="span"
+            variant="subtitle1"
+            color="inherit"
+            className={classes.imageTitle}
+          >
+            {props.value}
+            <span className={classes.imageMarked} />
+          </Typography>
+        </span>
+      </ButtonBase>
     </div>
   );
 }

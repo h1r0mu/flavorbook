@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import SaveIcon from "@material-ui/icons/Save";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import "typeface-roboto";
-
 import Steppers from "./Stepper.js";
 import Button from "./Button.js";
 import StoreInfo from "./Form.js";
@@ -29,63 +28,63 @@ const styles = {
   },
 };
 
-const selectHistories = state => state.histories.histories
+const selectHistories = (state) => state.histories.histories;
 
-function Result (props) {
-	const histories = useSelector(selectHistories)
-  const dispatch = useDispatch()
-	const [storeInfo, setStoreInfo] = useState({
-        date: null,
-        store: null,
-        country: null,
-        farm: null,
-        region: null,
-        process: null,
-        grind: null,
-        brewing: null,
-        days: null,
-      })
-	const [saved, setSaved] = useState(false)
-	const [tiles, setTiles] = useState(props.tiles.slice())
-	const delimiter = ["などの複雑なフレーバー，", "の強い香りと"][ Math.floor(Math.random() * 2) ];
+function Result(props) {
+  const histories = useSelector(selectHistories);
+  const dispatch = useDispatch();
+  const [storeInfo, setStoreInfo] = useState({
+    date: null,
+    store: null,
+    country: null,
+    farm: null,
+    region: null,
+    process: null,
+    grind: null,
+    brewing: null,
+    days: null,
+  });
+  const [saved, setSaved] = useState(false);
+  const [tiles, setTiles] = useState(props.tiles.slice());
+  const delimiter = ["などの複雑なフレーバー，", "の強い香りと"][
+    Math.floor(Math.random() * 2)
+  ];
 
   const save = () => {
-		dispatch({ 
-			type: 'histories/historyAdded', 
-			payload: {
-				key: new Date(Date.now()).toISOString(),
-				state: {
-				storeInfo: storeInfo,
-				tiles: tiles,
-				}
-			}
-		})
+    dispatch({
+      type: "histories/historyAdded",
+      payload: {
+        key: new Date(Date.now()).toISOString(),
+        state: {
+          storeInfo: storeInfo,
+          tiles: tiles,
+        },
+      },
+    });
     setSaved(true);
-  }
+  };
 
   const remove = (target) => {
-		dispatch({ 
-			type: 'histories/historyDeleted', 
-			payload: {
-				key: target.storeInfo.date,
-			}
-		})
-  }
+    dispatch({
+      type: "histories/historyDeleted",
+      payload: {
+        key: target.storeInfo.date,
+      },
+    });
+  };
   const handleChange = (event) => {
-    setStoreInfo(
-       {
-        ...storeInfo,
-        [event.target.name]: event.target.value,
-      }
-    );
-  }
+    setStoreInfo({
+      ...storeInfo,
+      [event.target.name]: event.target.value,
+    });
+  };
   const restore = (history) => {
     if (saved === false) {
       return;
     }
     setStoreInfo(history.storeInfo);
-			setTiles(history.tiles);
-  }
+    setTiles(history.tiles);
+  };
   const convert = () => {
     const top = tiles
       .filter((tile) => tile.flavor.level == 0)
@@ -104,37 +103,37 @@ function Result (props) {
     notes += bottom ? `，微かに${bottom}` : "";
     notes += "の香りを感じます．";
     return notes;
-  }
+  };
 
-    return (
-        <div className="app">
-          <div className="app-board">
-            <Wheel tiles={tiles} level={props.level} />
-          </div>
-					<Typography variant="h2" gutterBottom>
-						バリスタ語への翻訳結果
-					</Typography>
-					<div>
-						<p>{convert()}</p>
-					</div>
-          <div className={props.classes.storeButton}>
-            <StoreInfo
-              storeInfo={storeInfo}
-              handleChange={handleChange}
-              readOnly={saved}
-            />
-          </div>
-          <Button icon={<SaveIcon />} onClick={save} text={"保存する"} />
-          <div className={props.classes.history}>
-            <History
-              headers={Object.keys(storeInfo)}
-              histories={histories}
-              onClick={(history) => restore(history)}
-              onClickDelete={(history) => remove(history)}
-            />
-          </div>
-        </div>
-    );
+  return (
+    <div className="app">
+      <div className="app-board">
+        <Wheel tiles={tiles} level={props.level} />
+      </div>
+      <Typography variant="h2" gutterBottom>
+        バリスタ語への翻訳結果
+      </Typography>
+      <div>
+        <p>{convert()}</p>
+      </div>
+      <div className={props.classes.storeButton}>
+        <StoreInfo
+          storeInfo={storeInfo}
+          handleChange={handleChange}
+          readOnly={saved}
+        />
+      </div>
+      <Button icon={<SaveIcon />} onClick={save} text={"保存する"} />
+      <div className={props.classes.history}>
+        <History
+          headers={Object.keys(storeInfo)}
+          histories={histories}
+          onClick={(history) => restore(history)}
+          onClickDelete={(history) => remove(history)}
+        />
+      </div>
+    </div>
+  );
 }
 
 Result.propTypes = {

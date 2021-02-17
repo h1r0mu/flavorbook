@@ -4,11 +4,13 @@ import { Link, BrowserRouter, Route } from "react-router-dom";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { ThemeProvider } from "@material-ui/styles";
-
 import AppBar from "./AppBar.js";
 import Stepper from "./Stepper.js";
 import Button from "./Button.js";
 import Login from "./Login.js";
+import Signup from "./Signup.js";
+import Home from "./Home.js";
+import ForgetPassword from "./ForgetPassword.js";
 import Result from "./Result.js";
 import Wheel from "./Wheel.js";
 import { flavorData } from "../data/flavors";
@@ -123,7 +125,16 @@ export default function App() {
                 : "感じない香りを選択してください"}
             </Typography>
             <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/sign-up">
+              <Signup />
+            </Route>
+            <Route path="/forget-passsword">
+              <ForgetPassword />
             </Route>
             <Route path="/selection">
               <Wheel

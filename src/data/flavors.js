@@ -1,4 +1,3 @@
-
 export const flavorData = [
   ["野菜", 0, null, "/static/Big/green_vegetative.jpg"],
   ["酸味／発酵", 0, null, "/static/Big/sour_fermented.jpeg"],

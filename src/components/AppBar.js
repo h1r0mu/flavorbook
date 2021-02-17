@@ -19,7 +19,6 @@ import ShareIcon from "@material-ui/icons/Share";
 import ChatIcon from "@material-ui/icons/Chat";
 import StoreIcon from "@material-ui/icons/Store";
 
-
 const styles = {
   root: {
     flexGrow: 1,
@@ -69,66 +68,66 @@ class ButtonAppBar extends React.Component {
 
   render() {
     return (
-        <div className={this.props.classes.root}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton
-                edge="start"
-                className={this.props.classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-                onClick={this.handleDrawerOpen}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" className={this.props.classes.title}>
-                Coffee Flavors
-                <EmojiFoodBeverageIcon className={this.props.classes.coffee} />
-              </Typography>
-              <Button color="inherit">Login(coming soon)</Button>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            variant="temporary"
-            classes={{
-              paper: this.props.classes.drawerPaper,
-            }}
-            onEscapeKeyDown={this.handleDrawerClose}
-            onBackdropClick={this.handleDrawerClose}
-            open={this.state.drawerIsOpen}
-          >
-            <div className={this.props.classes.drawerHeader}>
-              <IconButton onClick={this.handleDrawerClose}>
-                <MenuIcon />
-              </IconButton>
-            </div>
-            <div className={this.props.classes.drawerInner}>
-              <List>
-                {[
-                  "豆の香りを調べる",
-                  "メンバーの香りをみてみる(近日公開)",
-                  "メンバー同士で話しあう(近日公開)",
-                  "豆のお店を探す(近日公開)",
-                ].map((text, index) => (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index % 4 === 0 ? (
-                        <LaptopMacIcon />
-                      ) : index % 4 === 1 ? (
-                        <ShareIcon />
-                      ) : index % 4 === 2 ? (
-                        <ChatIcon />
-                      ) : (
-                        <StoreIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ))}
-              </List>
-            </div>
-          </Drawer>
-        </div>
+      <div className={this.props.classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={this.props.classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={this.handleDrawerOpen}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" className={this.props.classes.title}>
+              Coffee Flavors
+              <EmojiFoodBeverageIcon className={this.props.classes.coffee} />
+            </Typography>
+            <Button color="inherit">Login(coming soon)</Button>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="temporary"
+          classes={{
+            paper: this.props.classes.drawerPaper,
+          }}
+          onEscapeKeyDown={this.handleDrawerClose}
+          onBackdropClick={this.handleDrawerClose}
+          open={this.state.drawerIsOpen}
+        >
+          <div className={this.props.classes.drawerHeader}>
+            <IconButton onClick={this.handleDrawerClose}>
+              <MenuIcon />
+            </IconButton>
+          </div>
+          <div className={this.props.classes.drawerInner}>
+            <List>
+              {[
+                "豆の香りを調べる",
+                "メンバーの香りをみてみる(近日公開)",
+                "メンバー同士で話しあう(近日公開)",
+                "豆のお店を探す(近日公開)",
+              ].map((text, index) => (
+                <ListItem button key={text}>
+                  <ListItemIcon>
+                    {index % 4 === 0 ? (
+                      <LaptopMacIcon />
+                    ) : index % 4 === 1 ? (
+                      <ShareIcon />
+                    ) : index % 4 === 2 ? (
+                      <ChatIcon />
+                    ) : (
+                      <StoreIcon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Drawer>
+      </div>
     );
   }
 }

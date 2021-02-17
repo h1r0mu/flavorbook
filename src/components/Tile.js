@@ -21,7 +21,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Tile(props) {
-
   const style = props.selected ? { backgroundColor: "yellow" } : {};
   const classes = useStyles();
 

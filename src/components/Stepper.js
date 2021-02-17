@@ -34,16 +34,16 @@ const HorizontalLinearStepper = (props) => {
     "Register Coffee Flavors",
   ];
   return (
-      <div className={classes.root}>
-        <Stepper activeStep={props.level}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        <div>{props.children}</div>
-      </div>
+    <div className={classes.root}>
+      <Stepper activeStep={props.level}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <div>{props.children}</div>
+    </div>
   );
 };
 
