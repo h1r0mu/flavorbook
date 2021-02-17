@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/flavorbook/static/js/main.d85d4cbd.chunk.js",
-    "main.js.map": "/flavorbook/static/js/main.d85d4cbd.chunk.js.map",
+    "main.js": "/flavorbook/static/js/main.409463b9.chunk.js",
+    "main.js.map": "/flavorbook/static/js/main.409463b9.chunk.js.map",
     "runtime-main.js": "/flavorbook/static/js/runtime-main.1b22ff0b.js",
     "runtime-main.js.map": "/flavorbook/static/js/runtime-main.1b22ff0b.js.map",
     "static/css/2.16ae864f.chunk.css": "/flavorbook/static/css/2.16ae864f.chunk.css",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.1b22ff0b.js",
     "static/css/2.16ae864f.chunk.css",
     "static/js/2.3e117a62.chunk.js",
-    "static/js/main.d85d4cbd.chunk.js"
+    "static/js/main.409463b9.chunk.js"
   ]
 }
