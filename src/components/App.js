@@ -115,7 +115,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <GlobalStyles />
           <div>
             <AppBar />
