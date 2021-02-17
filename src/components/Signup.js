@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
-import { useAuth } from "./contexts/auth-context.js";
+import { useAuth } from "../contexts/auth-context.js";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 400,
       margin: `${theme.spacing(0)} auto`,
     },
-    forgotpasswordBtn: {
+    signupBtn: {
       marginTop: theme.spacing(2),
       flexGrow: 1,
     },
@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme: Theme) =>
 //state type
 type State = {
   email: string,
+  password: string,
+  passwordconfirm: string,
   isButtonDisabled: boolean,
   helperText: string,
   isError: boolean,
@@ -43,6 +45,8 @@ type State = {
 
 const initialState: State = {
   email: "",
+  password: "",
+  passwordconfirm: "",
   isButtonDisabled: true,
   helperText: "",
   isError: false,
@@ -50,9 +54,11 @@ const initialState: State = {
 
 type Action =
   | { type: "setEmail", payload: string }
+  | { type: "setPassword", payload: string }
+  | { type: "setPasswordConfirm", payload: string }
   | { type: "setIsButtonDisabled", payload: boolean }
-  | { type: "forgotpasswordSuccess", payload: string }
-  | { type: "forgotpasswordFailed", payload: string }
+  | { type: "signupSuccess", payload: string }
+  | { type: "signupFailed", payload: string }
   | { type: "setIsError", payload: boolean };
 
 const reducer = (state: State, action: Action): State => {
@@ -62,18 +68,28 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         email: action.payload,
       };
+    case "setPassword":
+      return {
+        ...state,
+        password: action.payload,
+      };
+    case "setPasswordConfirm":
+      return {
+        ...state,
+        passwordconfirm: action.payload,
+      };
     case "setIsButtonDisabled":
       return {
         ...state,
         isButtonDisabled: action.payload,
       };
-    case "forgotpasswordSuccess":
+    case "signupSuccess":
       return {
         ...state,
         helperText: action.payload,
         isError: false,
       };
-    case "forgotpasswordFailed":
+    case "signupFailed":
       return {
         ...state,
         helperText: action.payload,
@@ -89,16 +105,23 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const ForgotPassword = () => {
+const Signup = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { resetPassword } = useAuth();
+  const signup = useAuth();
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit, errors, trigger } = useForm();
 
   useEffect(() => {
-    if (state.email.trim()) {
+    // stateのemail,password,passwordconfirmが変化した時のみ再びレンダー
+
+    if (state.password.trim() !== state.passwordconfirm.trim()) {
+      dispatch({
+        type: "setIsButtonDisabled",
+        payload: true,
+      });
+    } else if (state.email.trim() && state.password.trim()) {
       dispatch({
         type: "setIsButtonDisabled",
         payload: false,
@@ -109,10 +132,10 @@ const ForgotPassword = () => {
         payload: true,
       });
     }
-  }, [state.email]);
+  }, [state.email, state.password, state.passwordconfirm]);
 
-  async function handleForgotPassword() {
-    // async function handleLogin(data) {
+  async function handleSignup() {
+    // async function handleSignup(data) {
     try {
       setError("");
       setSuccessMessage("");
@@ -121,10 +144,10 @@ const ForgotPassword = () => {
         payload: true,
       });
 
-      await resetPassword(state.email, state.password);
+      await signup(state.email, state.passwordconfirm);
       dispatch({
-        type: "forgotpasswordSuccess",
-        payload: "ForgotPassword Successfully",
+        type: "signupSuccess",
+        payload: "Signup Successfully",
       });
 
       dispatch({
@@ -132,7 +155,7 @@ const ForgotPassword = () => {
         payload: false,
       });
 
-      setSuccessMessage("パスワードを初期化しました");
+      setSuccessMessage("アカウントの作成に成功しました");
     } catch (e) {
       console.log(e);
 
@@ -142,18 +165,23 @@ const ForgotPassword = () => {
             "通信がエラーになったのか、またはタイムアウトになりました。通信環境がいいところでやり直してください"
           );
           break;
-        case "auth/invalid-email":
-          setError("メールアドレスまたはパスワードが正しくありません");
+        case "auth/weak-password":
+          setError("パスワードが短すぎます。6文字以上を入力してください。");
           break;
-        case "auth/wrong-passsword":
-          setError("メールアドレスまたはパスワードが正しくありません");
+        case "auth/invalid-email":
+          setError("メールアドレスが正しくありません");
+          break;
+        case "auth/email-already-in-use":
+          setError(
+            "メールアドレスがすでに使用されています。ログインするか別のメールアドレスで作成してください"
+          );
           break;
         case "auth/user-disabled":
           setError("入力されたメールアドレスは無効になってます。");
           break;
         default:
           setError(
-            "処理に失敗しました。通信環境がいい所で再度やり直してください。"
+            "アカウントの作成に失敗しました。通信環境にいい所でやりなしてください。"
           );
       }
       dispatch({
@@ -170,7 +198,7 @@ const ForgotPassword = () => {
         if (errors) {
           <div>error</div>;
         } else {
-          handleForgotPassword();
+          handleSignup();
         }
       }
     }
@@ -190,10 +218,28 @@ const ForgotPassword = () => {
     });
   };
 
+  const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    dispatch({
+      type: "setPassword",
+      payload: event.target.value,
+    });
+  };
+
+  const handlePasswordConfirmChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    dispatch({
+      type: "setPasswordConfirm",
+      payload: event.target.value,
+    });
+  };
+
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="ForgotPassword" />
+        <CardHeader className={classes.header} title="Sign UP " />
         <CardContent>
           <div>
             {error && <div variant="danger">{error}</div>}
@@ -218,19 +264,49 @@ const ForgotPassword = () => {
                 メールアドレスの形式で入力されていません
               </div>
             )}
+            <TextField
+              error={state.isError}
+              fullWidth
+              id="password"
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="Password"
+              margin="normal"
+              helperText={state.helperText}
+              onChange={handlePasswordChange}
+              onKeyPress={handleKeyPress}
+            />
+            {errors.password?.type === "minLength" && (
+              <div style={{ color: "red" }}>
+                パスワードは6文字以上で入力してください
+              </div>
+            )}
+            <TextField
+              error={state.isError}
+              fullWidth
+              id="password-confirm"
+              type="password"
+              label="Password-confirm"
+              placeholder="Password-confirm"
+              margin="normal"
+              helperText={state.helperText}
+              onChange={handlePasswordConfirmChange}
+              onKeyPress={handleKeyPress}
+            />
           </div>
-          アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
+          もしアカウントがあるなら<Link to="/login"> Log In</Link>
         </CardContent>
         <CardActions>
           <Button
             variant="contained"
             size="large"
             color="secondary"
-            className={classes.forgotpasswordBtn}
-            onClick={handleSubmit(handleForgotPassword)}
+            className={classes.signupBtn}
+            onClick={handleSubmit(handleSignup)}
             disabled={state.isButtonDisabled}
           >
-            ForgotPassword
+            Signup
           </Button>
         </CardActions>
       </Card>
@@ -238,4 +314,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default Signup;

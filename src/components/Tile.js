@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import ButtonBases from "./complex_button.js";
+
+import ButtonBases from "./ComplexButton.js";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
@@ -19,24 +20,26 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Flavor(props) {
+function Tile(props) {
   const style = props.selected ? { backgroundColor: "yellow" } : {};
   const classes = useStyles();
+
   return (
     <ButtonBases
       className={classes.flavor}
       style={style}
       onClick={props.onClick}
       value={props.value}
-      url={props.url}
-      disabled={!props.onClick ? true : false}
+      url={props.imageUrl}
+      disabled={props.onClick === undefined}
     />
   );
 }
-Flavor.propTypes = {
+
+Tile.propTypes = {
   value: PropTypes.string,
   onClick: PropTypes.func,
   selected: PropTypes.bool,
   url: PropTypes.string,
 };
-export default Flavor;
+export default Tile;

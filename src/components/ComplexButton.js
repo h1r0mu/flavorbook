@@ -3,18 +3,6 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
-import Vege from "./images/vegetable.jpg";
-// import Sour from "./images/sour.jpg";
-// import Fluit from "./images/fluit.jpg";
-
-const images = [
-  // 画像のURLとタイトル、幅を宣言してimagesというリストに格納
-  {
-    url: Vege,
-    title: "野菜",
-    width: "100%",
-  },
-];
 
 const useStyles = makeStyles((theme) => ({
   // css設定
@@ -30,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     position: "relative",
     height: 200,
+    width: "100%",
     [theme.breakpoints.down("xs")]: {
       width: "100% !mportant", // Overrides inline-style
       height: 100,
@@ -99,37 +88,32 @@ function ButtonBases(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      {images.map((image) => (
-        <ButtonBase
-          focusRipple
-          key={props.value}
-          className={classes.image}
-          focusVisibleClassName={classes.focusVisible}
+      <ButtonBase
+        focusRipple
+        key={props.value}
+        className={classes.image}
+        focusVisibleClassName={classes.focusVisible}
+        onClick={props.onClick}
+      >
+        <span
+          className={classes.imageSrc}
           style={{
-            width: image.width,
+            backgroundImage: `url(${props.url})`,
           }}
-          onClick={props.onClick}
-        >
-          <span
-            className={classes.imageSrc}
-            style={{
-              backgroundImage: `url(${props.url})`,
-            }}
-          />
-          <span className={classes.imageBackdrop} />
-          <span className={classes.imageButton}>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              className={classes.imageTitle}
-            >
-              {props.value}
-              <span className={classes.imageMarked} />
-            </Typography>
-          </span>
-        </ButtonBase>
-      ))}
+        />
+        <span className={classes.imageBackdrop} />
+        <span className={classes.imageButton}>
+          <Typography
+            component="span"
+            variant="subtitle1"
+            color="inherit"
+            className={classes.imageTitle}
+          >
+            {props.value}
+            <span className={classes.imageMarked} />
+          </Typography>
+        </span>
+      </ButtonBase>
     </div>
   );
 }
