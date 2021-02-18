@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <div>
       <video
-        src="/static/videos/coffee.mp4"
+        src="./static/videos/coffee.mp4"
         loop
         muted
         autoPlay

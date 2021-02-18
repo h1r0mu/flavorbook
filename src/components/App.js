@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Link, BrowserRouter, Route } from "react-router-dom";
+import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { ThemeProvider } from "@material-ui/styles";
@@ -124,6 +124,7 @@ export default function App() {
                 ? "あなたの感じた香り一覧"
                 : "感じない香りを選択してください"}
             </Typography>
+            <Switch>
             <Route exact path="/">
               <Home />
             </Route>
@@ -146,6 +147,7 @@ export default function App() {
             <Route path="/result">
               <Result tiles={tiles.filter(isSelected)} />
             </Route>
+            </Switch>
             <Stepper level={level}>
               <div>
                 {level > 0 && !finish && (
