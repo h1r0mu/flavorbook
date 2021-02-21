@@ -122,7 +122,7 @@ export default function App() {
             <Typography variant="h1" gutterBottom>
               {finish
                 ? "あなたの感じた香り一覧"
-                : "感じない香りを選択してください"}
+                : "明らかに感じないと思う香りを選んでください"}
             </Typography>
             <Switch>
             <Route exact path="/">
@@ -142,32 +142,35 @@ export default function App() {
                 tiles={tiles.filter(isVisible)}
                 level={level}
                 onClick={handleClick}
-              />
-            </Route>
-            <Route path="/result">
-              <Result tiles={tiles.filter(isSelected)} />
-            </Route>
-            </Switch>
-            <Stepper level={level}>
-              <div>
-                {level > 0 && !finish && (
+              >
+							<Stepper level={level}>
+								<div>
+                {level > 0  && (
                   <Button onClick={handlePrev} text={"戻る"} />
                 )}
-                {level < 2 && !finish && (
+                {level !== 2 && (
                   <Button onClick={handleNext} text={"次へ"} />
                 )}
-                {level == 2 && !finish && (
+                {level === 2 && (
                   <Link to="/result">
                     <Button onClick={handleFinish} text={"結果を見る"} />
                   </Link>
                 )}
-                {level == 2 && finish && (
+								</div>
+							</Stepper>
+							</Wheel>
+            </Route>
+            <Route path="/result">
+							<Result tiles={tiles.filter(isSelected)}>
+								<Stepper level={level}>
                   <Link to="/selection">
+										<div>
                     <Button onClick={handleBack} text={"選択に戻る"} />
+										</div>
                   </Link>
-                )}
-              </div>
-            </Stepper>
+								</Stepper>
+							</Result>
+            </Route>
           </div>
         </BrowserRouter>
       </div>

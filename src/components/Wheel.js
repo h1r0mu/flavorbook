@@ -25,7 +25,7 @@ export default function Wheel(props) {
     <div className={classes.flavors}>
       <GridList cellHeight="auto" cols="auto">
         {props.tiles.map((tile) => (
-          <GridListTile key={tile.flavor.key} cols="1">
+          <GridListTile key={tile.flavor.key} cols={1}>
             <Tile
               className={classes.list}
               key={tile.flavor.key}
@@ -36,6 +36,7 @@ export default function Wheel(props) {
             />
           </GridListTile>
         ))}
+					{props.children}
       </GridList>
     </div>
   );
