@@ -132,7 +132,7 @@ function Result(props) {
           onClickDelete={(history) => remove(history)}
         />
       </div>
-    {props.children}
+      {props.children}
     </div>
   );
 }

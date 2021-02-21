@@ -36,7 +36,7 @@ export default function Wheel(props) {
             />
           </GridListTile>
         ))}
-					{props.children}
+        {props.children}
       </GridList>
     </div>
   );
