@@ -6,6 +6,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import "typeface-roboto";
+
 import Steppers from "./Stepper.js";
 import Button from "./Button.js";
 import StoreInfo from "./Form.js";
@@ -111,7 +112,7 @@ function Result(props) {
         <Wheel tiles={tiles} level={props.level} />
       </div>
       <Typography variant="h2" gutterBottom>
-        バリスタ語への翻訳結果
+        あなたの感じた香りを人に伝えるなら
       </Typography>
       <div>
         <p>{convert()}</p>
@@ -127,11 +128,11 @@ function Result(props) {
       <div className={props.classes.history}>
         <History
           headers={Object.keys(storeInfo)}
-          histories={histories}
           onClick={(history) => restore(history)}
           onClickDelete={(history) => remove(history)}
         />
       </div>
+      {props.children}
     </div>
   );
 }
