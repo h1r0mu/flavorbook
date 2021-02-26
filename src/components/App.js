@@ -15,6 +15,7 @@ import Result from "./Result.js";
 import Wheel from "./Wheel.js";
 import { flavorData } from "../data/flavors";
 import { GlobalStyles } from "../GlobalStyles";
+import { AuthProvider } from "./contexts/AuthContext.js";
 
 const theme = createMuiTheme({
   typography: {
@@ -117,62 +118,67 @@ export default function App() {
       <div>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <GlobalStyles />
-          <div>
-            <AppBar />
-            <Typography variant="h1" gutterBottom>
-              {finish
-                ? "あなたの感じた香り一覧"
-                : "明らかに感じないと思う香りを選んでください"}
-            </Typography>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/sign-up">
-                <Signup />
-              </Route>
-              <Route path="/forget-passsword">
-                <ForgetPassword />
-              </Route>
-              <Route path="/selection">
-                <Wheel
-                  tiles={tiles.filter(isVisible)}
-                  level={level}
-                  onClick={handleClick}
-                >
-                  <Stepper level={level}>
-                    <div>
-                      {level > 0 && (
-                        <Button onClick={handlePrev} text={"戻る"} />
-                      )}
-                      {level !== 2 && (
-                        <Button onClick={handleNext} text={"次へ"} />
-                      )}
-                      {level === 2 && (
-                        <Link to="/result">
-                          <Button onClick={handleFinish} text={"結果を見る"} />
+          <AuthProvider>
+            <div>
+              <AppBar />
+              <Typography variant="h1" gutterBottom>
+                {finish
+                  ? "あなたの感じた香り一覧"
+                  : "明らかに感じないと思う香りを選んでください"}
+              </Typography>
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <Route path="/sign-up">
+                  <Signup />
+                </Route>
+                <Route path="/forget-passsword">
+                  <ForgetPassword />
+                </Route>
+                <Route path="/selection">
+                  <Wheel
+                    tiles={tiles.filter(isVisible)}
+                    level={level}
+                    onClick={handleClick}
+                  >
+                    <Stepper level={level}>
+                      <div>
+                        {level > 0 && (
+                          <Button onClick={handlePrev} text={"戻る"} />
+                        )}
+                        {level !== 2 && (
+                          <Button onClick={handleNext} text={"次へ"} />
+                        )}
+                        {level === 2 && (
+                          <Link to="/result">
+                            <Button
+                              onClick={handleFinish}
+                              text={"結果を見る"}
+                            />
+                          </Link>
+                        )}
+                      </div>
+                    </Stepper>
+                  </Wheel>
+                </Route>
+                <Route path="/result">
+                  <Result tiles={tiles.filter(isSelected)}>
+                    <Stepper level={level}>
+                      <div>
+                        <Link to="/selection">
+                          <Button onClick={handleBack} text={"選択に戻る"} />
                         </Link>
-                      )}
-                    </div>
-                  </Stepper>
-                </Wheel>
-              </Route>
-              <Route path="/result">
-                <Result tiles={tiles.filter(isSelected)}>
-                  <Stepper level={level}>
-                    <div>
-                      <Link to="/selection">
-                        <Button onClick={handleBack} text={"選択に戻る"} />
-                      </Link>
-                    </div>
-                  </Stepper>
-                </Result>
-              </Route>
-            </Switch>
-          </div>
+                      </div>
+                    </Stepper>
+                  </Result>
+                </Route>
+              </Switch>
+            </div>
+          </AuthProvider>
         </BrowserRouter>
       </div>
     </ThemeProvider>

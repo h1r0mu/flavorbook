@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
-import { useAuth } from "../contexts/auth-context.js";
+import { useAuth } from "./contexts/AuthContext.js";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
