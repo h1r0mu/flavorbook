@@ -49,7 +49,7 @@ const initialState: State = {
   passwordconfirm: "",
   isButtonDisabled: true,
   helperText: "",
-  isError: false
+  isError: false,
 };
 
 type Action =
@@ -106,10 +106,9 @@ const reducer = (state: State, action: Action): State => {
 };
 
 const Signup = () => {
-
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {signup} = useAuth();
+  const { signup } = useAuth();
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit, errors, trigger } = useForm();
@@ -135,8 +134,8 @@ const Signup = () => {
     }
   }, [state.email, state.password, state.passwordconfirm]);
 
-		async function handleSignup() {
-		// async function handleSignup(data) {
+  async function handleSignup() {
+    // async function handleSignup(data) {
 
     try {
       setError("");
@@ -146,7 +145,7 @@ const Signup = () => {
         payload: true,
       });
 
-						console.log(state.email);
+      console.log(state.email);
       await signup(state.email, state.passwordconfirm);
 
       dispatch({
@@ -160,7 +159,6 @@ const Signup = () => {
       });
 
       setSuccessMessage("アカウントの作成に成功しました");
-
     } catch (e) {
       console.log(e);
 

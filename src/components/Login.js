@@ -105,7 +105,7 @@ const reducer = (state: State, action: Action): State => {
 export default function Login() {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {login} = useAuth();
+  const { login } = useAuth();
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit, errors, trigger } = useForm();
