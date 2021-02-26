@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
-import { useAuth } from "../contexts/auth-context.js";
+import { useAuth } from "./contexts/AuthContext.js";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,7 +49,7 @@ const initialState: State = {
   passwordconfirm: "",
   isButtonDisabled: true,
   helperText: "",
-  isError: false,
+  isError: false
 };
 
 type Action =
@@ -106,9 +106,10 @@ const reducer = (state: State, action: Action): State => {
 };
 
 const Signup = () => {
+
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const signup = useAuth();
+  const {signup} = useAuth();
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit, errors, trigger } = useForm();
@@ -134,8 +135,9 @@ const Signup = () => {
     }
   }, [state.email, state.password, state.passwordconfirm]);
 
-  async function handleSignup() {
-    // async function handleSignup(data) {
+		async function handleSignup() {
+		// async function handleSignup(data) {
+
     try {
       setError("");
       setSuccessMessage("");
@@ -144,7 +146,9 @@ const Signup = () => {
         payload: true,
       });
 
+						console.log(state.email);
       await signup(state.email, state.passwordconfirm);
+
       dispatch({
         type: "signupSuccess",
         payload: "Signup Successfully",
@@ -156,6 +160,7 @@ const Signup = () => {
       });
 
       setSuccessMessage("アカウントの作成に成功しました");
+
     } catch (e) {
       console.log(e);
 

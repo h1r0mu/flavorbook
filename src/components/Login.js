@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
-import { useAuth } from "../contexts/auth-context.js";
+import { useAuth } from "./contexts/AuthContext.js";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -105,7 +105,7 @@ const reducer = (state: State, action: Action): State => {
 export default function Login() {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const login = useAuth();
+  const {login} = useAuth();
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit, errors, trigger } = useForm();
