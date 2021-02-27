@@ -23,7 +23,7 @@ export default function Wheel(props) {
 
   return (
     <div className={classes.flavors}>
-      <GridList cellHeight="auto" cols="auto">
+      <GridList cellHeight="auto" cols={null}>
         {props.tiles.map((tile) => (
           <GridListTile key={tile.flavor.key} cols={1}>
             <Tile
