@@ -1,0 +1,202 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="makeStyles-root-1"
+>
+  <div
+    className="MuiPaper-root MuiStepper-root MuiStepper-horizontal MuiPaper-elevation0"
+  >
+    <div
+      className="MuiStep-root MuiStep-horizontal"
+    >
+      <span
+        className="MuiStepLabel-root MuiStepLabel-horizontal"
+      >
+        <span
+          className="MuiStepLabel-iconContainer"
+        >
+          <svg
+            aria-hidden={true}
+            className="MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-active"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="12"
+            />
+            <text
+              className="MuiStepIcon-text"
+              textAnchor="middle"
+              x="12"
+              y="16"
+            >
+              1
+            </text>
+          </svg>
+        </span>
+        <span
+          className="MuiStepLabel-labelContainer"
+        >
+          <span
+            className="MuiTypography-root MuiStepLabel-label MuiStepLabel-active MuiTypography-body2 MuiTypography-displayBlock"
+          >
+            Select Coffee Flavors ( Level1 )
+          </span>
+        </span>
+      </span>
+    </div>
+    <div
+      className="MuiStepConnector-root MuiStepConnector-horizontal Mui-disabled"
+    >
+      <span
+        className="MuiStepConnector-line MuiStepConnector-lineHorizontal"
+      />
+    </div>
+    <div
+      className="MuiStep-root MuiStep-horizontal"
+    >
+      <span
+        className="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled"
+      >
+        <span
+          className="MuiStepLabel-iconContainer"
+        >
+          <svg
+            aria-hidden={true}
+            className="MuiSvgIcon-root MuiStepIcon-root"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="12"
+            />
+            <text
+              className="MuiStepIcon-text"
+              textAnchor="middle"
+              x="12"
+              y="16"
+            >
+              2
+            </text>
+          </svg>
+        </span>
+        <span
+          className="MuiStepLabel-labelContainer"
+        >
+          <span
+            className="MuiTypography-root MuiStepLabel-label MuiTypography-body2 MuiTypography-displayBlock"
+          >
+            Select Coffee Flavors ( Level2 )
+          </span>
+        </span>
+      </span>
+    </div>
+    <div
+      className="MuiStepConnector-root MuiStepConnector-horizontal Mui-disabled"
+    >
+      <span
+        className="MuiStepConnector-line MuiStepConnector-lineHorizontal"
+      />
+    </div>
+    <div
+      className="MuiStep-root MuiStep-horizontal"
+    >
+      <span
+        className="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled"
+      >
+        <span
+          className="MuiStepLabel-iconContainer"
+        >
+          <svg
+            aria-hidden={true}
+            className="MuiSvgIcon-root MuiStepIcon-root"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="12"
+            />
+            <text
+              className="MuiStepIcon-text"
+              textAnchor="middle"
+              x="12"
+              y="16"
+            >
+              3
+            </text>
+          </svg>
+        </span>
+        <span
+          className="MuiStepLabel-labelContainer"
+        >
+          <span
+            className="MuiTypography-root MuiStepLabel-label MuiTypography-body2 MuiTypography-displayBlock"
+          >
+            Select Coffee Flavors ( Level3 )
+          </span>
+        </span>
+      </span>
+    </div>
+    <div
+      className="MuiStepConnector-root MuiStepConnector-horizontal Mui-disabled"
+    >
+      <span
+        className="MuiStepConnector-line MuiStepConnector-lineHorizontal"
+      />
+    </div>
+    <div
+      className="MuiStep-root MuiStep-horizontal"
+    >
+      <span
+        className="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled"
+      >
+        <span
+          className="MuiStepLabel-iconContainer"
+        >
+          <svg
+            aria-hidden={true}
+            className="MuiSvgIcon-root MuiStepIcon-root"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="12"
+            />
+            <text
+              className="MuiStepIcon-text"
+              textAnchor="middle"
+              x="12"
+              y="16"
+            >
+              4
+            </text>
+          </svg>
+        </span>
+        <span
+          className="MuiStepLabel-labelContainer"
+        >
+          <span
+            className="MuiTypography-root MuiStepLabel-label MuiTypography-body2 MuiTypography-displayBlock"
+          >
+            Register Coffee Flavors
+          </span>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div>
+    <div>
+      dummy
+    </div>
+  </div>
+</div>
+`;
