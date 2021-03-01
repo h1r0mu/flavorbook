@@ -135,7 +135,7 @@ const Signup = () => {
   }, [state.email, state.password, state.passwordconfirm]);
 
   async function handleSignup() {
-    // async function handleSignup(data) {
+    // 非同期処理
 
     try {
       setError("");
@@ -145,8 +145,8 @@ const Signup = () => {
         payload: true,
       });
 
-      console.log(state.email);
       await signup(state.email, state.passwordconfirm);
+      // 非同期処理がうまく行った場合に実行する
 
       dispatch({
         type: "signupSuccess",

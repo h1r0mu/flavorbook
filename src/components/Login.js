@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -109,6 +109,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit, errors, trigger } = useForm();
+  const history = useHistory();
 
   useEffect(() => {
     if (state.email.trim() && state.password.trim()) {
@@ -146,6 +147,7 @@ export default function Login() {
       });
 
       setSuccessMessage("ログインに成功しました");
+      history.push("/member");
     } catch (e) {
       console.log(e);
 

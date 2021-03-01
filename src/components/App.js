@@ -12,10 +12,12 @@ import Signup from "./Signup.js";
 import Home from "./Home.js";
 import ForgetPassword from "./ForgetPassword.js";
 import Result from "./Result.js";
+import Member from "./Member.js";
 import Wheel from "./Wheel.js";
 import { flavorData } from "../data/flavors";
 import { GlobalStyles } from "../GlobalStyles";
 import { AuthProvider } from "./contexts/AuthContext.js";
+import AuthFireRoute from "./AuthFireRoute.js";
 
 const theme = createMuiTheme({
   typography: {
@@ -139,6 +141,7 @@ export default function App() {
                 <Route path="/forget-passsword">
                   <ForgetPassword />
                 </Route>
+                <AuthFireRoute path="/member" component={Member} />
                 <Route path="/selection">
                   <Wheel
                     tiles={tiles.filter(isVisible)}
