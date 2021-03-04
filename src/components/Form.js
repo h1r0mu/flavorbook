@@ -113,7 +113,7 @@ export default function StoreInfo(props) {
         label="豆の状態"
         value={props.storeInfo.grind}
         onChange={props.handleChange}
-        readonly={true}
+        readOnly={true}
         InputProps={{
           readOnly: props.readOnly,
         }}

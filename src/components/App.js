@@ -104,6 +104,7 @@ export default function App() {
     setTiles(newTiles);
     setLevel(newLevel);
   };
+
   const handleFinish = () => setFinish(true);
   const handleBack = () => setFinish(false);
   const isEquivalent = (tile1, tile2) => tile1.flavor.key === tile2.flavor.key;

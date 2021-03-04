@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { useSelector } from "react-redux";
-
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
@@ -25,10 +24,11 @@ const selectHistories = (state) => state.histories.histories;
 
 export default function History(props) {
   const histories = useSelector(selectHistories);
+  console.log(histories);
   const classes = useStyles();
 
   return (
-    <div className={classes.demo}>
+    <div className={classes.table}>
       <List>
         {Object.entries(histories).map(([date, history]) => (
           <ListItem button key={date} onClick={() => props.onClick(history)}>
