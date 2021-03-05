@@ -109,7 +109,7 @@ export default function ForgetPassword() {
         payload: true,
       });
     }
-  }, [state.email,state.password]);
+  }, [state.email, state.password]);
 
   async function handleForgotPassword() {
     // async function handleLogin(data) {
