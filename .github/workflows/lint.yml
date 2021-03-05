@@ -27,3 +27,6 @@ jobs:
           # Enable linters
           eslint: true
           prettier: true
+
+      - name: Run tests
+        run: yarn test
