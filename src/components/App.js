@@ -35,15 +35,6 @@ const theme = createMuiTheme({
       "Segoe UI Emoji",
       "Segoe UI Symbol",
     ].join(","),
-    h1: {
-      marginTop: 40,
-      marginLeft: 40,
-      fontSize: 35,
-    },
-    h2: {
-      marginTop: 20,
-      fontSize: 50,
-    },
   },
   palette: {
     primary: {
@@ -126,7 +117,7 @@ export default function App() {
           <AuthProvider>
             <div>
               <AppBar />
-              <Typography variant="h1" gutterBottom>
+              <Typography variant="h4" gutterBottom>
                 {finish
                   ? "あなたの感じた香り一覧"
                   : "明らかに感じないと思う香りを選んでください"}
@@ -143,6 +134,9 @@ export default function App() {
                 </Route>
                 <Route path="/forget">
                   <ForgetPassword />
+                </Route>
+                <Route path="/dev">
+                  <Dev />
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
                 <AuthFireRoute
