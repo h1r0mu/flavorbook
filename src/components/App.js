@@ -139,7 +139,7 @@ export default function App() {
                 <Route path="/sign-up">
                   <Signup />
                 </Route>
-                <Route path="/forget-passsword">
+                <Route path="/forget">
                   <ForgetPassword />
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
