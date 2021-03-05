@@ -265,7 +265,7 @@ export default function Login() {
             )}
           </div>
           アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
-          パスワードを忘れた場合は<Link to="/forget-password">こちら</Link>
+          パスワードを忘れた場合は<Link to="/forget">こちら</Link>
         </CardContent>
         <CardActions>
           <Button
