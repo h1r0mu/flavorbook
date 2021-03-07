@@ -1,31 +1,44 @@
 import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@material-ui/icons/SentimentSatisfiedAltOutlined";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import styled from "styled-components";
+import TextField from "@material-ui/core/TextField";
 
 import Chip from "./Chip.js";
 import Slider from "./Slider.js";
+import { flavorData } from "../data/flavors";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     maxWidth: 500,
     margin: "10%",
     marginTop: "0%",
   },
-});
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+  searchField: {
+    width: 250,
+  },
+}));
 
 const StyledTypography = withStyles({
   h1: {
     textIndent: "0pt",
   },
   h2: {
-    textIndent: "10%",
+    textIndent: "0%",
   },
 })(Typography);
 
@@ -188,21 +201,74 @@ export default function Dev() {
         <StyledTypography variant="h1" gutterBottom>
           Flavors
         </StyledTypography>
-        <StyledTypography variant="h2" gutterBottom>
-          Level 1
-        </StyledTypography>
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
-        <Chip label="test" imagePath="../static/Big/floral.jpg" />
-        <StyledTypography variant="h2" gutterBottom>
-          Level 2
-        </StyledTypography>
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
-        <Chip label="test" imagePath="../static/Big/floral.jpg" />
-        <StyledTypography variant="h2" gutterBottom>
-          Level 3
-        </StyledTypography>
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
-        <Chip label="test" imagePath="../static/Big/floral.jpg" />
+        <div>
+          <StyledTypography variant="h2" gutterBottom>
+            Level 1
+          </StyledTypography>
+          <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+          <Chip label="test" imagePath="../static/Big/floral.jpg" />
+          <div className={classes.searchField}>
+            <Autocomplete
+              id="flavor-search-level1"
+              flavorSearchLevel2
+              options={flavorData
+                .filter((option) => option[1] == 0)
+                .map((option) => option[0])}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Level1"
+                  margin="normal"
+                  variant="outlined"
+                />
+              )}
+            />
+          </div>
+          <StyledTypography variant="h2" gutterBottom>
+            Level 2
+          </StyledTypography>
+          <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+          <Chip label="test" imagePath="../static/Big/floral.jpg" />
+          <div className={classes.searchField}>
+            <Autocomplete
+              id="flavor-search-level2"
+              flavorSearchLevel2
+              options={flavorData
+                .filter((option) => option[1] == 1)
+                .map((option) => option[0])}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Level2"
+                  margin="normal"
+                  variant="outlined"
+                />
+              )}
+            />
+          </div>
+          <StyledTypography variant="h2" gutterBottom>
+            Level 3
+          </StyledTypography>
+          <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+          <Chip label="test" imagePath="../static/Big/floral.jpg" />
+          <div className={classes.searchField}>
+            <Autocomplete
+              id="flavor-search-level3"
+              flavorSearchLevel2
+              options={flavorData
+                .filter((option) => option[1] == 2)
+                .map((option) => option[0])}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Level3"
+                  margin="normal"
+                  variant="outlined"
+                />
+              )}
+            />
+          </div>
+        </div>
       </div>
       <div>
         <StyledTypography variant="h1" gutterBottom>
