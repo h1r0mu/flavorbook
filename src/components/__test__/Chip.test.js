@@ -5,7 +5,7 @@ import Chip from "../Chip.js";
 
 it("renders correctly", () => {
   // const chip = renderer
-    // .create(<Chip label="dummy" imagePath="./dummy" />)
-    // .toJSON();
+  // .create(<Chip label="dummy" imagePath="./dummy" />)
+  // .toJSON();
   // expect(chip).toMatchSnapshot();
 });

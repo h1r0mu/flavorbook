@@ -1,7 +1,7 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import {Slider as MuiSlider} from '@material-ui/core';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { Slider as MuiSlider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(3),
   },
 }));
-
 
 function valuetext(value) {
   return `${value}°C`;
