@@ -5,7 +5,7 @@ import { useAuth } from "./contexts/AuthContext";
 import { db } from "../firebase.js";
 
 export default function Member() {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, sendEmailVerification } = useAuth();
   const history = useHistory();
   const [error, setError] = useState("");
   const [users, setUsers] = useState([]);
@@ -19,6 +19,17 @@ export default function Member() {
       history.push("/");
     } catch {
       setError("Failed to log out");
+    }
+  }
+
+  async function handleSendEmailVerification() {
+    setError("");
+    try {
+      await sendEmailVerification();
+      setError("メールをおくりました。メール有効化をお願いします");
+    } catch (e) {
+      console.log(e);
+      setError("有効化メールの送信に失敗しました。");
     }
   }
 
@@ -55,6 +66,7 @@ export default function Member() {
         <div>
           <strong>ハンドル名:</strong> {currentUser.displayName}
         </div>
+        <Link to="update-profile"> データの更新しよーぜ　</Link>
         <div>
           <strong>履歴</strong>
           <ul>{userListItems}</ul>
@@ -62,6 +74,15 @@ export default function Member() {
         <Button color="primary" onClick={handleLogout}>
           Logout
         </Button>
+        {!currentUser.emailVerified && (
+          <div>
+            メールアドレスが有効化されていません{" "}
+            <Button
+              color="primary"
+              onClick={handleSendEmailVerification}
+            ></Button>
+          </div>
+        )}
       </div>
     </div>
   );

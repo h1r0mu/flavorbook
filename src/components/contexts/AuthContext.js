@@ -42,6 +42,18 @@ export function AuthProvider({ children }) {
     return currentUser.sendEmailVerification(actionCodeSettings);
   }
 
+  function updatePassword(password) {
+    return currentUser.updateEmail(email);
+  }
+
+  function updateEmail(email) {
+    return currentUser.updateEmail(email);
+  }
+
+  function updateProfile(profiledata) {
+    return currentUser.updateProfile(profiledata);
+  }
+
   const value = {
     currentUser,
     signup,
@@ -49,6 +61,9 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     sendEmailVerification,
+    updatePassword,
+    updateEmail,
+    updateProfile,
   };
 
   useEffect(() => {

@@ -11,6 +11,7 @@ import Login from "./Login.js";
 import Signup from "./Signup.js";
 import Home from "./Home.js";
 import ForgetPassword from "./ForgetPassword.js";
+import UpdateProfile from "./UpdateProfile.js";
 import Result from "./Result.js";
 import Member from "./Member.js";
 import Wheel from "./Wheel.js";
@@ -143,6 +144,10 @@ export default function App() {
                   <ForgetPassword />
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
+                <AuthFireRoute
+                  path="/update-profile"
+                  component={UpdateProfile}
+                />
                 <Route path="/selection">
                   <Wheel
                     tiles={tiles.filter(isVisible)}
