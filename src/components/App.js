@@ -135,8 +135,8 @@ export default function App() {
                 <Route path="/forget">
                   <ForgetPassword />
                 </Route>
-                <Route path="/dev">
-                  <Dev />
+                <Route path="/expert">
+                  <Expert />
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
                 <AuthFireRoute
