@@ -5,6 +5,7 @@ import AppBar from "./AppBar.js";
 import AuthFireRoute from "./AuthFireRoute.js";
 import { AuthProvider } from "./contexts/AuthContext.js";
 import Button from "./Button.js";
+import Expert from "./Register/Expert.js";
 import ForgetPassword from "./ForgetPassword.js";
 import { GlobalStyles } from "../GlobalStyles";
 import Home from "./Home.js";

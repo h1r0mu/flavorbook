@@ -1,8 +1,8 @@
-import React from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import { Chip as MuiChip } from "@material-ui/core";
+import PropTypes from "prop-types";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,3 +26,8 @@ export default function Chip(props) {
     />
   );
 }
+
+Chip.propTypes = {
+  label: PropTypes.string,
+  imagePath: PropTypes.string,
+};

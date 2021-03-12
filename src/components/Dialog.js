@@ -1,9 +1,12 @@
 import {
-  Dialog as MuiDialog,
   DialogContent,
   DialogTitle,
+  Dialog as MuiDialog,
   Typography,
 } from "@material-ui/core";
+
+import PropTypes from "prop-types";
+import React from "react";
 
 export default function Dialog(props) {
   return (
@@ -19,3 +22,10 @@ export default function Dialog(props) {
     </MuiDialog>
   );
 }
+
+Dialog.propTypes = {
+  onClose: PropTypes.func,
+  open: PropTypes.bool,
+  content: PropTypes.string,
+  title: PropTypes.string,
+};

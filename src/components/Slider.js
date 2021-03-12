@@ -1,7 +1,7 @@
+import { Slider as MuiSlider } from "@material-ui/core";
+import PropTypes from "prop-types";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { Slider as MuiSlider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function valuetext(value) {
+function valueText(value) {
   return `${value}°C`;
 }
 
@@ -23,7 +23,7 @@ export default function Slider(props) {
     <div className={classes.root}>
       <MuiSlider
         defaultValue={50}
-        getAriaValueText={valuetext}
+        getAriaValueText={valueText}
         aria-labelledby="discrete-slider-always"
         step={5}
         marks={props.marks}
@@ -32,3 +32,7 @@ export default function Slider(props) {
     </div>
   );
 }
+
+Slider.propTypes = {
+  marks: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+};

@@ -1,37 +1,23 @@
+import { GridList, GridListTile } from "@material-ui/core";
 import React, { useState } from "react";
-
 import {
-  Checkbox,
-  Grid,
-  GridListTile,
-  GridList,
-  TextField,
-} from "@material-ui/core";
-import { Rating } from "@material-ui/lab";
-import {
-  CheckBox as CheckBoxIcon,
-  CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
-  SentimentVeryDissatisfied as SentimentVeryDissatisfiedIcon,
   SentimentDissatisfied as SentimentDissatisfiedIcon,
-  SentimentSatisfied as SentimentSatisfiedIcon,
   SentimentSatisfiedAlt as SentimentSatisfiedAltIcon,
+  SentimentSatisfied as SentimentSatisfiedIcon,
+  SentimentVeryDissatisfied as SentimentVeryDissatisfiedIcon,
   SentimentVerySatisfied as SentimentVerySatisfiedIcon,
 } from "@material-ui/icons";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import styled from "styled-components";
 
 import Autocomplete from "./Autocomplete.js";
-import Button from "../Button.js";
-import Dialog from "../Dialog.js";
 import Chip from "../Chip.js";
+import Dialog from "../Dialog.js";
+import PropTypes from "prop-types";
+import { Rating } from "@material-ui/lab";
 import Slider from "../Slider.js";
 import Tile from "../Tile.js";
 import Typography from "./Typography.js";
-
 import { flavorData } from "../../data/flavors";
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -195,6 +181,24 @@ const marks = {
   ],
 };
 
+function createFlavors(flavorData) {
+  const flavors = [];
+  flavorData.forEach(([name, level, parentName, imageUrl]) => {
+    flavors.push({
+      name: name,
+      level: level,
+      key: `${name}${level}`,
+      imageUrl: imageUrl,
+      parent: flavors.find(
+        (flavor) => flavor.name === parentName && flavor.level === level - 1
+      ),
+      description: name,
+    });
+  });
+  return flavors;
+}
+const flavors = createFlavors(flavorData);
+
 export default function Expert() {
   const classes = useStyles();
   const [selectedFlavorsLv0, setSelectedFlavorsLv0] = useState([]);
@@ -202,7 +206,7 @@ export default function Expert() {
   const [selectedFlavorsLv2, setSelectedFlavorsLv2] = useState([]);
   const [openedDialog, setOpenedDialog] = useState(null);
 
-  const select = (setter, event, value, reason) => {
+  const select = (setter, event, value) => {
     setter(value);
   };
 
@@ -389,20 +393,6 @@ export default function Expert() {
   );
 }
 
-function createFlavors(flavorData) {
-  const flavors = [];
-  flavorData.forEach(([name, level, parentName, imageUrl]) => {
-    flavors.push({
-      name: name,
-      level: level,
-      key: `${name}${level}`,
-      imageUrl: imageUrl,
-      parent: flavors.find(
-        (flavor) => flavor.name === parentName && flavor.level === level - 1
-      ),
-      description: name,
-    });
-  });
-  return flavors;
-}
-const flavors = createFlavors(flavorData);
+IconContainer.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
