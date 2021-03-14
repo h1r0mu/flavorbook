@@ -1,8 +1,7 @@
 import React from "react";
-import renderer from "react-test-renderer";
-
 import Wheel from "../Wheel.js";
 import { flavorData } from "../../data/flavors";
+import renderer from "react-test-renderer";
 
 it("renders correctly", () => {
   const tiles = createTiles(flavorData);

@@ -1,13 +1,4 @@
 import {
-  Chat as ChatIcon,
-  EmojiFoodBeverage as EmojiFoodBeverageIcon,
-  LaptopMac as LaptopMacIcon,
-  Menu as MenuIcon,
-  Share as ShareIcon,
-  Store as StoreIcon,
-} from "@material-ui/icons";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
-import {
   AppBar,
   Drawer,
   IconButton,
@@ -18,7 +9,16 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import {
+  Chat as ChatIcon,
+  EmojiFoodBeverage as EmojiFoodBeverageIcon,
+  LaptopMac as LaptopMacIcon,
+  Menu as MenuIcon,
+  Share as ShareIcon,
+  Store as StoreIcon,
+} from "@material-ui/icons";
 import React, { useState } from "react";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() =>
   createStyles({

@@ -1,5 +1,6 @@
+import { Redirect, Route } from "react-router-dom";
+
 import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
 import React from "react";
 import { useAuth } from "./contexts/AuthContext";
 

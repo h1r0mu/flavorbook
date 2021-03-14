@@ -1,15 +1,16 @@
+import "typeface-roboto";
+
+import React, { useState } from "react";
+
+import Button from "./Button.js";
+import History from "./History.js";
 import PropTypes from "prop-types";
 import SaveIcon from "@material-ui/icons/Save";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { useDispatch } from "react-redux";
-import React, { useState } from "react";
-import Wheel from "./Wheel.js";
-import History from "./History.js";
 import StoreInfo from "./Form.js";
-import Button from "./Button.js";
-
-import "typeface-roboto";
+import Typography from "@material-ui/core/Typography";
+import Wheel from "./Wheel.js";
+import { useDispatch } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {

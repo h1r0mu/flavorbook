@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
 import { GridList } from "@material-ui/core";
 import { GridListTile } from "@material-ui/core";
+import PropTypes from "prop-types";
 import React from "react";
 import Tile from "./Tile.js";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   list: {

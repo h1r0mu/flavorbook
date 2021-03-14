@@ -1,24 +1,25 @@
-import PropTypes from "prop-types";
-import { ThemeProvider } from "@material-ui/styles";
-import { createMuiTheme } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import React, { useState } from "react";
+
+import AppBar from "./AppBar.js";
 import AuthFireRoute from "./AuthFireRoute.js";
 import { AuthProvider } from "./contexts/AuthContext.js";
-import { GlobalStyles } from "../GlobalStyles";
-import { flavorData } from "../data/flavors";
-import Wheel from "./Wheel.js";
-import Member from "./Member.js";
-import Result from "./Result.js";
-import UpdateProfile from "./UpdateProfile.js";
-import ForgetPassword from "./ForgetPassword.js";
-import Home from "./Home.js";
-import Signup from "./Signup.js";
-import Login from "./Login.js";
 import Button from "./Button.js";
+import ForgetPassword from "./ForgetPassword.js";
+import { GlobalStyles } from "../GlobalStyles";
+import Home from "./Home.js";
+import Login from "./Login.js";
+import Member from "./Member.js";
+import PropTypes from "prop-types";
+import Result from "./Result.js";
+import Signup from "./Signup.js";
 import Stepper from "./Stepper.js";
-import AppBar from "./AppBar.js";
+import { ThemeProvider } from "@material-ui/styles";
+import Typography from "@material-ui/core/Typography";
+import UpdateProfile from "./UpdateProfile.js";
+import Wheel from "./Wheel.js";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { flavorData } from "../data/flavors";
 
 const theme = createMuiTheme({
   typography: {
