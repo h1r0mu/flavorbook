@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import React from "react";
-
-import ButtonBases from "./ComplexButton.js";
 import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
+import ButtonBases from "./ComplexButton.js";
 
 const useStyles = makeStyles(() => ({
   // css設定
@@ -40,6 +39,6 @@ Tile.propTypes = {
   value: PropTypes.string,
   onClick: PropTypes.func,
   selected: PropTypes.bool,
-  url: PropTypes.string,
+  imageUrl: PropTypes.string,
 };
 export default Tile;

@@ -1,5 +1,6 @@
-import React from "react";
+import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
+import React from "react";
 import { useAuth } from "./contexts/AuthContext";
 
 export default function AuthFirebaseRoute({ component: Component, ...rest }) {
@@ -18,3 +19,7 @@ export default function AuthFirebaseRoute({ component: Component, ...rest }) {
     ></Route>
   );
 }
+
+AuthFirebaseRoute.propTypes = {
+  component: PropTypes.elementType,
+};

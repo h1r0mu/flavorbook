@@ -1,6 +1,5 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { createMuiTheme } from "@material-ui/core/styles";
+import React from "react";
 import TreeSelector from "./TreeSelector.js";
 
 const useStyles = makeStyles(() => ({

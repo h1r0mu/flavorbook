@@ -10,7 +10,7 @@ it("renders correctly", () => {
   const wheel = renderer
     .create(
       <Wheel tiles={tiles} label="dummy" imagePath="./dummy">
-        <div>"dummy"</div>
+        <div>dummy</div>
       </Wheel>
     )
     .toJSON();

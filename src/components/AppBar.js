@@ -1,30 +1,26 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
 import {
-  createStyles,
-  makeStyles,
-  Theme,
-  withStyles,
-} from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { createMuiTheme } from "@material-ui/core/styles";
-import EmojiFoodBeverageIcon from "@material-ui/icons/EmojiFoodBeverage";
-import LaptopMacIcon from "@material-ui/icons/LaptopMac";
-import ShareIcon from "@material-ui/icons/Share";
-import ChatIcon from "@material-ui/icons/Chat";
-import StoreIcon from "@material-ui/icons/Store";
+  Chat as ChatIcon,
+  EmojiFoodBeverage as EmojiFoodBeverageIcon,
+  LaptopMac as LaptopMacIcon,
+  Menu as MenuIcon,
+  Share as ShareIcon,
+  Store as StoreIcon,
+} from "@material-ui/icons";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import {
+  AppBar,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
+import React, { useState } from "react";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       flexGrow: 1,

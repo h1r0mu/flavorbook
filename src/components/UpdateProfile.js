@@ -1,10 +1,9 @@
-import React, { useState, useReducer, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Typography, Paper, Button, TextField } from "@material-ui/core";
-
-import { useAuth } from "./contexts/AuthContext.js";
 import { Link, useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import React, { useState, useReducer, useEffect } from "react";
+import { useAuth } from "./contexts/AuthContext.js";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -150,7 +149,7 @@ const UpdateProfile = () => {
     }
   }, [state.email, state.password, state.passwordconfirm, currentUser.email]);
 
-  async function handleUpdateProfile(data) {
+  async function handleUpdateProfile() {
     setError("");
     setSuccessMessage("");
     //sing up ボタンの無効化

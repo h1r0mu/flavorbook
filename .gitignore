@@ -24,3 +24,16 @@ yarn-error.log*
 
 # ES Lint
 .eslintcache
+
+# Tags
+# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+TAGS
+.TAGS
+!TAGS/
+tags
+tags.temp
+tags.lock
+.tags
+!tags/
+gtags.files
+
