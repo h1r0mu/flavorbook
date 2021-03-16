@@ -61,16 +61,16 @@ export default function Autocomplete(props) {
           )}
         />
       </div>
-      <div>{props.children}</div>
+      {props.children}
     </div>
   );
 }
 
 Autocomplete.propTypes = {
   children: PropTypes.element,
-  onChange: PropTypes.func,
-  getOptionLabel: PropTypes.func,
+  getOptionLabel: PropTypes.func.isRequired,
   getChipProps: PropTypes.func,
-  options: PropTypes.array,
-  title: PropTypes.string,
+  onChange: PropTypes.func,
+  options: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
 };
