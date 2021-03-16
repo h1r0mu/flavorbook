@@ -23,7 +23,6 @@ it("the children are in the document", () => {
   const children = <div>We are Children!</div>;
   const instance = renderer.create(
     <Autocomplete
-      title="title"
       onChange={() => null}
       options={["paper", "flannel", "metal"]}
       getChipProps={() => ({ label: "label", imagePath: "imagePath" })}

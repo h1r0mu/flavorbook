@@ -72,5 +72,5 @@ Autocomplete.propTypes = {
   getChipProps: PropTypes.func,
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };

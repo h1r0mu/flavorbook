@@ -9,7 +9,6 @@ import {
 } from "@material-ui/icons";
 
 import Autocomplete from "./Autocomplete.js";
-import Chip from "../Chip.js";
 import Dialog from "../Dialog.js";
 import PropTypes from "prop-types";
 import { Rating } from "@material-ui/lab";
@@ -337,7 +336,15 @@ export default function Expert() {
         <Slider marks={marks.mouseFeel1} />
         <Slider marks={marks.mouseFeel2} />
         <Slider marks={marks.mouseFeel3} />
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+        <Autocomplete
+          options={flavors.filter((flavor) => flavor.level == 0)}
+          getOptionLabel={(flavor) => flavor.name}
+          getChipProps={(flavor) => ({
+            label: flavor.name,
+            imagePath: flavor.imageUrl,
+          })}
+          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
+        />
       </div>
       <div>
         <Typography variant="h1" gutterBottom>
@@ -345,7 +352,15 @@ export default function Expert() {
         </Typography>
         <Slider marks={marks.acidity1} />
         <Slider marks={marks.acidity2} />
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+        <Autocomplete
+          options={flavors.filter((flavor) => flavor.level == 0)}
+          getOptionLabel={(flavor) => flavor.name}
+          getChipProps={(flavor) => ({
+            label: flavor.name,
+            imagePath: flavor.imageUrl,
+          })}
+          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
+        />
       </div>
       <div>
         <Typography variant="h1" gutterBottom>
@@ -353,7 +368,15 @@ export default function Expert() {
         </Typography>
         <Slider marks={marks.sweetness1} />
         <Slider marks={marks.sweetness2} />
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+        <Autocomplete
+          options={flavors.filter((flavor) => flavor.level == 0)}
+          getOptionLabel={(flavor) => flavor.name}
+          getChipProps={(flavor) => ({
+            label: flavor.name,
+            imagePath: flavor.imageUrl,
+          })}
+          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
+        />
       </div>
       <div>
         <Typography variant="h1" gutterBottom>
@@ -362,7 +385,15 @@ export default function Expert() {
         <Slider marks={marks.afterTaste1} />
         <Slider marks={marks.afterTaste2} />
         <Slider marks={marks.afterTaste3} />
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+        <Autocomplete
+          options={flavors.filter((flavor) => flavor.level == 0)}
+          getOptionLabel={(flavor) => flavor.name}
+          getChipProps={(flavor) => ({
+            label: flavor.name,
+            imagePath: flavor.imageUrl,
+          })}
+          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
+        />
       </div>
       <div>
         <Typography variant="h1" gutterBottom>
@@ -371,11 +402,27 @@ export default function Expert() {
         <Typography variant="h2" gutterBottom>
           Too much
         </Typography>
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+        <Autocomplete
+          options={flavors.filter((flavor) => flavor.level == 0)}
+          getOptionLabel={(flavor) => flavor.name}
+          getChipProps={(flavor) => ({
+            label: flavor.name,
+            imagePath: flavor.imageUrl,
+          })}
+          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
+        />
         <Typography variant="h2" gutterBottom>
           Lack
         </Typography>
-        <Chip label="test" imagePath="../static/Big/fruity.jpg" />
+        <Autocomplete
+          options={flavors.filter((flavor) => flavor.level == 0)}
+          getOptionLabel={(flavor) => flavor.name}
+          getChipProps={(flavor) => ({
+            label: flavor.name,
+            imagePath: flavor.imageUrl,
+          })}
+          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
+        />
       </div>
       <div>
         <Typography variant="h1" gutterBottom>
