@@ -14,6 +14,7 @@ import ForgetPassword from "./ForgetPassword.js";
 import UpdateProfile from "./UpdateProfile.js";
 import Result from "./Result.js";
 import Member from "./Member.js";
+import MemberTest from "./MemberTest.js";
 import Wheel from "./Wheel.js";
 import { flavorData } from "../data/flavors";
 import { GlobalStyles } from "../GlobalStyles";
@@ -142,6 +143,9 @@ export default function App() {
                 </Route>
                 <Route path="/forget">
                   <ForgetPassword />
+                </Route>
+                <Route path="/member-test">
+                  <MemberTest />
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
                 <AuthFireRoute

@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { useAuth } from "./contexts/AuthContext";
 import { db } from "../firebase.js";
+import Card from "./Card";
 
 export default function Member() {
   const { currentUser, logout, sendEmailVerification } = useAuth();
@@ -46,7 +47,7 @@ export default function Member() {
 
   const userListItems = users.map((user) => {
     return (
-      <li>
+      <li key="firebase-list">
         {user.store_name}:{user.bean_state}:{user.refine_method}:
         {user.extraction_method}:{user.producing_country}:
         {user.producing_region}:{user.producing_farm}:
@@ -66,7 +67,6 @@ export default function Member() {
         <div>
           <strong>ハンドル名:</strong> {currentUser.displayName}
         </div>
-        <Link to="update-profile"> データの更新しよーぜ　</Link>
         <div>
           <strong>履歴</strong>
           <ul>{userListItems}</ul>
