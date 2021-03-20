@@ -1,7 +1,6 @@
+import Button from "../Button.js";
 import React from "react";
 import renderer from "react-test-renderer";
-
-import Button from "../Button.js";
 
 it("renders correctly", () => {
   const button = renderer

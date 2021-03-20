@@ -1,8 +1,9 @@
-import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+
 import Button from "@material-ui/core/Button";
-import { useAuth } from "./contexts/AuthContext";
 import { db } from "../firebase.js";
+import { useAuth } from "./contexts/AuthContext";
 
 export default function Member() {
   const { currentUser, logout, sendEmailVerification } = useAuth();
@@ -46,7 +47,7 @@ export default function Member() {
 
   const userListItems = users.map((user) => {
     return (
-      <li>
+      <li key={user.store.name}>
         {user.store_name}:{user.bean_state}:{user.refine_method}:
         {user.extraction_method}:{user.producing_country}:
         {user.producing_region}:{user.producing_farm}:

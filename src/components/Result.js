@@ -1,17 +1,16 @@
-import PropTypes from "prop-types";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import SaveIcon from "@material-ui/icons/Save";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import "typeface-roboto";
 
-import Steppers from "./Stepper.js";
+import React, { useState } from "react";
+
 import Button from "./Button.js";
-import StoreInfo from "./Form.js";
 import History from "./History.js";
+import PropTypes from "prop-types";
+import SaveIcon from "@material-ui/icons/Save";
+import StoreInfo from "./Form.js";
+import Typography from "@material-ui/core/Typography";
 import Wheel from "./Wheel.js";
+import { useDispatch } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
@@ -29,10 +28,7 @@ const styles = {
   },
 };
 
-const selectHistories = (state) => state.histories.histories;
-
 function Result(props) {
-  const histories = useSelector(selectHistories);
   const dispatch = useDispatch();
   const [storeInfo, setStoreInfo] = useState({
     date: null,
@@ -145,6 +141,7 @@ Result.propTypes = {
   onClickPrev: PropTypes.func,
   onClickNext: PropTypes.func,
   classes: PropTypes.object.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default withStyles(styles)(Result);
