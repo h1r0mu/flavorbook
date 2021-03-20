@@ -5,6 +5,7 @@ import AppBar from "./AppBar.js";
 import AuthFireRoute from "./AuthFireRoute.js";
 import { AuthProvider } from "./contexts/AuthContext.js";
 import Button from "./Button.js";
+import Expert from "./Register/Expert.js";
 import ForgetPassword from "./ForgetPassword.js";
 import { GlobalStyles } from "../GlobalStyles";
 import Home from "./Home.js";
@@ -35,15 +36,6 @@ const theme = createMuiTheme({
       "Segoe UI Emoji",
       "Segoe UI Symbol",
     ].join(","),
-    h1: {
-      marginTop: 40,
-      marginLeft: 40,
-      fontSize: 35,
-    },
-    h2: {
-      marginTop: 20,
-      fontSize: 50,
-    },
   },
   palette: {
     primary: {
@@ -126,7 +118,7 @@ export default function App() {
           <AuthProvider>
             <div>
               <AppBar />
-              <Typography variant="h1" gutterBottom>
+              <Typography variant="h4" gutterBottom>
                 {finish
                   ? "あなたの感じた香り一覧"
                   : "明らかに感じないと思う香りを選んでください"}
@@ -143,6 +135,9 @@ export default function App() {
                 </Route>
                 <Route path="/forget">
                   <ForgetPassword />
+                </Route>
+                <Route path="/expert">
+                  <Expert />
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
                 <AuthFireRoute
