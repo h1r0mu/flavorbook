@@ -24,7 +24,6 @@ const selectHistories = (state) => state.histories.histories;
 
 export default function History(props) {
   const histories = useSelector(selectHistories);
-  console.log(histories);
   const classes = useStyles();
 
   return (
