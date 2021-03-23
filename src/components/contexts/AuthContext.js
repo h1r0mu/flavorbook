@@ -1,4 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
+import PropTypes from "prop-types";
 import { auth } from "../../firebase.js";
 
 const AuthContext = React.createContext();
@@ -9,10 +11,8 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function AuthProvider({ children }) {
+export function AuthProvider(props) {
   const [currentUser, setCurrentUser] = useState();
-
-  const [loading, setLoading] = useState(true);
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -42,8 +42,8 @@ export function AuthProvider({ children }) {
     return currentUser.sendEmailVerification(actionCodeSettings);
   }
 
-  function updatePassword(password) {
-    return currentUser.updateEmail(email);
+  function updatePassword() {
+    return currentUser.updateEmail();
   }
 
   function updateEmail(email) {
@@ -72,5 +72,11 @@ export function AuthProvider({ children }) {
     });
   }, []);
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
+  );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.element,
+};

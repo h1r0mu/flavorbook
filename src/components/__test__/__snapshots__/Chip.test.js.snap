@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="MuiButtonBase-root MuiChip-root makeStyles-root-1 MuiChip-clickable"
+  imagePath="./dummy"
+  onBlur={[Function]}
+  onDragLeave={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  onMouseDown={[Function]}
+  onMouseLeave={[Function]}
+  onMouseUp={[Function]}
+  onTouchEnd={[Function]}
+  onTouchMove={[Function]}
+  onTouchStart={[Function]}
+  role="button"
+  tabIndex={0}
+>
+  <div
+    className="MuiAvatar-root MuiAvatar-circle MuiChip-avatar"
+  >
+    <img
+      alt="dummy"
+      className="MuiAvatar-img"
+      src="./dummy"
+    />
+  </div>
+  <span
+    className="MuiChip-label"
+  >
+    dummy
+  </span>
+</div>
+`;

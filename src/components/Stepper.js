@@ -1,11 +1,9 @@
+import PropTypes from "prop-types";
 import React from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import PropTypes from "prop-types";
-import { createMuiTheme } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
