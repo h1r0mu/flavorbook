@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "./Card";
-import Typography from "@material-ui/core/Typography";
 import Chip from "./Chip";
 import MemberPageComp from "./MemberPageComp";
+import Cards from "./Cards";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   cards: {},
+  chips: {
+    display: "flex",
+				maxWidth:1000,
+  },
   chipButton: {
     display: "flex",
-    marginLeft: 1000,
+				marginLeft:'auto',
   },
 }));
 
@@ -21,9 +26,6 @@ export default function Member() {
   const classes = useStyles();
   const history = useHistory();
   const [error, setError] = useState("");
-  const [users, setUsers] = useState([]);
-
-  const _users = [];
 
   async function handleLogout() {
     setError("");
@@ -53,9 +55,9 @@ export default function Member() {
       <Grid container>
         <Grid item xs={3}></Grid>
         <Grid item xs={10}>
-          <div className={classes.chipButton}>
-            <Chip name="CREATE" pattern="Create" color="primary" />
-            <Chip name="EDIT" pattern="Edit" color="secondry" />
+          <div className={classes.chips}>
+            <Chip name="CREATE" pattern="Create" color="primary" className={classes.chipButton} />
+            <Chip name="EDIT" pattern="Edit" color="secondry" className={classes.chipButton} />
           </div>
         </Grid>
       </Grid>
@@ -68,27 +70,7 @@ export default function Member() {
         </Grid>
         <Grid item xs={9}>
           <div className={classes.cards}>
-            <Card
-              picName="sample.png"
-              storeName="はぜや珈琲"
-              coffeeName="エチオピア　ハロディ　ナチュラル"
-              subtitle="City Roast"
-              flavors={flavors}
-            />
-            <Card
-              picName="sample1.png"
-              storeName="はぜや珈琲"
-              coffeeName="エチオピア　ハロディ　ナチュラル"
-              subtitle="City Roast"
-              flavors={flavors}
-            />
-            <Card
-              picName="sample2.png"
-              storeName="はぜや珈琲"
-              coffeeName="エチオピア　ハロディ　ナチュラル"
-              subtitle="City Roast"
-              flavors={flavors}
-            />
+            <Cards />
           </div>
         </Grid>
       </Grid>

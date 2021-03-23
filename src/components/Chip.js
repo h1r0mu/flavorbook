@@ -20,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     "& > *": {
       margin: theme.spacing(0.5),
-      width: 200,
-      height: 40,
+      maxWidth: 300,
+      minWidth: 200,
+      maxHeight: 40,
     },
   },
 }));
