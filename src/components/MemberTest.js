@@ -14,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
   cards: {},
   chips: {
     display: "flex",
-				maxWidth:1000,
+    maxWidth: 1000,
   },
   chipButton: {
     display: "flex",
-				marginLeft:'auto',
+    marginLeft: "auto",
   },
 }));
 
@@ -56,8 +56,18 @@ export default function Member() {
         <Grid item xs={3}></Grid>
         <Grid item xs={10}>
           <div className={classes.chips}>
-            <Chip name="CREATE" pattern="Create" color="primary" className={classes.chipButton} />
-            <Chip name="EDIT" pattern="Edit" color="secondry" className={classes.chipButton} />
+            <Chip
+              name="CREATE"
+              pattern="Create"
+              color="primary"
+              className={classes.chipButton}
+            />
+            <Chip
+              name="EDIT"
+              pattern="Edit"
+              color="secondry"
+              className={classes.chipButton}
+            />
           </div>
         </Grid>
       </Grid>

@@ -35,10 +35,10 @@ exports[`renders correctly 1`] = `
         className="makeStyles-coffeeName-5"
       >
         <div
-          className="makeStyles-root-9"
+          className="makeStyles-root-10"
         >
           <div
-            className="MuiAvatar-root MuiAvatar-circle makeStyles-small-10"
+            className="MuiAvatar-root MuiAvatar-circle makeStyles-small-11"
           >
             <img
               alt="Remy Sharp"
@@ -62,7 +62,7 @@ exports[`renders correctly 1`] = `
         className="makeStyles-chips-8"
       >
         <div
-          className="makeStyles-root-12"
+          className="makeStyles-root-13"
         >
           <div
             className="MuiButtonBase-root MuiChip-root MuiChip-clickable"
@@ -80,11 +80,11 @@ exports[`renders correctly 1`] = `
             role="button"
             tabIndex={0}
           >
-            <div
-              className="MuiAvatar-root MuiAvatar-circle MuiChip-avatar MuiAvatar-colorDefault"
+            <p
+              className="MuiChip-icon"
             >
-              M
-            </div>
+              no icon
+            </p>
             <span
               className="MuiChip-label"
             >
@@ -93,7 +93,7 @@ exports[`renders correctly 1`] = `
           </div>
         </div>
         <div
-          className="makeStyles-root-12"
+          className="makeStyles-root-13"
         >
           <div
             className="MuiButtonBase-root MuiChip-root MuiChip-clickable"
@@ -111,11 +111,11 @@ exports[`renders correctly 1`] = `
             role="button"
             tabIndex={0}
           >
-            <div
-              className="MuiAvatar-root MuiAvatar-circle MuiChip-avatar MuiAvatar-colorDefault"
+            <p
+              className="MuiChip-icon"
             >
-              M
-            </div>
+              no icon
+            </p>
             <span
               className="MuiChip-label"
             >
@@ -123,6 +123,11 @@ exports[`renders correctly 1`] = `
             </span>
           </div>
         </div>
+        <h6
+          className="MuiTypography-root makeStyles-time-9 MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
+        >
+          2021-3-14
+        </h6>
       </div>
     </div>
   </div>
