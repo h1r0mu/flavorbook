@@ -10,7 +10,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Avatar from "./Avatar";
-import Chip from "./Chip";
+import Chip from "./Chips";
 import { storage } from "../firebase";
 
 const useStyles = makeStyles((theme) => ({

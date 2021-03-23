@@ -13,7 +13,7 @@ import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import Card from "./Card";
-import Chip from "./Chip";
+import Chip from "./Chips";
 
 const useStyles = makeStyles((theme) => ({
   root: {

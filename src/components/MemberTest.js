@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "./Card";
-import Chip from "./Chip";
+import Chip from "./Chips";
 import MemberPageComp from "./MemberPageComp";
 import Cards from "./Cards";
 
