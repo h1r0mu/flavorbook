@@ -2,18 +2,15 @@ import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import SkipNextIcon from "@material-ui/icons/SkipNext";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Avatar from "./Avatar";
 import Chip from "./Chips";
 import { storage } from "../firebase";
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 1000,
     display: "flex",
@@ -60,7 +57,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MediaControlCard(props) {
   const classes = useStyles();
-  const theme = useTheme();
   var imgSample = storage.child("member/" + props.picName);
   imgSample.getDownloadURL().then((downloadURL) => {
     document.getElementById(props.picName).src = downloadURL;
@@ -69,7 +65,7 @@ export default function MediaControlCard(props) {
   const chips = flavorItems.map((flavor) => <Chip name={flavor} />);
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} key={props.coffeeName + props.picName}>
       <img
         id={props.picName}
         src=""
@@ -106,3 +102,11 @@ export default function MediaControlCard(props) {
     </Card>
   );
 }
+
+Card.propTypes = {
+  picName: PropTypes.string,
+  flavors: PropTypes.array,
+		storeName:PropTypes.string,
+		coffeeName:PropTypes.string,
+		subtitle:PropTypes.string,
+};
