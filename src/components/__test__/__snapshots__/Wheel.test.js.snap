@@ -6731,7 +6731,7 @@ exports[`renders correctly 1`] = `
         }
       }
     >
-      "dummy"
+      dummy
     </div>
   </ul>
 </div>

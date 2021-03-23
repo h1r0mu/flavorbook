@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import SkipNextIcon from "@material-ui/icons/SkipNext";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Avatar from "./Avatar";
 import Chip from "./Chips";
 import { storage } from "../firebase";
 import { db } from "../firebase.js";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 1000,
     display: "flex",
@@ -61,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Cards() {
   const classes = useStyles();
-  const theme = useTheme();
   const [cards, setCards] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +78,7 @@ export default function Cards() {
         document.getElementById(card.pictureURL).src = url;
       });
     return (
-      <div>
+      <div key={index}>
         <Card className={classes.root} key={index}>
           <img
             id={card.pictureURL}

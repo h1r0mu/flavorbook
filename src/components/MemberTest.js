@@ -1,15 +1,11 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Card from "./Card";
+import { makeStyles } from "@material-ui/core/styles";
 import Chip from "./Chips";
 import MemberPageComp from "./MemberPageComp";
 import Cards from "./Cards";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {},
   cards: {},
   chips: {
@@ -24,34 +20,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Member() {
   const classes = useStyles();
-  const history = useHistory();
-  const [error, setError] = useState("");
-
-  async function handleLogout() {
-    setError("");
-    try {
-      await logout();
-      history.push("/");
-    } catch {
-      setError("Failed to log out");
-    }
-  }
-
-  async function handleSendEmailVerification() {
-    setError("");
-    try {
-      await sendEmailVerification();
-      setError("メールをおくりました。メール有効化をお願いします");
-    } catch (e) {
-      console.log(e);
-      setError("有効化メールの送信に失敗しました。");
-    }
-  }
-  const flavors = ["fruity", "floral"];
 
   return (
     <div className={classes.root}>
-      <div>{error && <div style={{ color: "red" }}>{error}</div>}</div>
       <Grid container>
         <Grid item xs={3}></Grid>
         <Grid item xs={10}>

@@ -1,8 +1,7 @@
 import React from "react";
-import renderer from "react-test-renderer";
-
 import Wheel from "../Wheel.js";
 import { flavorData } from "../../data/flavors";
+import renderer from "react-test-renderer";
 
 it("renders correctly", () => {
   const tiles = createTiles(flavorData);
@@ -10,7 +9,7 @@ it("renders correctly", () => {
   const wheel = renderer
     .create(
       <Wheel tiles={tiles} label="dummy" imagePath="./dummy">
-        <div>"dummy"</div>
+        <div>dummy</div>
       </Wheel>
     )
     .toJSON();

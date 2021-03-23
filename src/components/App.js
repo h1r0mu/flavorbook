@@ -1,25 +1,27 @@
-import PropTypes from "prop-types";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import React, { useState } from "react";
-import { Link, BrowserRouter, Route, Switch } from "react-router-dom";
-import { createMuiTheme } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { ThemeProvider } from "@material-ui/styles";
+
 import AppBar from "./AppBar.js";
-import Stepper from "./Stepper.js";
+import AuthFireRoute from "./AuthFireRoute.js";
+import { AuthProvider } from "./contexts/AuthContext.js";
 import Button from "./Button.js";
-import Login from "./Login.js";
-import Signup from "./Signup.js";
-import Home from "./Home.js";
+import Expert from "./Register/Expert.js";
 import ForgetPassword from "./ForgetPassword.js";
-import UpdateProfile from "./UpdateProfile.js";
-import Result from "./Result.js";
+import { GlobalStyles } from "../GlobalStyles";
+import Home from "./Home.js";
+import Login from "./Login.js";
 import Member from "./Member.js";
+import PropTypes from "prop-types";
+import Result from "./Result.js";
+import Signup from "./Signup.js";
+import Stepper from "./Stepper.js";
+import { ThemeProvider } from "@material-ui/styles";
+import Typography from "@material-ui/core/Typography";
+import UpdateProfile from "./UpdateProfile.js";
 import MemberTest from "./MemberTest.js";
 import Wheel from "./Wheel.js";
+import { createMuiTheme } from "@material-ui/core/styles";
 import { flavorData } from "../data/flavors";
-import { GlobalStyles } from "../GlobalStyles";
-import { AuthProvider } from "./contexts/AuthContext.js";
-import AuthFireRoute from "./AuthFireRoute.js";
 
 const theme = createMuiTheme({
   typography: {
@@ -35,15 +37,6 @@ const theme = createMuiTheme({
       "Segoe UI Emoji",
       "Segoe UI Symbol",
     ].join(","),
-    h1: {
-      marginTop: 40,
-      marginLeft: 40,
-      fontSize: 35,
-    },
-    h2: {
-      marginTop: 20,
-      fontSize: 50,
-    },
   },
   palette: {
     primary: {
@@ -126,7 +119,7 @@ export default function App() {
           <AuthProvider>
             <div>
               <AppBar />
-              <Typography variant="h1" gutterBottom>
+              <Typography variant="h4" gutterBottom>
                 {finish
                   ? "あなたの感じた香り一覧"
                   : "明らかに感じないと思う香りを選んでください"}
@@ -146,6 +139,9 @@ export default function App() {
                 </Route>
                 <Route path="/member-test">
                   <MemberTest />
+                </Route>
+                <Route path="/expert">
+                  <Expert />
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
                 <AuthFireRoute

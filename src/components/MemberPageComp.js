@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -12,10 +9,10 @@ import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
 import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
-import Card from "./Card";
 import Chip from "./Chips";
+import PropTypes from "prop-types";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     marginTop: 40,
   },
@@ -82,7 +79,7 @@ const top100Films = [
   { title: "The Lord of the Rings: The Fellowship of the Ring", year: 2001 },
 ];
 
-export default function Demo(props) {
+export default function MemberPageComp(props) {
   const classes = useStyles();
   function setSearch(setSearch) {
     if (setSearch) {
@@ -119,3 +116,8 @@ export default function Demo(props) {
     </div>
   );
 }
+
+MemberPageComp.propTypes = {
+  name: PropTypes.string,
+  setSearch: PropTypes.bool,
+};

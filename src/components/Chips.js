@@ -4,12 +4,10 @@ import {
   makeStyles,
   MuiThemeProvider,
 } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
-import FaceIcon from "@material-ui/icons/Face";
-import DoneIcon from "@material-ui/icons/Done";
 import CreateIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Create";
+import PropTypes from "prop-types";
 
 // メンバーページのEditとCreateチップ
 
@@ -65,3 +63,9 @@ export default function Chips(props) {
     </MuiThemeProvider>
   );
 }
+
+Chips.propTypes = {
+  pattern: PropTypes.string,
+  name: PropTypes.string,
+  color: PropTypes.string,
+};

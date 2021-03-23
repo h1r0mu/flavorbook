@@ -1,7 +1,6 @@
 import React from "react";
-import renderer from "react-test-renderer";
-
 import Stepper from "../Stepper.js";
+import renderer from "react-test-renderer";
 
 it("renders correctly", () => {
   const stepper = renderer
