@@ -64,7 +64,7 @@ export default function MediaControlCard(props) {
   const chips = flavorItems.map((flavor) => <Chip name={flavor} />);
 
   return (
-    <Card className={classes.root} key={props.coffeeName + props.picName>
+    <Card className={classes.root} key={props.coffeeName + props.picName}>
       <img
         id={props.picName}
         src=""
