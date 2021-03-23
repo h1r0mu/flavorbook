@@ -139,6 +139,7 @@ export default function App() {
                 </Route>
                 <Route path="/member-test">
                   <MemberTest />
+                </Route>
                 <Route path="/expert">
                   <Expert />
                 </Route>
