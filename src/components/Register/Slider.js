@@ -10,7 +10,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
 export default function Slider(props) {
   const classes = useStyles();
 

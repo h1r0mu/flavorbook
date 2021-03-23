@@ -6,7 +6,7 @@ exports[`renders correctly 1`] = `
     className="makeStyles-root-1"
   >
     <h2
-      className="MuiTypography-root MuiTypography-h2 WithStyles(ForwardRef(Typography))-h2-3 MuiTypography-gutterBottom"
+      className="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom"
     >
       title
     </h2>
@@ -131,10 +131,10 @@ exports[`renders correctly 1`] = `
           </div>
           <fieldset
             aria-hidden={true}
-            className="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
+            className="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              className="PrivateNotchedOutline-legendLabelled-6"
+              className="PrivateNotchedOutline-legendLabelled-4"
             >
               <span>
                 title
@@ -157,7 +157,7 @@ exports[`renders correctly when minimal props are given 1`] = `
     className="makeStyles-root-1"
   >
     <h2
-      className="MuiTypography-root MuiTypography-h2 WithStyles(ForwardRef(Typography))-h2-3 MuiTypography-gutterBottom"
+      className="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom"
     >
       title
     </h2>
@@ -282,10 +282,10 @@ exports[`renders correctly when minimal props are given 1`] = `
           </div>
           <fieldset
             aria-hidden={true}
-            className="PrivateNotchedOutline-root-4 MuiOutlinedInput-notchedOutline"
+            className="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              className="PrivateNotchedOutline-legendLabelled-6"
+              className="PrivateNotchedOutline-legendLabelled-4"
             >
               <span>
                 title
