@@ -18,6 +18,7 @@ import Stepper from "./Stepper.js";
 import { ThemeProvider } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import UpdateProfile from "./UpdateProfile.js";
+import MemberTest from "./MemberTest.js";
 import Wheel from "./Wheel.js";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { flavorData } from "../data/flavors";
@@ -135,6 +136,9 @@ export default function App() {
                 </Route>
                 <Route path="/forget">
                   <ForgetPassword />
+                </Route>
+                <Route path="/member-test">
+                  <MemberTest />
                 </Route>
                 <Route path="/expert">
                   <Expert />

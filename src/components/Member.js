@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 
 import Button from "@material-ui/core/Button";
@@ -67,7 +67,6 @@ export default function Member() {
         <div>
           <strong>ハンドル名:</strong> {currentUser.displayName}
         </div>
-        <Link to="update-profile"> データの更新しよーぜ　</Link>
         <div>
           <strong>履歴</strong>
           <ul>{userListItems}</ul>

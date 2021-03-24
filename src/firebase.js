@@ -1,5 +1,6 @@
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 import firebase from "firebase/app";
 
@@ -20,7 +21,9 @@ firebase.initializeApp(firebaseConfig);
 
 var auth_obj = firebase.auth();
 var result_db = firebase.firestore();
+var storageRef = firebase.storage().ref();
 
 export default firebase;
 export const auth = auth_obj;
 export const db = result_db;
+export const storage = storageRef;
