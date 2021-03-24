@@ -119,11 +119,6 @@ export default function App() {
           <AuthProvider>
             <div>
               <AppBar />
-              <Typography variant="h4" gutterBottom>
-                {finish
-                  ? "あなたの感じた香り一覧"
-                  : "明らかに感じないと思う香りを選んでください"}
-              </Typography>
               <Switch>
                 <Route exact path="/">
                   <Home />
@@ -149,6 +144,11 @@ export default function App() {
                   component={UpdateProfile}
                 />
                 <Route path="/selection">
+                  <Typography variant="h4" gutterBottom>
+                    {finish
+                      ? "あなたの感じた香り一覧"
+                      : "明らかに感じないと思う香りを選んでください"}
+                  </Typography>
                   <Wheel
                     tiles={tiles.filter(isVisible)}
                     level={level}
@@ -175,6 +175,11 @@ export default function App() {
                   </Wheel>
                 </Route>
                 <Route path="/result">
+                  <Typography variant="h4" gutterBottom>
+                    {finish
+                      ? "あなたの感じた香り一覧"
+                      : "明らかに感じないと思う香りを選んでください"}
+                  </Typography>
                   <Result tiles={tiles.filter(isSelected)}>
                     <Stepper level={level}>
                       <div>
