@@ -1,5 +1,3 @@
-import { GridList, GridListTile } from "@material-ui/core";
-import React, { useState } from "react";
 import {
   SentimentDissatisfied as SentimentDissatisfiedIcon,
   SentimentSatisfiedAlt as SentimentSatisfiedAltIcon,
@@ -8,17 +6,17 @@ import {
   SentimentVerySatisfied as SentimentVerySatisfiedIcon,
 } from "@material-ui/icons";
 
-import Autocomplete from "./Autocomplete.js";
-import Dialog from "../Dialog.js";
+import DescriptorSelector from "./DescriptorSelector";
 import PropTypes from "prop-types";
 import { Rating } from "@material-ui/lab";
-import Slider from "../Slider.js";
-import Tile from "../Tile.js";
-import Typography from "./Typography.js";
+import React from "react";
+import Slider from "./Slider.js";
+import { Typography } from "@material-ui/core";
+import { descriptorEnum } from "./beanSlice.js";
 import { flavorData } from "../../data/flavors";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexWrap: "wrap",
     justifyContent: "space-around",
@@ -26,10 +24,6 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     margin: "10%",
     marginTop: "0%",
-  },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1,
   },
   iconButton: {
     padding: 10,
@@ -62,11 +56,6 @@ const customIcons = {
   },
 };
 
-function IconContainer(props) {
-  const { value, ...other } = props;
-  return <span {...other}>{customIcons[value].icon}</span>;
-}
-
 const marks = {
   cleanCup: [
     {
@@ -74,7 +63,7 @@ const marks = {
       label: "Not clean",
     },
     {
-      value: 100,
+      value: 10,
       label: "Very clean",
     },
   ],
@@ -84,7 +73,7 @@ const marks = {
       label: "Watery",
     },
     {
-      value: 100,
+      value: 10,
       label: "Syropy",
     },
   ],
@@ -94,7 +83,7 @@ const marks = {
       label: "Light",
     },
     {
-      value: 100,
+      value: 10,
       label: "Heavy",
     },
   ],
@@ -104,7 +93,7 @@ const marks = {
       label: "Soft",
     },
     {
-      value: 100,
+      value: 10,
       label: "Spicy",
     },
   ],
@@ -114,7 +103,7 @@ const marks = {
       label: "Weak",
     },
     {
-      value: 100,
+      value: 10,
       label: "Strong",
     },
   ],
@@ -124,7 +113,7 @@ const marks = {
       label: "Dark",
     },
     {
-      value: 100,
+      value: 10,
       label: "Bright",
     },
   ],
@@ -134,7 +123,7 @@ const marks = {
       label: "Weak",
     },
     {
-      value: 100,
+      value: 10,
       label: "Strong",
     },
   ],
@@ -144,7 +133,7 @@ const marks = {
       label: "Dark",
     },
     {
-      value: 100,
+      value: 10,
       label: "Bright",
     },
   ],
@@ -154,7 +143,7 @@ const marks = {
       label: "Short",
     },
     {
-      value: 100,
+      value: 10,
       label: "Long",
     },
   ],
@@ -164,7 +153,7 @@ const marks = {
       label: "Rough",
     },
     {
-      value: 100,
+      value: 10,
       label: "Smooth",
     },
   ],
@@ -174,13 +163,18 @@ const marks = {
       label: "Light",
     },
     {
-      value: 100,
+      value: 10,
       label: "Heavy",
     },
   ],
 };
 
-function createFlavors(flavorData) {
+function IconContainer(props) {
+  const { value, ...other } = props;
+  return <span {...other}>{customIcons[value].icon}</span>;
+}
+
+export function createFlavors(flavorData) {
   const flavors = [];
   flavorData.forEach(([name, level, parentName, imageUrl]) => {
     flavors.push({
@@ -196,26 +190,11 @@ function createFlavors(flavorData) {
   });
   return flavors;
 }
-const flavors = createFlavors(flavorData);
 
 export default function Expert() {
   const classes = useStyles();
-  const [selectedFlavorsLv0, setSelectedFlavorsLv0] = useState([]);
-  const [selectedFlavorsLv1, setSelectedFlavorsLv1] = useState([]);
-  const [selectedFlavorsLv2, setSelectedFlavorsLv2] = useState([]);
-  const [openedDialog, setOpenedDialog] = useState(null);
 
-  const select = (setter, event, value) => {
-    setter(value);
-  };
-
-  const open = (dialog) => {
-    setOpenedDialog(dialog);
-  };
-
-  const close = () => {
-    setOpenedDialog(null);
-  };
+  const flavors = createFlavors(flavorData);
 
   return (
     <div className={classes.root}>
@@ -223,105 +202,21 @@ export default function Expert() {
         <Typography variant="h1" gutterBottom>
           Flavors
         </Typography>
-        <Autocomplete
+        <DescriptorSelector
           title="Level 1"
+          name={descriptorEnum.FLAVOR_LEVEL1_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
-        >
-          <div>
-            <GridList cellHeight={"auto"} className={classes.gridList} cols={6}>
-              {selectedFlavorsLv0.map((flavor) => (
-                <GridListTile key={flavor.key} cols={null}>
-                  <Tile
-                    className={classes.list}
-                    key={flavor.key}
-                    value={flavor.name}
-                    imageUrl={flavor.imageUrl}
-                    onClick={() => open(flavor)}
-                  />
-                  <Dialog
-                    key={flavor.key}
-                    title={flavor.name}
-                    content={flavor.description.repeat(1000)}
-                    open={openedDialog === flavor}
-                    onClose={close}
-                  />
-                </GridListTile>
-              ))}
-            </GridList>
-          </div>
-        </Autocomplete>
-        <Autocomplete
+        />
+        <DescriptorSelector
           title="Level 2"
+          name={descriptorEnum.FLAVOR_LEVEL2_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 1)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv1, ...args)}
-        >
-          <div>
-            <GridList cellHeight={"auto"} className={classes.gridList} cols={6}>
-              {selectedFlavorsLv1.map((flavor) => (
-                <GridListTile key={flavor.key} cols={null}>
-                  <Tile
-                    className={classes.list}
-                    key={flavor.key}
-                    value={flavor.name}
-                    imageUrl={flavor.imageUrl}
-                    onClick={() => open(flavor)}
-                  />
-                  <Dialog
-                    key={flavor.key}
-                    title={flavor.name}
-                    content={flavor.description.repeat(1000)}
-                    open={openedDialog === flavor}
-                    onClose={close}
-                  />
-                </GridListTile>
-              ))}
-            </GridList>
-          </div>
-        </Autocomplete>
-        <Autocomplete
+        />
+        <DescriptorSelector
           title="Level 3"
+          name={descriptorEnum.FLAVOR_LEVEL3_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 2)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv2, ...args)}
-        >
-          <div>
-            <GridList cellHeight={"auto"} className={classes.gridList} cols={6}>
-              {selectedFlavorsLv2.map((flavor) => (
-                <GridListTile key={flavor.key} cols={null}>
-                  <Tile
-                    className={classes.list}
-                    key={flavor.key}
-                    value={flavor.name}
-                    imageUrl={flavor.imageUrl}
-                    onClick={() => open(flavor)}
-                  />
-                  <Dialog
-                    key={flavor.key}
-                    title={flavor.name}
-                    content={flavor.description.repeat(1000)}
-                    open={openedDialog === flavor}
-                    onClose={close}
-                  />
-                </GridListTile>
-              ))}
-            </GridList>
-          </div>
-        </Autocomplete>
+        />
       </div>
       <div>
         <Typography variant="h1" gutterBottom>
@@ -336,14 +231,9 @@ export default function Expert() {
         <Slider marks={marks.mouseFeel1} />
         <Slider marks={marks.mouseFeel2} />
         <Slider marks={marks.mouseFeel3} />
-        <Autocomplete
+        <DescriptorSelector
+          name={descriptorEnum.MOUSE_FEEL_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
         />
       </div>
       <div>
@@ -352,14 +242,9 @@ export default function Expert() {
         </Typography>
         <Slider marks={marks.acidity1} />
         <Slider marks={marks.acidity2} />
-        <Autocomplete
+        <DescriptorSelector
+          name={descriptorEnum.ACIDITY_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
         />
       </div>
       <div>
@@ -368,14 +253,9 @@ export default function Expert() {
         </Typography>
         <Slider marks={marks.sweetness1} />
         <Slider marks={marks.sweetness2} />
-        <Autocomplete
+        <DescriptorSelector
+          name={descriptorEnum.SWEETNESS_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
         />
       </div>
       <div>
@@ -385,14 +265,9 @@ export default function Expert() {
         <Slider marks={marks.afterTaste1} />
         <Slider marks={marks.afterTaste2} />
         <Slider marks={marks.afterTaste3} />
-        <Autocomplete
+        <DescriptorSelector
+          name={descriptorEnum.AFTER_TASTE_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
         />
       </div>
       <div>
@@ -402,26 +277,16 @@ export default function Expert() {
         <Typography variant="h2" gutterBottom>
           Too much
         </Typography>
-        <Autocomplete
+        <DescriptorSelector
+          name={descriptorEnum.HARMONY_TOO_MUCH_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
         />
         <Typography variant="h2" gutterBottom>
-          Lack
+          Poor
         </Typography>
-        <Autocomplete
+        <DescriptorSelector
+          name={descriptorEnum.HARMONY_POOR_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
-          getOptionLabel={(flavor) => flavor.name}
-          getChipProps={(flavor) => ({
-            label: flavor.name,
-            imagePath: flavor.imageUrl,
-          })}
-          onChange={(...args) => select(setSelectedFlavorsLv0, ...args)}
         />
       </div>
       <div>

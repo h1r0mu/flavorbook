@@ -2,13 +2,12 @@ import {
   CheckBox as CheckBoxIcon,
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
 } from "@material-ui/icons";
-import { Checkbox, TextField } from "@material-ui/core";
+import { Checkbox, TextField, Typography } from "@material-ui/core";
 
-import Chip from "../Chip.js";
+import Chip from "./Chip.js";
 import { Autocomplete as MuiAutocomplete } from "@material-ui/lab";
 import PropTypes from "prop-types";
 import React from "react";
-import Typography from "./Typography.js";
 import { makeStyles } from "@material-ui/core/styles";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
