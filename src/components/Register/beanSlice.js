@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { beansCollection } from "../../firebase";
+import firebase from "firebase/app";
 
 export const descriptorValueEnum = Object.freeze({
   MIN: 0,
@@ -70,6 +72,31 @@ const initialState = {
   [descriptorNameEnum.BREWING]: descriptorValueEnum.DEFAULT,
 };
 
+const serialize = (bean) => {
+  const serializedBean = {};
+  Object.entries(bean).map(([key, value]) => {
+    if (value instanceof Array) {
+      serializedBean[key] = value.map((v) => v.name);
+    } else {
+      serializedBean[key] = String(value);
+    }
+  });
+  return serializedBean;
+};
+
+export const saveNewBean = createAsyncThunk(
+  "bean/saveNewBean",
+  async (bean) => {
+    const beanId = beansCollection.doc().id;
+    beansCollection.doc(beanId).set({
+      beanId: beanId,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      ...serialize(bean),
+    });
+  }
+);
+
 const beanSlice = createSlice({
   name: "bean",
   initialState,
@@ -85,6 +112,9 @@ const beanSlice = createSlice({
         };
       },
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(saveNewBean.fulfilled);
   },
 });
 

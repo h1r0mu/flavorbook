@@ -1,4 +1,8 @@
-import { descriptorNameEnum, descriptorValueEnum } from "./beanSlice.js";
+import {
+  descriptorNameEnum,
+  descriptorValueEnum,
+  saveNewBean,
+} from "./beanSlice.js";
 
 import Button from "../Button.js";
 import DescriptorSelector from "./DescriptorSelector";
@@ -6,9 +10,9 @@ import Rating from "./Rating.js";
 import React from "react";
 import Slider from "./Slider.js";
 import { Typography } from "@material-ui/core";
-import { db } from "../../firebase.js";
 import { flavorData } from "../../data/flavors";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -158,16 +162,14 @@ export function createFlavors(flavorData) {
 }
 
 export default function Expert() {
+  const dispatch = useDispatch();
+  const bean = useSelector((state) => state.bean);
   const classes = useStyles();
 
   const flavors = createFlavors(flavorData);
 
   const post = () => {
-    const beanId = db.collection("beans").doc().id;
-    db.collection("beans").doc(beanId).set({
-      beanId: beanId,
-      createdAt: db.FieldValue.serverTimestamp(),
-    });
+    dispatch(saveNewBean(bean));
   };
 
   return (

@@ -27,3 +27,4 @@ export default firebase;
 export const auth = auth_obj;
 export const db = result_db;
 export const storage = storageRef;
+export const beansCollection = db.collection("beans");
