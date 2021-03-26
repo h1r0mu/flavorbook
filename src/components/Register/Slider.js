@@ -1,7 +1,10 @@
 import { Slider as MuiSlider } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
+import { descriptorUpdate } from "./beanSlice.js";
+import { descriptorValueEnum } from "./beanSlice.js";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -10,22 +13,27 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Slider(props) {
+export default function Slider({ name, marks }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <MuiSlider
       className={classes.root}
-      min={0}
-      max={10}
+      min={descriptorValueEnum.MIN}
+      max={descriptorValueEnum.MAX}
       step={1}
-      defaultValue={5}
-      marks={props.marks}
-      valueLabelDisplay="auto"
+      defaultValue={descriptorValueEnum.DEFAULT}
+      marks={marks}
+      valueLabelDisplay="off"
+      onChangeCommitted={(event, value) =>
+        dispatch(descriptorUpdate(name, value))
+      }
     />
   );
 }
 
 Slider.propTypes = {
-  marks: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  name: PropTypes.PropTypes.string.isRequired,
+  marks: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]).isRequired,
 };
