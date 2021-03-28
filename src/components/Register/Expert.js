@@ -1,20 +1,18 @@
 import {
-  SentimentDissatisfied as SentimentDissatisfiedIcon,
-  SentimentSatisfiedAlt as SentimentSatisfiedAltIcon,
-  SentimentSatisfied as SentimentSatisfiedIcon,
-  SentimentVeryDissatisfied as SentimentVeryDissatisfiedIcon,
-  SentimentVerySatisfied as SentimentVerySatisfiedIcon,
-} from "@material-ui/icons";
+  descriptorNameEnum,
+  descriptorValueEnum,
+  saveNewBean,
+} from "./beanSlice.js";
 
+import Button from "../Button.js";
 import DescriptorSelector from "./DescriptorSelector";
-import PropTypes from "prop-types";
-import { Rating } from "@material-ui/lab";
+import Rating from "./Rating.js";
 import React from "react";
 import Slider from "./Slider.js";
 import { Typography } from "@material-ui/core";
-import { descriptorEnum } from "./beanSlice.js";
 import { flavorData } from "../../data/flavors";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,146 +31,118 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const customIcons = {
-  1: {
-    icon: <SentimentVeryDissatisfiedIcon />,
-    label: "Very Dissatisfied",
-  },
-  2: {
-    icon: <SentimentDissatisfiedIcon />,
-    label: "Dissatisfied",
-  },
-  3: {
-    icon: <SentimentSatisfiedIcon />,
-    label: "Neutral",
-  },
-  4: {
-    icon: <SentimentSatisfiedAltIcon />,
-    label: "Satisfied",
-  },
-  5: {
-    icon: <SentimentVerySatisfiedIcon />,
-    label: "Very Satisfied",
-  },
-};
-
 const marks = {
   cleanCup: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Not clean",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Very clean",
     },
   ],
   mouseFeel1: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Watery",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Syropy",
     },
   ],
   mouseFeel2: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Light",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Heavy",
     },
   ],
   mouseFeel3: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Soft",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Spicy",
     },
   ],
   acidity1: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Weak",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Strong",
     },
   ],
   acidity2: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Dark",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Bright",
     },
   ],
   sweetness1: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Weak",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Strong",
     },
   ],
   sweetness2: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Dark",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Bright",
     },
   ],
   afterTaste1: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Short",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Long",
     },
   ],
   afterTaste2: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Rough",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Smooth",
     },
   ],
   afterTaste3: [
     {
-      value: 0,
+      value: descriptorValueEnum.MIN,
       label: "Light",
     },
     {
-      value: 10,
+      value: descriptorValueEnum.MAX,
       label: "Heavy",
     },
   ],
 };
-
-function IconContainer(props) {
-  const { value, ...other } = props;
-  return <span {...other}>{customIcons[value].icon}</span>;
-}
 
 export function createFlavors(flavorData) {
   const flavors = [];
@@ -192,9 +162,15 @@ export function createFlavors(flavorData) {
 }
 
 export default function Expert() {
+  const dispatch = useDispatch();
+  const bean = useSelector((state) => state.bean);
   const classes = useStyles();
 
   const flavors = createFlavors(flavorData);
+
+  const post = () => {
+    dispatch(saveNewBean(bean));
+  };
 
   return (
     <div className={classes.root}>
@@ -204,17 +180,17 @@ export default function Expert() {
         </Typography>
         <DescriptorSelector
           title="Level 1"
-          name={descriptorEnum.FLAVOR_LEVEL1_DESCRIPTORS}
+          name={descriptorNameEnum.FLAVOR_LEVEL1_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
         <DescriptorSelector
           title="Level 2"
-          name={descriptorEnum.FLAVOR_LEVEL2_DESCRIPTORS}
+          name={descriptorNameEnum.FLAVOR_LEVEL2_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 1)}
         />
         <DescriptorSelector
           title="Level 3"
-          name={descriptorEnum.FLAVOR_LEVEL3_DESCRIPTORS}
+          name={descriptorNameEnum.FLAVOR_LEVEL3_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 2)}
         />
       </div>
@@ -222,17 +198,26 @@ export default function Expert() {
         <Typography variant="h1" gutterBottom>
           Clean cup
         </Typography>
-        <Slider marks={marks.cleanCup} />
+        <Slider name={descriptorNameEnum.CLEAN_CUP} marks={marks.cleanCup} />
       </div>
       <div>
         <Typography variant="h1" gutterBottom>
           Mouse feel
         </Typography>
-        <Slider marks={marks.mouseFeel1} />
-        <Slider marks={marks.mouseFeel2} />
-        <Slider marks={marks.mouseFeel3} />
+        <Slider
+          name={descriptorNameEnum.MOUSE_FEEL1}
+          marks={marks.mouseFeel1}
+        />
+        <Slider
+          name={descriptorNameEnum.MOUSE_FEEL2}
+          marks={marks.mouseFeel2}
+        />
+        <Slider
+          name={descriptorNameEnum.MOUSE_FEEL3}
+          marks={marks.mouseFeel3}
+        />
         <DescriptorSelector
-          name={descriptorEnum.MOUSE_FEEL_DESCRIPTORS}
+          name={descriptorNameEnum.MOUSE_FEEL_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
       </div>
@@ -240,10 +225,10 @@ export default function Expert() {
         <Typography variant="h1" gutterBottom>
           Acidity
         </Typography>
-        <Slider marks={marks.acidity1} />
-        <Slider marks={marks.acidity2} />
+        <Slider name={descriptorNameEnum.ACIDITY1} marks={marks.acidity1} />
+        <Slider name={descriptorNameEnum.ACIDITY2} marks={marks.acidity2} />
         <DescriptorSelector
-          name={descriptorEnum.ACIDITY_DESCRIPTORS}
+          name={descriptorNameEnum.ACIDITY_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
       </div>
@@ -251,10 +236,10 @@ export default function Expert() {
         <Typography variant="h1" gutterBottom>
           Sweetness
         </Typography>
-        <Slider marks={marks.sweetness1} />
-        <Slider marks={marks.sweetness2} />
+        <Slider name={descriptorNameEnum.SWEETNESS1} marks={marks.sweetness1} />
+        <Slider name={descriptorNameEnum.SWEETNESS2} marks={marks.sweetness2} />
         <DescriptorSelector
-          name={descriptorEnum.SWEETNESS_DESCRIPTORS}
+          name={descriptorNameEnum.SWEETNESS_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
       </div>
@@ -262,11 +247,20 @@ export default function Expert() {
         <Typography variant="h1" gutterBottom>
           After taste
         </Typography>
-        <Slider marks={marks.afterTaste1} />
-        <Slider marks={marks.afterTaste2} />
-        <Slider marks={marks.afterTaste3} />
+        <Slider
+          name={descriptorNameEnum.AFTER_TASTE1}
+          marks={marks.afterTaste1}
+        />
+        <Slider
+          name={descriptorNameEnum.AFTER_TASTE2}
+          marks={marks.afterTaste2}
+        />
+        <Slider
+          name={descriptorNameEnum.AFTER_TASTE3}
+          marks={marks.afterTaste3}
+        />
         <DescriptorSelector
-          name={descriptorEnum.AFTER_TASTE_DESCRIPTORS}
+          name={descriptorNameEnum.AFTER_TASTE_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
       </div>
@@ -278,14 +272,14 @@ export default function Expert() {
           Too much
         </Typography>
         <DescriptorSelector
-          name={descriptorEnum.HARMONY_TOO_MUCH_DESCRIPTORS}
+          name={descriptorNameEnum.HARMONY_TOO_MUCH_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
         <Typography variant="h2" gutterBottom>
           Poor
         </Typography>
         <DescriptorSelector
-          name={descriptorEnum.HARMONY_POOR_DESCRIPTORS}
+          name={descriptorNameEnum.HARMONY_POOR_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
       </div>
@@ -293,18 +287,9 @@ export default function Expert() {
         <Typography variant="h1" gutterBottom>
           Overall
         </Typography>
-        <Rating
-          name="customized-icons"
-          defaultValue={0}
-          getLabelText={(value) => customIcons[value].label}
-          IconContainerComponent={IconContainer}
-          size="large"
-        />
+        <Rating name={descriptorNameEnum.OVERALL} />
       </div>
+      <Button onClick={post} text="Save" />
     </div>
   );
 }
-
-IconContainer.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};

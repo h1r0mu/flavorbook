@@ -1,9 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { beansCollection } from "../../firebase";
+import firebase from "firebase/app";
 
-export const descriptorEnum = Object.freeze({
+export const descriptorValueEnum = Object.freeze({
+  MIN: 0,
+  MAX: 10,
+  DEFAULT: 5,
+});
+
+export const descriptorNameEnum = Object.freeze({
   FLAVOR_LEVEL1_DESCRIPTORS: "flavorLevel1Descriptors",
   FLAVOR_LEVEL2_DESCRIPTORS: "flavorLevel2Descriptors",
   FLAVOR_LEVEL3_DESCRIPTORS: "flavorLevel3Descriptors",
+  CLEAN_CUP: "cleanCup",
   MOUSE_FEEL1: "mouseFeel1",
   MOUSE_FEEL2: "mouseFeel2",
   MOUSE_FEEL3: "mouseFeel3",
@@ -32,35 +41,61 @@ export const descriptorEnum = Object.freeze({
 });
 
 const initialState = {
-  [descriptorEnum.FLAVOR_LEVEL1_DESCRIPTORS]: [],
-  [descriptorEnum.FLAVOR_LEVEL2_DESCRIPTORS]: [],
-  [descriptorEnum.FLAVOR_LEVEL3_DESCRIPTORS]: [],
-  [descriptorEnum.MOUSE_FEEL1]: null,
-  [descriptorEnum.MOUSE_FEEL2]: null,
-  [descriptorEnum.MOUSE_FEEL3]: null,
-  [descriptorEnum.MOUSE_FEEL_DESCRIPTORS]: [],
-  [descriptorEnum.ACIDITY1]: null,
-  [descriptorEnum.ACIDITY2]: null,
-  [descriptorEnum.ACIDITY_DESCRIPTORS]: [],
-  [descriptorEnum.SWEETNESS1]: null,
-  [descriptorEnum.SWEETNESS2]: null,
-  [descriptorEnum.SWEETNESS_DESCRIPTORS]: [],
-  [descriptorEnum.AFTER_TASTE1]: null,
-  [descriptorEnum.AFTER_TASTE2]: null,
-  [descriptorEnum.AFTER_TASTE3]: null,
-  [descriptorEnum.AFTER_TASTE_DESCRIPTORS]: [],
-  [descriptorEnum.HARMONY_TOO_MUCH_DESCRIPTORS]: [],
-  [descriptorEnum.HARMONY_POOR_DESCRIPTORS]: [],
-  [descriptorEnum.OVERALL]: null,
-  [descriptorEnum.DATE]: null,
-  [descriptorEnum.STORE]: null,
-  [descriptorEnum.COUNTRY]: null,
-  [descriptorEnum.FARM]: null,
-  [descriptorEnum.REGION]: null,
-  [descriptorEnum.PROCESS]: null,
-  [descriptorEnum.GRIND]: null,
-  [descriptorEnum.BREWING]: null,
+  [descriptorNameEnum.FLAVOR_LEVEL1_DESCRIPTORS]: [],
+  [descriptorNameEnum.FLAVOR_LEVEL2_DESCRIPTORS]: [],
+  [descriptorNameEnum.FLAVOR_LEVEL3_DESCRIPTORS]: [],
+  [descriptorNameEnum.CLEAN_CUP]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.MOUSE_FEEL1]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.MOUSE_FEEL2]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.MOUSE_FEEL3]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.MOUSE_FEEL_DESCRIPTORS]: [],
+  [descriptorNameEnum.ACIDITY1]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.ACIDITY2]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.ACIDITY_DESCRIPTORS]: [],
+  [descriptorNameEnum.SWEETNESS1]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.SWEETNESS2]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.SWEETNESS_DESCRIPTORS]: [],
+  [descriptorNameEnum.AFTER_TASTE1]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.AFTER_TASTE2]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.AFTER_TASTE3]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.AFTER_TASTE_DESCRIPTORS]: [],
+  [descriptorNameEnum.HARMONY_TOO_MUCH_DESCRIPTORS]: [],
+  [descriptorNameEnum.HARMONY_POOR_DESCRIPTORS]: [],
+  [descriptorNameEnum.OVERALL]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.DATE]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.STORE]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.COUNTRY]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.FARM]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.REGION]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.PROCESS]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.GRIND]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.BREWING]: descriptorValueEnum.DEFAULT,
 };
+
+const serialize = (bean) => {
+  const serializedBean = {};
+  Object.entries(bean).map(([key, value]) => {
+    if (value instanceof Array) {
+      serializedBean[key] = value.map((v) => v.name);
+    } else {
+      serializedBean[key] = String(value);
+    }
+  });
+  return serializedBean;
+};
+
+export const saveNewBean = createAsyncThunk(
+  "bean/saveNewBean",
+  async (bean) => {
+    const beanId = beansCollection.doc().id;
+    beansCollection.doc(beanId).set({
+      beanId: beanId,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      ...serialize(bean),
+    });
+  }
+);
 
 const beanSlice = createSlice({
   name: "bean",
@@ -77,6 +112,9 @@ const beanSlice = createSlice({
         };
       },
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(saveNewBean.fulfilled);
   },
 });
 

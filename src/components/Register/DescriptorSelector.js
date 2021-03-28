@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import Tile from "../Tile.js";
 
 export default function DescriptorSelector({ title, name, options }) {
-  const selectedDescriptors = useSelector((state) =>
+  const descriptors = useSelector((state) =>
     selectDescriptorByName(state, name)
   );
   const [openedDialog, setOpenedDialog] = useState(null);
@@ -37,19 +37,19 @@ export default function DescriptorSelector({ title, name, options }) {
       >
         <div>
           <GridList cellHeight={"auto"} cols={6}>
-            {selectedDescriptors.map((flavor) => (
-              <GridListTile key={flavor.key} cols={null}>
+            {descriptors.map((descriptor) => (
+              <GridListTile key={descriptor.key} cols={null}>
                 <Tile
-                  key={flavor.key}
-                  value={flavor.name}
-                  imageUrl={flavor.imageUrl}
-                  onClick={() => open(flavor)}
+                  key={descriptor.key}
+                  value={descriptor.name}
+                  imageUrl={descriptor.imageUrl}
+                  onClick={() => open(descriptor)}
                 />
                 <Dialog
-                  key={flavor.key}
-                  title={flavor.name}
-                  content={flavor.description.repeat(1000)}
-                  open={openedDialog === flavor}
+                  key={descriptor.key}
+                  title={descriptor.name}
+                  content={descriptor.description.repeat(1000)}
+                  open={openedDialog === descriptor}
                   onClose={close}
                 />
               </GridListTile>
