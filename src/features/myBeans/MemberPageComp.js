@@ -1,16 +1,16 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import PublicIcon from "@material-ui/icons/Public";
-import StoreIcon from "@material-ui/icons/Store";
-import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
-import LocalCafeIcon from "@material-ui/icons/LocalCafe";
-import parse from "autosuggest-highlight/parse";
-import match from "autosuggest-highlight/match";
 import Chip from "./Chips";
+import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import PropTypes from "prop-types";
+import PublicIcon from "@material-ui/icons/Public";
+import React from "react";
+import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
+import StoreIcon from "@material-ui/icons/Store";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,7 +33,7 @@ function Highlights() {
     <Autocomplete
       id="highlights-demo"
       style={{ maxWidth: 300 }}
-      options={top100Films}
+      options={[]}
       getOptionLabel={(option) => option.title}
       renderInput={(params) => (
         <TextField
@@ -63,21 +63,6 @@ function Highlights() {
     />
   );
 }
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { title: "The Shawshank Redemption", year: 1994 },
-  { title: "The Godfather", year: 1972 },
-  { title: "The Godfather: Part II", year: 1974 },
-  { title: "The Dark Knight", year: 2008 },
-  { title: "12 Angry Men", year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: "Pulp Fiction", year: 1994 },
-  { title: "The Lord of the Rings: The Return of the King", year: 2003 },
-  { title: "The Good, the Bad and the Ugly", year: 1966 },
-  { title: "Fight Club", year: 1999 },
-  { title: "The Lord of the Rings: The Fellowship of the Ring", year: 2001 },
-];
 
 export default function MemberPageComp(props) {
   const classes = useStyles();
