@@ -9,9 +9,20 @@ import { db } from "../../firebase";
 
 const beansAdapter = createEntityAdapter();
 
+const serialize = (data) => {
+  const serializedData = {};
+  Object.entries(data).map(([key, value]) => {
+    if (value instanceof Date) {
+      serializedData[key] = value.toString();
+    } else {
+      serializedData[key] = value;
+    }
+  });
+  return serializedData;
+};
 export const fetchBeans = createAsyncThunk("beans/fetchBeans", async () => {
-  const snapshot = await db.collection("cards").get();
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const snapshot = await db.collection("beans").get();
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...serialize(doc.data()) }));
 });
 
 const initialState = beansAdapter.getInitialState({

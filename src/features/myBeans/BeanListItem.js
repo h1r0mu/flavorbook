@@ -67,7 +67,9 @@ const BeanListItem = ({ id }) => {
       const imageSrc = await storage.child(url).getDownloadURL();
       setImageSrc(imageSrc);
     };
-    fetchImageSrc("member/" + bean.pictureURL);
+    if (bean.pictureURL) {
+      fetchImageSrc("member/" + bean.pictureURL);
+    }
   }, []);
 
   if (imageSrc == null) {
@@ -89,20 +91,20 @@ const BeanListItem = ({ id }) => {
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography variant="subtitle1" color="textSecondary">
-            {bean.storeName}
+            {bean.storeName ? bean.storeName : ""}
             <ShoppingCartIcon />
           </Typography>
           <div className={classes.coffeeName}>
             <Avatar className={classes.avatar} />
             <Typography component="h3" variant="h5" className={classes.bold}>
-              {bean.coffeeName}
+              {bean.coffeeName ? bean.coffeeName : ""}
             </Typography>
           </div>
           <Typography variant="subtitle1" color="textSecondary">
             subtitle
           </Typography>
           <div className={classes.chips}>
-            {bean.flavors.map((flavor, index) => (
+            {bean.flavorLevel1Descriptors.map((flavor, index) => (
               <Chip name={flavor} color="primary" key={index} />
             ))}
             <Typography
