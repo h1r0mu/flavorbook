@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AppBar from "./AppBar.js";
 import AuthFireRoute from "./AuthFireRoute.js";
 import { AuthProvider } from "./contexts/AuthContext.js";
-import Expert from "./Register/Expert.js";
+import Expert from "../features/newBean/Expert.js";
 import ForgetPassword from "./ForgetPassword.js";
 import { GlobalStyles } from "../GlobalStyles";
 import Home from "./Home.js";

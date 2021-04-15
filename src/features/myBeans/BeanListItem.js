@@ -91,13 +91,13 @@ const BeanListItem = ({ id }) => {
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography variant="subtitle1" color="textSecondary">
-            {bean.storeName ? bean.storeName : ""}
+            {bean.store ? bean.store : ""}
             <ShoppingCartIcon />
           </Typography>
-          <div className={classes.coffeeName}>
+          <div className={classes.coffee}>
             <Avatar className={classes.avatar} />
             <Typography component="h3" variant="h5" className={classes.bold}>
-              {bean.coffeeName ? bean.coffeeName : ""}
+              {bean.coffee ? bean.coffee : ""}
             </Typography>
           </div>
           <Typography variant="subtitle1" color="textSecondary">
