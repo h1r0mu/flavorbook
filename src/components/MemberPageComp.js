@@ -1,16 +1,16 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import PublicIcon from "@material-ui/icons/Public";
-import StoreIcon from "@material-ui/icons/Store";
-import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
-import LocalCafeIcon from "@material-ui/icons/LocalCafe";
-import parse from "autosuggest-highlight/parse";
-import match from "autosuggest-highlight/match";
 import Chip from "./Chips";
+import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import PropTypes from "prop-types";
+import PublicIcon from "@material-ui/icons/Public";
+import React from "react";
+import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
+import StoreIcon from "@material-ui/icons/Store";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
 
 const useStyles = makeStyles(() => ({
   root: {

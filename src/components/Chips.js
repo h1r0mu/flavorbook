@@ -1,13 +1,14 @@
-import React from "react";
 import {
+  MuiThemeProvider,
   createMuiTheme,
   makeStyles,
-  MuiThemeProvider,
 } from "@material-ui/core/styles";
+
 import Chip from "@material-ui/core/Chip";
 import CreateIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Create";
 import PropTypes from "prop-types";
+import React from "react";
 
 // メンバーページのEditとCreateチップ
 

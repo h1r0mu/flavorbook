@@ -1,9 +1,9 @@
-import React from "react";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Chip from "./Chips";
-import MemberPageComp from "./MemberPageComp";
 import Cards from "./Cards";
+import Chip from "./Chips";
+import Grid from "@material-ui/core/Grid";
+import MemberPageComp from "./MemberPageComp";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   root: {},

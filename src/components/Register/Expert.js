@@ -3,6 +3,7 @@ import {
   descriptorValueEnum,
   saveNewBean,
 } from "./beanSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "../Button.js";
 import DescriptorSelector from "./DescriptorSelector";
@@ -12,7 +13,6 @@ import Slider from "./Slider.js";
 import { Typography } from "@material-ui/core";
 import { flavorData } from "../../data/flavors";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
