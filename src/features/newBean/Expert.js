@@ -6,6 +6,7 @@ import {
 } from "./beanSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
+import Autocomplete from "./Autocomplete";
 import Button from "@material-ui/core/Button";
 import DescriptorSelector from "./DescriptorSelector";
 import Rating from "./Rating.js";
@@ -178,6 +179,9 @@ export default function Expert() {
 
   const post = () => {
     dispatch(saveNewBean(bean));
+    if (image === null) {
+      return;
+    }
     const uploadImage = storage.child(`/member/${image.name}`).put(image);
     uploadImage.on(
       firebase.storage.TaskEvent.STATE_CHANGED,
@@ -315,6 +319,48 @@ export default function Expert() {
           Overall
         </Typography>
         <Rating name={descriptorNameEnum.OVERALL} />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Store
+        </Typography>
+        <Autocomplete name={descriptorNameEnum.STORE} options={[]} />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Country
+        </Typography>
+        <Autocomplete
+          name={descriptorNameEnum.COUNTRY}
+          options={["Ethiopia", "Brazil"]}
+        />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Region
+        </Typography>
+        <Autocomplete name={descriptorNameEnum.REGION} options={[]} />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Farm
+        </Typography>
+        <Autocomplete name={descriptorNameEnum.FARM} options={[]} />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Process
+        </Typography>
+        <Autocomplete
+          name={descriptorNameEnum.PROCESS}
+          options={["Washed", "Natural"]}
+        />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Store
+        </Typography>
+        <Autocomplete name={descriptorNameEnum.GRIND} options={[]} />
       </div>
       <div>
         <input

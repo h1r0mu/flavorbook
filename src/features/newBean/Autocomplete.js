@@ -1,28 +1,33 @@
-import { descriptorUpdate, selectDescriptorByName } from "./beanSlice.js";
-import { useDispatch, useSelector } from "react-redux";
-
-import { Autocomplete as BaseAutocomplete } from "../common/Autocomplete.js";
+import { Autocomplete as MuiAutocomplete } from "@material-ui/lab";
 import PropTypes from "prop-types";
 import React from "react";
+import TextField from "@material-ui/core/TextField";
+import { descriptorUpdate } from "./beanSlice.js";
+import { useDispatch } from "react-redux";
 
-export default function Autocomplete({ title, name, options }) {
-  const value = useSelector((state) => selectDescriptorByName(state, name));
+export default function Autocomplete({ name, label, options }) {
   const dispatch = useDispatch();
+  label = label ? label !== null : name;
+
+  const handleChange = (event, value) => {
+    dispatch(descriptorUpdate(name, value));
+  };
 
   return (
-    <BaseAutocomplete
-      title={title}
+    <MuiAutocomplete
+      id={label}
       options={options}
-      getOptionLabel={(flavor) => flavor.name}
-      onChange={(event, value) => dispatch(descriptorUpdate(name, value))}
-    >
-      {value}
-    </BaseAutocomplete>
+      style={{ width: 300 }}
+      renderInput={(params) => (
+        <TextField {...params} label={label} variant="outlined" />
+      )}
+      onChange={handleChange}
+    />
   );
 }
 
 Autocomplete.propTypes = {
-  title: PropTypes.string,
-  options: PropTypes.array,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  label: PropTypes.string,
 };
