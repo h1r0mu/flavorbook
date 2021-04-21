@@ -1,17 +1,18 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import React from "react";
 
 import AppBar from "./AppBar.js";
 import AuthFireRoute from "./AuthFireRoute.js";
 import { AuthProvider } from "./contexts/AuthContext.js";
-import Expert from "./Register/Expert.js";
+import Expert from "../features/newBean/Expert.js";
 import ForgetPassword from "./ForgetPassword.js";
 import { GlobalStyles } from "../GlobalStyles";
 import Home from "./Home.js";
 import Login from "./Login.js";
 import Member from "./Member.js";
 import MemberTest from "./MemberTest.js";
+import { Page as MyBeans } from "../features/myBeans/Page.js";
 import PropTypes from "prop-types";
+import React from "react";
 import Signup from "./Signup.js";
 import { ThemeProvider } from "@material-ui/styles";
 import UpdateProfile from "./UpdateProfile.js";
@@ -70,6 +71,9 @@ export default function App() {
                 </Route>
                 <Route path="/member-test">
                   <MemberTest />
+                </Route>
+                <Route path="/member-test2">
+                  <MyBeans />
                 </Route>
                 <Route path="/selection">
                   <Expert />

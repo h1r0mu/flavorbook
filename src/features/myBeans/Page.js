@@ -1,4 +1,4 @@
-import Cards from "./Cards";
+import BeanList from "./BeanList";
 import Chip from "./Chips";
 import Grid from "@material-ui/core/Grid";
 import MemberPageComp from "./MemberPageComp";
@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function Member() {
+export const Page = () => {
   const classes = useStyles();
 
   return (
@@ -51,10 +51,10 @@ export default function Member() {
         </Grid>
         <Grid item xs={9}>
           <div className={classes.cards}>
-            <Cards />
+            <BeanList />
           </div>
         </Grid>
       </Grid>
     </div>
   );
-}
+};
