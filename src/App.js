@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import AppBar from "./components/AppBar.js";
+import AppBar from "./features/header/Header.js";
 import AuthFireRoute from "./components/AuthFireRoute.js";
 import { AuthProvider } from "./components/contexts/AuthContext.js";
 import Expert from "./features/newBean/Expert.js";
