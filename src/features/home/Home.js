@@ -1,5 +1,5 @@
 import React from "react";
-import TreeSelector from "./TreeSelector.js";
+import TreeSelector from "../../components/TreeSelector.js";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({

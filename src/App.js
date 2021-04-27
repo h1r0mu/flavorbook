@@ -6,7 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Expert from "./features/newBean/Expert.js";
 import ForgetPassword from "./features/forgetPassword/ForgetPassword.js";
 import { GlobalStyles } from "./GlobalStyles";
-import Home from "./components/Home.js";
+import Home from "./features/home/Home.js";
 import Login from "./features/login/Login";
 import Member from "./components/Member.js";
 import MemberTest from "./components/MemberTest.js";
