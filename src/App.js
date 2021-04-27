@@ -1,21 +1,21 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AppBar from "./features/header/Header.js";
-import AuthFireRoute from "./components/AuthFireRoute.js";
-import { AuthProvider } from "./components/contexts/AuthContext.js";
+import AuthFireRoute from "./features/common/AuthFireRoute.js";
+import { AuthProvider } from "./contexts/AuthContext";
 import Expert from "./features/newBean/Expert.js";
-import ForgetPassword from "./components/ForgetPassword.js";
+import ForgetPassword from "./features/forgetPassword/ForgetPassword.js";
 import { GlobalStyles } from "./GlobalStyles";
 import Home from "./components/Home.js";
-import Login from "./components/Login.js";
+import Login from "./features/login/Login";
 import Member from "./components/Member.js";
 import MemberTest from "./components/MemberTest.js";
 import { Page as MyBeans } from "./features/myBeans/Page.js";
 import PropTypes from "prop-types";
 import React from "react";
-import Signup from "./components/Signup.js";
+import Signup from "./features/signup/Signup.js";
 import { ThemeProvider } from "@material-ui/styles";
-import UpdateProfile from "./components/UpdateProfile.js";
+import UpdateProfile from "./features/user/UpdateProfile.js";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
