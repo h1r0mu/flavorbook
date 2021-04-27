@@ -1,21 +1,21 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import AppBar from "./AppBar.js";
-import AuthFireRoute from "./AuthFireRoute.js";
-import { AuthProvider } from "./contexts/AuthContext.js";
-import Expert from "../features/newBean/Expert.js";
-import ForgetPassword from "./ForgetPassword.js";
-import { GlobalStyles } from "../GlobalStyles";
-import Home from "./Home.js";
-import Login from "./Login.js";
-import Member from "./Member.js";
-import MemberTest from "./MemberTest.js";
-import { Page as MyBeans } from "../features/myBeans/Page.js";
+import AppBar from "./components/AppBar.js";
+import AuthFireRoute from "./components/AuthFireRoute.js";
+import { AuthProvider } from "./components/contexts/AuthContext.js";
+import Expert from "./features/newBean/Expert.js";
+import ForgetPassword from "./components/ForgetPassword.js";
+import { GlobalStyles } from "./GlobalStyles";
+import Home from "./components/Home.js";
+import Login from "./components/Login.js";
+import Member from "./components/Member.js";
+import MemberTest from "./components/MemberTest.js";
+import { Page as MyBeans } from "./features/myBeans/Page.js";
 import PropTypes from "prop-types";
 import React from "react";
-import Signup from "./Signup.js";
+import Signup from "./components/Signup.js";
 import { ThemeProvider } from "@material-ui/styles";
-import UpdateProfile from "./UpdateProfile.js";
+import UpdateProfile from "./components/UpdateProfile.js";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
