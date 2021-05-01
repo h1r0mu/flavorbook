@@ -1,4 +1,4 @@
-import Autocomplete from "../../Autocomplete.js";
+import Autocomplete from "../Autocomplete.js";
 import React from "react";
 import renderer from "react-test-renderer";
 
