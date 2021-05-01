@@ -8,8 +8,7 @@ import ForgetPassword from "./features/forgetPassword/ForgetPassword.js";
 import { GlobalStyles } from "./GlobalStyles";
 import Home from "./features/home/Home.js";
 import Login from "./features/login/Login";
-import Member from "./components/Member.js";
-import MemberTest from "./components/MemberTest.js";
+import Member from "./features/user/Member.js";
 import { Page as MyBeans } from "./features/myBeans/Page.js";
 import PropTypes from "prop-types";
 import React from "react";
@@ -70,9 +69,6 @@ export default function App() {
                   <ForgetPassword />
                 </Route>
                 <Route path="/member-test">
-                  <MemberTest />
-                </Route>
-                <Route path="/member-test2">
                   <MyBeans />
                 </Route>
                 <Route path="/selection">

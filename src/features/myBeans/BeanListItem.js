@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { deleteBean, selectBeanById } from "./beansSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import Avatar from "../../components/Avatar";
+import Avatar from "./Avatar";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
