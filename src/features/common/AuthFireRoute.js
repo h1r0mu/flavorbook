@@ -2,7 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 
 import PropTypes from "prop-types";
 import React from "react";
-import { useAuth } from "./contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function AuthFirebaseRoute({ component: Component, ...rest }) {
   const { currentUser } = useAuth();

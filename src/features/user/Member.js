@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import Button from "@material-ui/core/Button";
-import { db } from "../firebase.js";
-import { useAuth } from "./contexts/AuthContext";
+import { db } from "../../firebase.js";
+import { useAuth } from "../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 
 export default function Member() {

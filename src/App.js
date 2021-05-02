@@ -1,21 +1,20 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import AppBar from "./AppBar.js";
-import AuthFireRoute from "./AuthFireRoute.js";
-import { AuthProvider } from "./contexts/AuthContext.js";
-import Expert from "../features/newBean/Expert.js";
-import ForgetPassword from "./ForgetPassword.js";
-import { GlobalStyles } from "../GlobalStyles";
-import Home from "./Home.js";
-import Login from "./Login.js";
-import Member from "./Member.js";
-import MemberTest from "./MemberTest.js";
-import { Page as MyBeans } from "../features/myBeans/Page.js";
+import AppBar from "./features/header/Header.js";
+import AuthFireRoute from "./features/common/AuthFireRoute.js";
+import { AuthProvider } from "./contexts/AuthContext";
+import Expert from "./features/newBean/Expert.js";
+import ForgetPassword from "./features/forgetPassword/ForgetPassword.js";
+import { GlobalStyles } from "./GlobalStyles";
+import Home from "./features/home/Home.js";
+import Login from "./features/login/Login";
+import Member from "./features/user/Member.js";
+import { Page as MyBeans } from "./features/myBeans/Page.js";
 import PropTypes from "prop-types";
 import React from "react";
-import Signup from "./Signup.js";
+import Signup from "./features/signup/Signup.js";
 import { ThemeProvider } from "@material-ui/styles";
-import UpdateProfile from "./UpdateProfile.js";
+import UpdateProfile from "./features/user/UpdateProfile.js";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
@@ -70,9 +69,6 @@ export default function App() {
                   <ForgetPassword />
                 </Route>
                 <Route path="/member-test">
-                  <MemberTest />
-                </Route>
-                <Route path="/member-test2">
                   <MyBeans />
                 </Route>
                 <Route path="/selection">

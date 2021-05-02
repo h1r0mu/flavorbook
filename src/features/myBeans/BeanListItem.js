@@ -1,16 +1,19 @@
 import { React, useEffect, useState } from "react";
+import { deleteBean, selectBeanById } from "./beansSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-import Avatar from "../../components/Avatar";
+import Avatar from "./Avatar";
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Chip from "./Chips";
+import DeleteIcon from "@material-ui/icons/Delete";
 import PropTypes from "prop-types";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { selectBeanById } from "./beansSlice";
 import { storage } from "../../firebase";
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -57,10 +60,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const BeanListItem = ({ id }) => {
+const BeanListItem = ({ id, editable }) => {
   const classes = useStyles();
   const bean = useSelector((state) => selectBeanById(state, id));
   const [imageSrc, setImageSrc] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchImageSrc = async (url) => {
@@ -79,6 +83,10 @@ const BeanListItem = ({ id }) => {
       </div>
     );
   }
+
+  const onDelete = async () => {
+    await dispatch(deleteBean(bean.id));
+  };
 
   return (
     <Card className={classes.root} key={id}>
@@ -116,6 +124,19 @@ const BeanListItem = ({ id }) => {
             </Typography>
           </div>
         </CardContent>
+        <CardActions>
+          {editable ? (
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              startIcon={<DeleteIcon />}
+              onClick={onDelete}
+            >
+              Delete
+            </Button>
+          ) : null}
+        </CardActions>
       </div>
     </Card>
   );
@@ -123,6 +144,7 @@ const BeanListItem = ({ id }) => {
 
 BeanListItem.propTypes = {
   id: PropTypes.string,
+  editable: PropTypes.bool,
 };
 
 export default BeanListItem;

@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
-import { useAuth } from "./contexts/AuthContext.js";
+import { useAuth } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme: Theme) =>

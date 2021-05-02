@@ -25,6 +25,11 @@ export const fetchBeans = createAsyncThunk("beans/fetchBeans", async () => {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...serialize(doc.data()) }));
 });
 
+export const deleteBean = createAsyncThunk("beans/deleteBean", async (id) => {
+  await db.collection("beans").doc(id).delete();
+  return id;
+});
+
 const initialState = beansAdapter.getInitialState({
   status: "idle",
 });
@@ -41,9 +46,14 @@ const beansSlice = createSlice({
       .addCase(fetchBeans.fulfilled, (state, action) => {
         beansAdapter.setAll(state, action.payload);
         state.status = "idle";
-      });
+      })
+      .addCase(deleteBean.fulfilled, (state, action) =>
+        beansAdapter.removeOne(state, action.payload)
+      );
   },
 });
+
+export const { beanDeleted } = beansSlice.actions;
 
 export default beansSlice.reducer;
 
