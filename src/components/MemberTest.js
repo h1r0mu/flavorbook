@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import Chip from "./Chips";
-import MemberPageComp from "./MemberPageComp";
+import Chips from "./Chips";
+import SearchForm from "./SearchForm";
 import Cards from "./Cards";
 
 const useStyles = makeStyles(() => ({
@@ -20,6 +20,19 @@ const useStyles = makeStyles(() => ({
 
 export default function Member() {
   const classes = useStyles();
+		const [key, setKey] = useState([""]);
+
+		const addKey = (str) => {
+				return setKey(Array.from(new Set([...key,str])));
+		}
+
+		const setKeyWords = (key) => {
+				return <Cards val={key}/>
+		}
+
+		useEffect(()=>{
+				setKeyWords(key);
+		},[key]);
 
   return (
     <div className={classes.root}>
@@ -27,13 +40,13 @@ export default function Member() {
         <Grid item xs={3}></Grid>
         <Grid item xs={10}>
           <div className={classes.chips}>
-            <Chip
+            <Chips
               name="CREATE"
               pattern="Create"
               color="primary"
               className={classes.chipButton}
             />
-            <Chip
+            <Chips
               name="EDIT"
               pattern="Edit"
               color="secondry"
@@ -44,14 +57,15 @@ export default function Member() {
       </Grid>
       <Grid container>
         <Grid item xs={3}>
-          <MemberPageComp name="Flavor Type" setSearch={false} />
-          <MemberPageComp name="Country" setSearch={true} />
-          <MemberPageComp name="Shop" setSearch={true} />
-          <MemberPageComp name="Roast" setSearch={true} />
+          <SearchForm name="Flavor" addKey = {addKey} />
+          <SearchForm name="Country"  addKey = {addKey} />
+          <SearchForm name="Shop"  addKey = {addKey} />
+          <SearchForm name="Roast"  addKey = {addKey} />
         </Grid>
         <Grid item xs={9}>
           <div className={classes.cards}>
-            <Cards />
+												<p>{key}</p>
+												<div>{setKeyWords(key)}</div>
           </div>
         </Grid>
       </Grid>
