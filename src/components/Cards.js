@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
+import Avatar from "./Avatar";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import Avatar from "./Avatar";
 import Chip from "./Chips";
-import { storage } from "../firebase";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Typography from "@material-ui/core/Typography";
 import { db } from "../firebase.js";
 import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import { storage } from "../firebase";
 
 const useStyles = makeStyles(() => ({
   root: {

@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { descriptorUpdate, selectDescriptorByName } from "./beanSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
-import Autocomplete from "../Autocomplete.js";
-import Dialog from "../Dialog.js";
+import Autocomplete from "../common/Autocomplete.js";
+import Dialog from "../common/Dialog.js";
 import PropTypes from "prop-types";
-import Tile from "../Tile.js";
+import Tile from "../common/Tile.js";
 
 export default function DescriptorSelector({ title, name, options }) {
   const descriptors = useSelector((state) =>

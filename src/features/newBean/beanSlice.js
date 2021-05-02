@@ -31,7 +31,7 @@ export const descriptorNameEnum = Object.freeze({
   HARMONY_TOO_MUCH_DESCRIPTORS: "harmonyTooMuchDescriptors",
   HARMONY_POOR_DESCRIPTORS: "harmonyPoorDescriptors",
   OVERALL: "overall",
-  DATE: "date",
+  PURCHASE_DATE: "purchaseDate",
   STORE: "store",
   COUNTRY: "country",
   FARM: "farm",
@@ -39,6 +39,7 @@ export const descriptorNameEnum = Object.freeze({
   PROCESS: "process",
   GRIND: "grind",
   BREWING: "brewing",
+  PICTURE_URL: "pictureURL",
 });
 
 const initialState = {
@@ -63,14 +64,15 @@ const initialState = {
   [descriptorNameEnum.HARMONY_TOO_MUCH_DESCRIPTORS]: [],
   [descriptorNameEnum.HARMONY_POOR_DESCRIPTORS]: [],
   [descriptorNameEnum.OVERALL]: descriptorValueEnum.DEFAULT,
-  [descriptorNameEnum.DATE]: descriptorValueEnum.DEFAULT,
-  [descriptorNameEnum.STORE]: descriptorValueEnum.DEFAULT,
-  [descriptorNameEnum.COUNTRY]: descriptorValueEnum.DEFAULT,
-  [descriptorNameEnum.FARM]: descriptorValueEnum.DEFAULT,
-  [descriptorNameEnum.REGION]: descriptorValueEnum.DEFAULT,
-  [descriptorNameEnum.PROCESS]: descriptorValueEnum.DEFAULT,
-  [descriptorNameEnum.GRIND]: descriptorValueEnum.DEFAULT,
-  [descriptorNameEnum.BREWING]: descriptorValueEnum.DEFAULT,
+  [descriptorNameEnum.PURCHASE_DATE]: null,
+  [descriptorNameEnum.STORE]: null,
+  [descriptorNameEnum.COUNTRY]: null,
+  [descriptorNameEnum.FARM]: null,
+  [descriptorNameEnum.REGION]: null,
+  [descriptorNameEnum.PROCESS]: null,
+  [descriptorNameEnum.GRIND]: null,
+  [descriptorNameEnum.BREWING]: null,
+  [descriptorNameEnum.PICTURE_URL]: "",
 };
 
 const serialize = (bean) => {

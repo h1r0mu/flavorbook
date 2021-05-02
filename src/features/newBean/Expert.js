@@ -1,3 +1,4 @@
+import { React, useState } from "react";
 import {
   descriptorNameEnum,
   descriptorValueEnum,
@@ -5,14 +6,17 @@ import {
 } from "./beanSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
-import Button from "../Button.js";
+import Autocomplete from "./Autocomplete";
+import Button from "@material-ui/core/Button";
 import DescriptorSelector from "./DescriptorSelector";
 import Rating from "./Rating.js";
-import React from "react";
 import Slider from "./Slider.js";
 import { Typography } from "@material-ui/core";
+import { descriptorUpdate } from "./beanSlice.js";
+import firebase from "firebase/app";
 import { flavorData } from "../../data/flavors";
 import { makeStyles } from "@material-ui/core/styles";
+import { storage } from "../../firebase";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -28,6 +32,9 @@ const useStyles = makeStyles(() => ({
   },
   searchField: {
     width: "50%",
+  },
+  input: {
+    display: "none",
   },
 }));
 
@@ -165,11 +172,35 @@ export default function Expert() {
   const dispatch = useDispatch();
   const bean = useSelector((state) => state.bean);
   const classes = useStyles();
+  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
 
   const flavors = createFlavors(flavorData);
 
   const post = () => {
     dispatch(saveNewBean(bean));
+    if (image === null) {
+      return;
+    }
+    const uploadImage = storage.child(`/member/${image.name}`).put(image);
+    uploadImage.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      null,
+      (error) => {
+        throw error;
+      },
+      () => {
+        setImage(null);
+        setImageUrl("");
+      }
+    );
+  };
+
+  const handleLoad = (e) => {
+    const image = e.target.files[0];
+    setImage(image);
+    setImageUrl(URL.createObjectURL(image));
+    dispatch(descriptorUpdate(descriptorNameEnum.PICTURE_URL, image.name));
   };
 
   return (
@@ -289,7 +320,71 @@ export default function Expert() {
         </Typography>
         <Rating name={descriptorNameEnum.OVERALL} />
       </div>
-      <Button onClick={post} text="Save" />
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Store
+        </Typography>
+        <Autocomplete name={descriptorNameEnum.STORE} options={[]} />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Country
+        </Typography>
+        <Autocomplete
+          name={descriptorNameEnum.COUNTRY}
+          options={["Ethiopia", "Brazil"]}
+        />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Region
+        </Typography>
+        <Autocomplete name={descriptorNameEnum.REGION} options={[]} />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Farm
+        </Typography>
+        <Autocomplete name={descriptorNameEnum.FARM} options={[]} />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Process
+        </Typography>
+        <Autocomplete
+          name={descriptorNameEnum.PROCESS}
+          options={["Washed", "Natural"]}
+        />
+      </div>
+      <div>
+        <Typography variant="h1" gutterBottom>
+          Store
+        </Typography>
+        <Autocomplete name={descriptorNameEnum.GRIND} options={[]} />
+      </div>
+      <div>
+        <input
+          accept="image/*"
+          id="contained-button-file"
+          className={classes.input}
+          multiple
+          type="file"
+          onChange={handleLoad}
+        />
+        <label htmlFor="contained-button-file">
+          <Button variant="contained" color="primary" component="span">
+            Upload
+          </Button>
+        </label>
+      </div>
+      <div>
+        <img style={{ width: "10%" }} src={imageUrl} />
+      </div>
+      <div>
+        <Button variant="contained" color="primary" onClick={post}>
+          Save
+        </Button>
+      </div>
     </div>
   );
 }
