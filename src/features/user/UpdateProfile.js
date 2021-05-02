@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import React, { useEffect, useReducer, useState } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 
-import { useAuth } from "./contexts/AuthContext.js";
+import { useAuth } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme: Theme) =>

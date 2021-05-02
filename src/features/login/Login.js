@@ -1,40 +1,37 @@
+import { Link, useHistory } from "react-router-dom";
 import React, { useEffect, useReducer, useState } from "react";
-import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
-import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
-import { useAuth } from "./contexts/AuthContext.js";
+import { makeStyles } from "@material-ui/core/styles";
+import { useAuth } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      display: "flex",
-      flexWrap: "wrap",
-      width: 400,
-      margin: `${theme.spacing(0)} auto`,
-    },
-    signupBtn: {
-      marginTop: theme.spacing(2),
-      flexGrow: 1,
-    },
-    header: {
-      textAlign: "center",
-      background: "#212121",
-      color: "#fff",
-    },
-    card: {
-      marginTop: theme.spacing(10),
-    },
-  })
-);
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+    width: 400,
+    margin: `${theme.spacing(0)} auto`,
+  },
+  loginBtn: {
+    marginTop: theme.spacing(2),
+    flexGrow: 1,
+  },
+  header: {
+    textAlign: "center",
+    background: "#212121",
+    color: "#fff",
+  },
+  card: {
+    marginTop: theme.spacing(10),
+  },
+}));
 
-//state type
 type State = {
   email: string,
   password: string,
@@ -58,8 +55,8 @@ type Action =
   | { type: "setPassword", payload: string }
   | { type: "setPasswordConfirm", payload: string }
   | { type: "setIsButtonDisabled", payload: boolean }
-  | { type: "signupSuccess", payload: string }
-  | { type: "signupFailed", payload: string }
+  | { type: "loginSuccess", payload: string }
+  | { type: "loginFailed", payload: string }
   | { type: "setIsError", payload: boolean };
 
 const reducer = (state: State, action: Action): State => {
@@ -84,13 +81,13 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         isButtonDisabled: action.payload,
       };
-    case "signupSuccess":
+    case "loginSuccess":
       return {
         ...state,
         helperText: action.payload,
         isError: false,
       };
-    case "signupFailed":
+    case "loginFailed":
       return {
         ...state,
         helperText: action.payload,
@@ -106,23 +103,17 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const Signup = () => {
+export default function Login() {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { signup } = useAuth();
+  const { login } = useAuth();
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { register, handleSubmit, errors, trigger } = useForm();
+  const history = useHistory();
 
   useEffect(() => {
-    // stateのemail,password,passwordconfirmが変化した時のみ再びレンダー
-
-    if (state.password.trim() !== state.passwordconfirm.trim()) {
-      dispatch({
-        type: "setIsButtonDisabled",
-        payload: true,
-      });
-    } else if (state.email.trim() && state.password.trim()) {
+    if (state.email.trim() && state.password.trim()) {
       dispatch({
         type: "setIsButtonDisabled",
         payload: false,
@@ -133,11 +124,10 @@ const Signup = () => {
         payload: true,
       });
     }
-  }, [state.email, state.password, state.passwordconfirm]);
+  }, [state.email, state.password]);
 
-  async function handleSignup() {
-    // 非同期処理
-
+  async function handleLogin() {
+    // async function handleLogin(data) {
     try {
       setError("");
       setSuccessMessage("");
@@ -146,12 +136,10 @@ const Signup = () => {
         payload: true,
       });
 
-      await signup(state.email, state.passwordconfirm);
-      // 非同期処理がうまく行った場合に実行する
-
+      await login(state.email, state.password);
       dispatch({
-        type: "signupSuccess",
-        payload: "Signup Successfully",
+        type: "loginSuccess",
+        payload: "Login Successfully",
       });
 
       dispatch({
@@ -159,7 +147,8 @@ const Signup = () => {
         payload: false,
       });
 
-      setSuccessMessage("アカウントの作成に成功しました");
+      setSuccessMessage("ログインに成功しました");
+      history.push("/member");
     } catch (e) {
       console.log(e);
 
@@ -173,12 +162,10 @@ const Signup = () => {
           setError("パスワードが短すぎます。6文字以上を入力してください。");
           break;
         case "auth/invalid-email":
-          setError("メールアドレスが正しくありません");
+          setError("メールアドレスまたはパスワードが正しくありません");
           break;
-        case "auth/email-already-in-use":
-          setError(
-            "メールアドレスがすでに使用されています。ログインするか別のメールアドレスで作成してください"
-          );
+        case "auth/wrong-passsword":
+          setError("メールアドレスまたはパスワードが正しくありません");
           break;
         case "auth/user-disabled":
           setError("入力されたメールアドレスは無効になってます。");
@@ -202,7 +189,7 @@ const Signup = () => {
         if (errors) {
           <div>error</div>;
         } else {
-          handleSignup();
+          handleLogin();
         }
       }
     }
@@ -231,19 +218,10 @@ const Signup = () => {
     });
   };
 
-  const handlePasswordConfirmChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    dispatch({
-      type: "setPasswordConfirm",
-      payload: event.target.value,
-    });
-  };
-
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Sign UP " />
+        <CardHeader className={classes.header} title="Login" />
         <CardContent>
           <div>
             {error && <div variant="danger">{error}</div>}
@@ -286,36 +264,23 @@ const Signup = () => {
                 パスワードは6文字以上で入力してください
               </div>
             )}
-            <TextField
-              error={state.isError}
-              fullWidth
-              id="password-confirm"
-              type="password"
-              label="Password-confirm"
-              placeholder="Password-confirm"
-              margin="normal"
-              helperText={state.helperText}
-              onChange={handlePasswordConfirmChange}
-              onKeyPress={handleKeyPress}
-            />
           </div>
-          もしアカウントがあるなら<Link to="/login"> Log In</Link>
+          アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
+          パスワードを忘れた場合は<Link to="/forget">こちら</Link>
         </CardContent>
         <CardActions>
           <Button
             variant="contained"
             size="large"
             color="secondary"
-            className={classes.signupBtn}
-            onClick={handleSubmit(handleSignup)}
+            className={classes.loginBtn}
+            onClick={handleSubmit(handleLogin)}
             disabled={state.isButtonDisabled}
           >
-            Signup
+            Login
           </Button>
         </CardActions>
       </Card>
     </form>
   );
-};
-
-export default Signup;
+}

@@ -1,4 +1,4 @@
-import AppBar from "../AppBar.js";
+import AppBar from "../Header";
 import React from "react";
 import renderer from "react-test-renderer";
 

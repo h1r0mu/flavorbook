@@ -1,6 +1,6 @@
 import * as reactRedux from "react-redux";
 
-import DescriptorSelector from "../../Register/DescriptorSelector.js";
+import DescriptorSelector from "../DescriptorSelector";
 import React from "react";
 import renderer from "react-test-renderer";
 
