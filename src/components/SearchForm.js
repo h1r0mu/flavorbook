@@ -30,48 +30,48 @@ const useStyles = makeStyles(() => ({
 
 function Highlights(props) {
   return (
-				<>
-						<Autocomplete
-								id="highlights-demo"
-								style={{ maxWidth: 300 }}
-								options={props.list}
-								getOptionLabel={(option) => option}
-								renderInput={(params) => (
-										<TextField
-												{...params}
-												label="Search"
-												variant="outlined"
-												margin="normal"
-										/>
-								)}
-								onInputChange={(event, newInputValue) => {
-												props.addKey(newInputValue);
-										}}
-								renderOption={(option, { inputValue }) => {
-										const matches = match(option, inputValue);
-										const parts = parse(option, matches);
+    <>
+      <Autocomplete
+        id="highlights-demo"
+        style={{ maxWidth: 300 }}
+        options={props.list}
+        getOptionLabel={(option) => option}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Search"
+            variant="outlined"
+            margin="normal"
+          />
+        )}
+        onInputChange={(event, newInputValue) => {
+          props.addKey(newInputValue);
+        }}
+        renderOption={(option, { inputValue }) => {
+          const matches = match(option, inputValue);
+          const parts = parse(option, matches);
 
-										return (
-												<div>
-														{parts.map((part, index) => (
-																<span
-																		key={index}
-																		style={{ fontWeight: part.highlight ? 700 : 400 }}
-																>
-																		{part.text}
-																</span>
-														))}
-												</div>
-										);
-								}}
-						/>
-				</>
+          return (
+            <div>
+              {parts.map((part, index) => (
+                <span
+                  key={index}
+                  style={{ fontWeight: part.highlight ? 700 : 400 }}
+                >
+                  {part.text}
+                </span>
+              ))}
+            </div>
+          );
+        }}
+      />
+    </>
   );
 }
 
 export default function SearchForm(props) {
   const [cards, setCards] = useState([]);
-		const classes = useStyles();
+  const classes = useStyles();
   useEffect(() => {
     const fetchData = async () => {
       const ref = db.collection("cards");
@@ -113,7 +113,13 @@ export default function SearchForm(props) {
   });
 
   function setSearch() {
-    return <Highlights className={classes.highlight} list={resultList} addKey={props.addKey}/>;
+    return (
+      <Highlights
+        className={classes.highlight}
+        list={resultList}
+        addKey={props.addKey}
+      />
+    );
   }
 
   function setIcon(name) {
@@ -146,10 +152,10 @@ export default function SearchForm(props) {
 
 SearchForm.propTypes = {
   name: PropTypes.string,
-		addKey: PropTypes.function,
+  addKey: PropTypes.function,
 };
 
 Highlights.propTypes = {
   list: PropTypes.array,
-		addKey: PropTypes.function,
+  addKey: PropTypes.function,
 };

@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Chips from "./Chips";
@@ -20,19 +20,19 @@ const useStyles = makeStyles(() => ({
 
 export default function Member() {
   const classes = useStyles();
-		const [key, setKey] = useState([""]);
+  const [key, setKey] = useState([""]);
 
-		const addKey = (str) => {
-				return setKey(Array.from(new Set([...key,str])));
-		}
+  const addKey = (str) => {
+    return setKey(Array.from(new Set([...key, str])));
+  };
 
-		const setKeyWords = (key) => {
-				return <Cards val={key}/>
-		}
+  const setKeyWords = (key) => {
+    return <Cards val={key} />;
+  };
 
-		useEffect(()=>{
-				setKeyWords(key);
-		},[key]);
+  useEffect(() => {
+    setKeyWords(key);
+  }, [key]);
 
   return (
     <div className={classes.root}>
@@ -57,15 +57,15 @@ export default function Member() {
       </Grid>
       <Grid container>
         <Grid item xs={3}>
-          <SearchForm name="Flavor" addKey = {addKey} />
-          <SearchForm name="Country"  addKey = {addKey} />
-          <SearchForm name="Shop"  addKey = {addKey} />
-          <SearchForm name="Roast"  addKey = {addKey} />
+          <SearchForm name="Flavor" addKey={addKey} />
+          <SearchForm name="Country" addKey={addKey} />
+          <SearchForm name="Shop" addKey={addKey} />
+          <SearchForm name="Roast" addKey={addKey} />
         </Grid>
         <Grid item xs={9}>
           <div className={classes.cards}>
-												<p>{key}</p>
-												<div>{setKeyWords(key)}</div>
+            <p>{key}</p>
+            <div>{setKeyWords(key)}</div>
           </div>
         </Grid>
       </Grid>

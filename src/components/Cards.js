@@ -58,62 +58,77 @@ const useStyles = makeStyles(() => ({
 export default function Cards(props) {
   const classes = useStyles();
   const [cards, setCards] = useState([]);
-		const keyWords = props.val;
+  const keyWords = props.val;
 
   useEffect(() => {
     const fetchData = async () => {
+      let snapShot_store = "";
+      let snapShot_country = "";
+      let snapShot_flavor = "";
+      let snapShot_roast = "";
 
-						let snapShot_store = '';
-						let snapShot_country = '';
-						let snapShot_flavor = '';
-						let snapShot_roast = '';
+      snapShot_roast = await db
+        .collection("cards")
+        .where("roast", "in", keyWords)
+        .get();
+      snapShot_store = await db
+        .collection("cards")
+        .where("storeName", "in", keyWords)
+        .get();
+      snapShot_country = await db
+        .collection("cards")
+        .where("countryName", "in", keyWords)
+        .get();
+      snapShot_flavor = await db
+        .collection("cards")
+        .where("flavors", "array-contains-any", keyWords)
+        .get();
 
-						snapShot_roast = await db.collection("cards").where('roast','in',keyWords).get();
-						snapShot_store= await db.collection("cards").where('storeName','in',keyWords).get();
-						snapShot_country = await db.collection("cards").where('countryName','in',keyWords).get();
-						snapShot_flavor = await db.collection("cards").where('flavors','array-contains-any',keyWords).get();
+      // const make_cards = (snapShot) => {
+      // snapShot.docs.map((doc) => {
+      // const item = doc.data();
+      // return item;
+      // });
+      // };
 
-						// const make_cards = (snapShot) => {
-								// snapShot.docs.map((doc) => {
-										// const item = doc.data();
-										// return item;
-								// });
-						// };
+      // const cards_store =  make_cards(snapShot_store);
+      // const cards_country =  make_cards(snapShot_country);
+      // const cards_flavor =  make_cards(snapShot_flavor);
+      // const cards_roast =  make_cards(snapShot_roast);
 
-						// const cards_store =  make_cards(snapShot_store);
-						// const cards_country =  make_cards(snapShot_country);
-						// const cards_flavor =  make_cards(snapShot_flavor);
-						// const cards_roast =  make_cards(snapShot_roast);
-						
-						const cards_store = snapShot_store.docs.map((doc) => {
-								const item = doc.data();
-								return item;
-						});
-						const cards_country = snapShot_country.docs.map((doc) => {
-								const item = doc.data();
-								return item;
-						});
-						const cards_flavor = snapShot_flavor.docs.map((doc) => {
-								const item = doc.data();
-								return item;
-						});
-						const cards_roast = snapShot_roast.docs.map((doc) => {
-								const item = doc.data();
-								return item;
-						});
+      const cards_store = snapShot_store.docs.map((doc) => {
+        const item = doc.data();
+        return item;
+      });
+      const cards_country = snapShot_country.docs.map((doc) => {
+        const item = doc.data();
+        return item;
+      });
+      const cards_flavor = snapShot_flavor.docs.map((doc) => {
+        const item = doc.data();
+        return item;
+      });
+      const cards_roast = snapShot_roast.docs.map((doc) => {
+        const item = doc.data();
+        return item;
+      });
 
-						let cards = cards_store.concat(cards_country).concat(cards_flavor).concat(cards_roast);
+      let cards = cards_store
+        .concat(cards_country)
+        .concat(cards_flavor)
+        .concat(cards_roast);
 
-						const resultcards = Array.from(
-								cards.reduce((map, currentitem) => 
-									map.set(currentitem.coffeeName, currentitem),
-																new Map()
-										).values()
-						);
+      const resultcards = Array.from(
+        cards
+          .reduce(
+            (map, currentitem) => map.set(currentitem.coffeeName, currentitem),
+            new Map()
+          )
+          .values()
+      );
 
       setCards(resultcards);
-
-				};
+    };
     fetchData();
   }, [keyWords]);
 
@@ -125,52 +140,52 @@ export default function Cards(props) {
         document.getElementById(card.pictureURL).src = url;
       });
 
-				return (
-						<div key={index}>
-								<Card className={classes.root} key={index}>
-										<img
-												id={card.pictureURL}
-												src=""
-												alt={card.pictureURL}
-												className={classes.cover}
-										/>
-										<div className={classes.details}>
-												<CardContent className={classes.content}>
-														<Typography variant="subtitle1" color="textSecondary">
-																{card.storeName}
-																<ShoppingCartIcon />
-														</Typography>
-														<div className={classes.coffeeName}>
-																<Avatar className={classes.avatar} />
-																<Typography
-																		component="h3"
-																		variant="h5"
-																		className={classes.bold}
-																>
-																		{card.coffeeName}
-																</Typography>
-														</div>
-														<Typography variant="subtitle1" color="textSecondary">
-																subtitle
-														</Typography>
-														<div className={classes.chips}>
-																{card.flavors.map((flavor, index) => (
-																		<Chip name={flavor} color="primary" key={index} />
-																))}
-																<Typography
-																		variant="subtitle1"
-																		color="textSecondary"
-																		className={classes.time}
-																>
-																		2001-3-14
-																</Typography>
-														</div>
-												</CardContent>
-										</div>
-								</Card>
-						</div>
-				);
-});
+    return (
+      <div key={index}>
+        <Card className={classes.root} key={index}>
+          <img
+            id={card.pictureURL}
+            src=""
+            alt={card.pictureURL}
+            className={classes.cover}
+          />
+          <div className={classes.details}>
+            <CardContent className={classes.content}>
+              <Typography variant="subtitle1" color="textSecondary">
+                {card.storeName}
+                <ShoppingCartIcon />
+              </Typography>
+              <div className={classes.coffeeName}>
+                <Avatar className={classes.avatar} />
+                <Typography
+                  component="h3"
+                  variant="h5"
+                  className={classes.bold}
+                >
+                  {card.coffeeName}
+                </Typography>
+              </div>
+              <Typography variant="subtitle1" color="textSecondary">
+                subtitle
+              </Typography>
+              <div className={classes.chips}>
+                {card.flavors.map((flavor, index) => (
+                  <Chip name={flavor} color="primary" key={index} />
+                ))}
+                <Typography
+                  variant="subtitle1"
+                  color="textSecondary"
+                  className={classes.time}
+                >
+                  2001-3-14
+                </Typography>
+              </div>
+            </CardContent>
+          </div>
+        </Card>
+      </div>
+    );
+  });
 
   return <>{cardsItem}</>;
 }
@@ -178,4 +193,3 @@ export default function Cards(props) {
 Cards.propTypes = {
   val: PropTypes.array,
 };
-
