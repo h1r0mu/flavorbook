@@ -1,9 +1,10 @@
 import BeanList from "./BeanList";
-import Chip from "./Chips";
+import Chips from "./Chips";
 import Grid from "@material-ui/core/Grid";
-import MemberPageComp from "./MemberPageComp";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import SearchForm from "../common/SearchForm";
+import Cards from "./Cards";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -64,12 +65,9 @@ export const Page = () => {
         </Grid>
         <Grid item xs={9}>
           <div className={classes.cards}>
-<<<<<<< HEAD:src/components/MemberTest.js
             <p>{key}</p>
             <div>{setKeyWords(key)}</div>
-=======
             <BeanList />
->>>>>>> b13621260eec142b53bd61a975b8ddcffb1209c1:src/features/myBeans/Page.js
           </div>
         </Grid>
       </Grid>

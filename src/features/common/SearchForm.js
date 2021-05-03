@@ -10,7 +10,7 @@ import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import PropTypes from "prop-types";
-import { db } from "../firebase.js";
+import { db } from "../../firebase.js";
 
 const useStyles = makeStyles(() => ({
   root: {

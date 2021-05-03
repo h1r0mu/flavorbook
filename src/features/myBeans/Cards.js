@@ -6,8 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Avatar from "./Avatar";
 import Chip from "./Chips";
-import { storage } from "../firebase";
-import { db } from "../firebase.js";
+import { storage } from "../../firebase.js";
+import { db } from "../../firebase.js";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles(() => ({
