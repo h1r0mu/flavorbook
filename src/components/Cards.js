@@ -84,18 +84,6 @@ export default function Cards(props) {
         .where("flavors", "array-contains-any", keyWords)
         .get();
 
-      // const make_cards = (snapShot) => {
-      // snapShot.docs.map((doc) => {
-      // const item = doc.data();
-      // return item;
-      // });
-      // };
-
-      // const cards_store =  make_cards(snapShot_store);
-      // const cards_country =  make_cards(snapShot_country);
-      // const cards_flavor =  make_cards(snapShot_flavor);
-      // const cards_roast =  make_cards(snapShot_roast);
-
       const cards_store = snapShot_store.docs.map((doc) => {
         const item = doc.data();
         return item;
