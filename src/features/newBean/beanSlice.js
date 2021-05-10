@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { beansCollection } from "../../firebase";
+import { beansCollection, userBeansCollection } from "../../firebase";
 import firebase from "firebase/app";
 
 export const descriptorValueEnum = Object.freeze({
@@ -40,6 +40,7 @@ export const descriptorNameEnum = Object.freeze({
   GRIND: "grind",
   BREWING: "brewing",
   PICTURE_URL: "pictureURL",
+  ROAST: "roast",
 });
 
 const initialState = {
@@ -72,31 +73,72 @@ const initialState = {
   [descriptorNameEnum.PROCESS]: null,
   [descriptorNameEnum.GRIND]: null,
   [descriptorNameEnum.BREWING]: null,
+  [descriptorNameEnum.ROAST]: null,
   [descriptorNameEnum.PICTURE_URL]: "",
-};
-
-const serialize = (bean) => {
-  const serializedBean = {};
-  Object.entries(bean).map(([key, value]) => {
-    if (value instanceof Array) {
-      serializedBean[key] = value.map((v) => v.name);
-    } else {
-      serializedBean[key] = String(value);
-    }
-  });
-  return serializedBean;
 };
 
 export const saveNewBean = createAsyncThunk(
   "bean/saveNewBean",
-  async (bean) => {
+  async (newBean) => {
     const beanId = beansCollection.doc().id;
-    beansCollection.doc(beanId).set({
+    const bean = {
+      id: beanId,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      shopId: "",
+      [descriptorNameEnum.COUNTRY]: newBean[descriptorNameEnum.COUNTRY],
+      [descriptorNameEnum.REGION]: newBean[descriptorNameEnum.REGION],
+      [descriptorNameEnum.FARM]: newBean[descriptorNameEnum.FARM],
+      [descriptorNameEnum.PROCESS]: newBean[descriptorNameEnum.PROCESS],
+      [descriptorNameEnum.GRIND]: newBean[descriptorNameEnum.GRIND],
+      [descriptorNameEnum.ROAST]: newBean[descriptorNameEnum.ROAST],
+    };
+    const userBeanId = userBeansCollection.doc().id;
+    console.log(bean);
+    const userBean = {
+      id: userBeanId,
       beanId: beanId,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      ...serialize(bean),
-    });
+      [descriptorNameEnum.PURCHASE_DATE]:
+        newBean[descriptorNameEnum.PURCHASE_DATE],
+      [descriptorNameEnum.FLAVOR_LEVEL1_DESCRIPTORS]:
+        newBean[descriptorNameEnum.FLAVOR_LEVEL1_DESCRIPTORS],
+      [descriptorNameEnum.FLAVOR_LEVEL2_DESCRIPTORS]:
+        newBean[descriptorNameEnum.FLAVOR_LEVEL2_DESCRIPTORS],
+      [descriptorNameEnum.FLAVOR_LEVEL3_DESCRIPTORS]:
+        newBean[descriptorNameEnum.FLAVOR_LEVEL3_DESCRIPTORS],
+      [descriptorNameEnum.MOUSE_FEEL1]: newBean[descriptorNameEnum.MOUSE_FEEL1],
+      [descriptorNameEnum.MOUSE_FEEL2]: newBean[descriptorNameEnum.MOUSE_FEEL2],
+      [descriptorNameEnum.MOUSE_FEEL3]: newBean[descriptorNameEnum.MOUSE_FEEL3],
+      [descriptorNameEnum.MOUSE_FEEL_DESCRIPTORS]:
+        newBean[descriptorNameEnum.MOUSE_FEEL_DESCRIPTORS],
+      [descriptorNameEnum.ACIDITY1]: newBean[descriptorNameEnum.ACIDITY1],
+      [descriptorNameEnum.ACIDITY2]: newBean[descriptorNameEnum.ACIDITY2],
+      [descriptorNameEnum.ACIDITY_DESCRIPTORS]:
+        newBean[descriptorNameEnum.ACIDITY_DESCRIPTORS],
+      [descriptorNameEnum.SWEETNESS1]: newBean[descriptorNameEnum.SWEETNESS1],
+      [descriptorNameEnum.SWEETNESS2]: newBean[descriptorNameEnum.SWEETNESS2],
+      [descriptorNameEnum.SWEETNESS_DESCRIPTORS]:
+        newBean[descriptorNameEnum.SWEETNESS_DESCRIPTORS],
+      [descriptorNameEnum.AFTER_TASTE1]:
+        newBean[descriptorNameEnum.AFTER_TASTE1],
+      [descriptorNameEnum.AFTER_TASTE2]:
+        newBean[descriptorNameEnum.AFTER_TASTE2],
+      [descriptorNameEnum.AFTER_TASTE3]:
+        newBean[descriptorNameEnum.AFTER_TASTE3],
+      [descriptorNameEnum.AFTER_TASTE_DESCRIPTORS]:
+        newBean[descriptorNameEnum.AFTER_TASTE_DESCRIPTORS],
+      [descriptorNameEnum.HARMONY_TOO_MUCH_DESCRIPTORS]:
+        newBean[descriptorNameEnum.HARMONY_TOO_MUCH_DESCRIPTORS],
+      [descriptorNameEnum.HARMONY_POOR_DESCRIPTORS]:
+        newBean[descriptorNameEnum.HARMONY_POOR_DESCRIPTORS],
+      [descriptorNameEnum.BREWING]: newBean[descriptorNameEnum.BREWING],
+      [descriptorNameEnum.OVERALL]: newBean[descriptorNameEnum.OVERALL],
+      [descriptorNameEnum.PICTURE_URL]: newBean[descriptorNameEnum.PICTURE_URL],
+    };
+    userBeansCollection.doc(userBeanId).set(userBean);
+    beansCollection.doc(beanId).set(bean);
   }
 );
 
