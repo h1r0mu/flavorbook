@@ -1,6 +1,6 @@
+import { beansCollection, userBeansCollection } from "../../firebase";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { beansCollection, userBeansCollection } from "../../firebase";
 import firebase from "firebase/app";
 
 export const descriptorValueEnum = Object.freeze({
@@ -80,7 +80,34 @@ const initialState = {
 export const saveNewBean = createAsyncThunk(
   "bean/saveNewBean",
   async (newBean) => {
-    const beanId = beansCollection.doc().id;
+    const snapshot = await beansCollection
+      .where(
+        descriptorNameEnum.COUNTRY,
+        "==",
+        newBean[descriptorNameEnum.COUNTRY]
+      )
+      .where(
+        descriptorNameEnum.REGION,
+        "==",
+        newBean[descriptorNameEnum.REGION]
+      )
+      .where(descriptorNameEnum.FARM, "==", newBean[descriptorNameEnum.FARM])
+      .where(
+        descriptorNameEnum.PROCESS,
+        "==",
+        newBean[descriptorNameEnum.PROCESS]
+      )
+      .where(descriptorNameEnum.GRIND, "==", newBean[descriptorNameEnum.GRIND])
+      .where(descriptorNameEnum.ROAST, "==", newBean[descriptorNameEnum.ROAST])
+      .get();
+    let beanId = null;
+    if (snapshot.empty) {
+      beanId = beansCollection.doc().id;
+    } else {
+      snapshot.forEach((doc) => {
+        beanId = doc.id;
+      });
+    }
     const bean = {
       id: beanId,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -93,8 +120,11 @@ export const saveNewBean = createAsyncThunk(
       [descriptorNameEnum.GRIND]: newBean[descriptorNameEnum.GRIND],
       [descriptorNameEnum.ROAST]: newBean[descriptorNameEnum.ROAST],
     };
+    if (snapshot.empty) {
+      console.log("update bean");
+      beansCollection.doc(beanId).set(bean);
+    }
     const userBeanId = userBeansCollection.doc().id;
-    console.log(bean);
     const userBean = {
       id: userBeanId,
       beanId: beanId,
@@ -138,7 +168,6 @@ export const saveNewBean = createAsyncThunk(
       [descriptorNameEnum.PICTURE_URL]: newBean[descriptorNameEnum.PICTURE_URL],
     };
     userBeansCollection.doc(userBeanId).set(userBean);
-    beansCollection.doc(beanId).set(bean);
   }
 );
 
