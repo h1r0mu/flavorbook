@@ -74,7 +74,7 @@ export default function SearchForm(props) {
   const classes = useStyles();
   useEffect(() => {
     const fetchData = async () => {
-      const ref = db.collection("cards");
+      const ref = db.collection("beans");
       const snapShot = await ref.get();
       const _cards = snapShot.docs.map((doc) => {
         const item = doc.data();
@@ -90,18 +90,18 @@ export default function SearchForm(props) {
   cards.map((card) => {
     switch (props.name) {
       case "Flavor":
-        card.flavors.map((flavor) => {
+        card.flavorLevel1Descriptors.map((flavor) => {
           resultList.push(flavor);
         });
         break;
       case "Country":
-        resultList.push(card.countryName);
+        resultList.push(card.country);
         break;
       case "Shop":
-        resultList.push(card.storeName);
+        resultList.push(card.store);
         break;
-      case "Roast":
-        resultList.push(card.roast);
+      case "Process":
+        resultList.push(card.process);
         break;
       default:
         console.log("Bugs are discovered.");
@@ -130,7 +130,7 @@ export default function SearchForm(props) {
         return <PublicIcon className={classes.icon} />;
       case "Shop":
         return <StoreIcon className={classes.icon} />;
-      case "Roast":
+      case "Process":
         return <SportsRugbyIcon className={classes.icon} />;
       default:
         return <></>;
