@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchForm from "../common/SearchForm";
 import Cards from "./Cards";
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -63,27 +62,23 @@ export const Page = () => {
   return (
     <div className={classes.root}>
       <Grid container>
+        <Grid item xs={1}>
+								</Grid>
         <Grid item xs={3}>
           <SearchForm name="Flavor" addKey={addKey} />
           <SearchForm name="Country" addKey={addKey} />
           <SearchForm name="Shop" addKey={addKey} />
           <SearchForm name="Process" addKey={addKey} />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={7}>
           <div>{setChips(key)}</div>
           <div className={classes.chips}>
-            <Link to="/selection">
-              <Chips
-                name="Create"
-                pattern="Create"
-                color="primary"
-                className={classes.chipButton}
-              />
-            </Link>
             <BeanList keyWords={key} />
           </div>
         </Grid>
       </Grid>
+						<Grid item xs={1}>
+						</Grid>
     </div>
   );
 };

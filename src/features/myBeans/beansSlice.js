@@ -63,5 +63,5 @@ export const {
 } = beansAdapter.getSelectors((state) => state.beans);
 
 export const selectBeanIds = createSelector(selectBeans, (beans) =>
-  beans.map((bean) => bean.id)
+  beans.map((bean) => bean.beanId)
 );
