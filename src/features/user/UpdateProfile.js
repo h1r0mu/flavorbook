@@ -262,14 +262,13 @@ const UpdateProfile = () => {
     });
   };
 
-  const handlePasswordConfirmChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    dispatch({
-      type: "setPasswordConfirm",
-      payload: event.target.value,
-    });
-  };
+  const handlePasswordConfirmChange: React.ChangeEventHandler<HTMLInputElement> =
+    (event) => {
+      dispatch({
+        type: "setPasswordConfirm",
+        payload: event.target.value,
+      });
+    };
   const handleDisplayNameChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
@@ -301,7 +300,8 @@ const UpdateProfile = () => {
             value={state.email}
             onChange={handleEmailChange}
             inputRef={register({
-              pattern: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
+              pattern:
+                /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
             })}
           />
           {errors.email?.type === "pattern" && (

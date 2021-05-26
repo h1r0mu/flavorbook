@@ -3,9 +3,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AppBar from "./features/header/Header.js";
 import AuthFireRoute from "./features/common/AuthFireRoute.js";
 import { AuthProvider } from "./contexts/AuthContext";
-import Expert from "./features/newBean/Expert.js";
+import Selection from "./features/newBean/Selection.js";
 import ForgetPassword from "./features/forgetPassword/ForgetPassword.js";
-import { GlobalStyles } from "./GlobalStyles";
 import Home from "./features/home/Home.js";
 import Login from "./features/login/Login";
 import Member from "./features/user/Member.js";
@@ -16,21 +15,14 @@ import Signup from "./features/signup/Signup.js";
 import { ThemeProvider } from "@material-ui/styles";
 import UpdateProfile from "./features/user/UpdateProfile.js";
 import { createMuiTheme } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createMuiTheme({
+  spacing: [0, 4, 8, 16, 32, 64],
   typography: {
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      "Segoe UI",
-      "Roboto",
-      "Helvetica Neue",
-      "Arial",
-      "sans-serif",
-      "Apple Color Emoji",
-      "Segoe UI Emoji",
-      "Segoe UI Symbol",
-    ].join(","),
+    fontFamily: ["GraphikWeb", "Verdana", "sans-serif", "Helvetica Neue"].join(
+      ","
+    ),
   },
   palette: {
     primary: {
@@ -39,19 +31,51 @@ const theme = createMuiTheme({
     secondary: {
       main: "#f44336",
     },
-    background: {
-      paper: "#ffe4c4",
-      default: "#ffe4c4",
+  },
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        html: {
+          WebkitFontSmoothing: "auto",
+          margin: "0px",
+          backgroundColor: "#f7f3f0",
+        },
+        body: {
+          backgroundColor: "#f7f3f0",
+        },
+      },
+    },
+    input: {
+      margin: "0px",
+    },
+    MuiTypography: {
+      h2: {
+        fontSize: "20px",
+        lineHeight: "normal",
+        fontWeight: "600",
+        margin: "0 0 8px",
+      },
+    },
+    MuiFormControl: {
+      root: {
+        margin: "10px",
+      },
+    },
+    MuiAutocomplete: {
+      option: {
+        backgroundColor: "#f7f3f0",
+      },
     },
   },
 });
+theme.spacing(2);
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <div>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <GlobalStyles />
           <AuthProvider>
             <div>
               <AppBar />
@@ -72,7 +96,7 @@ export default function App() {
                   <MyBeans />
                 </Route>
                 <Route path="/selection">
-                  <Expert />
+                  <Selection />
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
                 <AuthFireRoute

@@ -8,22 +8,14 @@ import Chip from "./Chip.js";
 import { Autocomplete as MuiAutocomplete } from "@material-ui/lab";
 import PropTypes from "prop-types";
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const useStyles = makeStyles(() => ({
-  root: {
-    width: "50%",
-  },
-}));
-
 export default function Autocomplete(props) {
-  const classes = useStyles();
   return (
     <div>
-      <div className={classes.root}>
+      <div>
         <Typography variant="h2" gutterBottom>
           {props.title}
         </Typography>
@@ -56,7 +48,7 @@ export default function Autocomplete(props) {
             ))
           }
           renderInput={(params) => (
-            <TextField {...params} variant="outlined" label={props.title} />
+            <TextField {...params} label={props.label} />
           )}
         />
       </div>
@@ -72,4 +64,5 @@ Autocomplete.propTypes = {
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
   title: PropTypes.string,
+  label: PropTypes.string,
 };

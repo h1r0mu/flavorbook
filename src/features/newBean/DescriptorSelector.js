@@ -27,6 +27,7 @@ export default function DescriptorSelector({ title, name, options }) {
     <Box>
       <Autocomplete
         title={title}
+        label={name}
         options={options}
         getOptionLabel={(flavor) => flavor.name}
         getChipProps={(flavor) => ({

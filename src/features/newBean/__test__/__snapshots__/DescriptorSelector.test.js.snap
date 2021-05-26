@@ -5,9 +5,7 @@ exports[`renders correctly match a snapshot 1`] = `
   className="MuiBox-root MuiBox-root-1"
 >
   <div>
-    <div
-      className="makeStyles-root-2"
-    >
+    <div>
       <h2
         className="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom"
       >
@@ -25,16 +23,8 @@ exports[`renders correctly match a snapshot 1`] = `
         <div
           className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
         >
-          <label
-            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
-            data-shrink={false}
-            htmlFor="TITLE"
-            id="TITLE-label"
-          >
-            TITLE
-          </label>
           <div
-            className="MuiInputBase-root MuiOutlinedInput-root MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+            className="MuiInputBase-root MuiInput-root MuiInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
             onClick={[Function]}
           >
             <input
@@ -45,7 +35,7 @@ exports[`renders correctly match a snapshot 1`] = `
               autoCapitalize="none"
               autoComplete="off"
               autoFocus={false}
-              className="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+              className="MuiInputBase-input MuiInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd"
               disabled={false}
               id="TITLE"
               onAnimationStart={[Function]}
@@ -132,18 +122,6 @@ exports[`renders correctly match a snapshot 1`] = `
                 </span>
               </button>
             </div>
-            <fieldset
-              aria-hidden={true}
-              className="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline"
-            >
-              <legend
-                className="PrivateNotchedOutline-legendLabelled-5"
-              >
-                <span>
-                  TITLE
-                </span>
-              </legend>
-            </fieldset>
           </div>
         </div>
       </div>

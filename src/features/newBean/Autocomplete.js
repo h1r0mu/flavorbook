@@ -18,9 +18,7 @@ export default function Autocomplete({ name, label, options }) {
       id={label}
       options={options}
       style={{ width: 300 }}
-      renderInput={(params) => (
-        <TextField {...params} label={label} variant="outlined" />
-      )}
+      renderInput={(params) => <TextField {...params} label={label} />}
       onChange={handleChange}
     />
   );
