@@ -211,7 +211,8 @@ export default function ForgetPassword() {
               onChange={handleEmailChange}
               onKeyPress={handleKeyPress}
               inputRef={register({
-                pattern: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
+                pattern:
+                  /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
               })}
             />
             {errors.email?.type === "pattern" && (

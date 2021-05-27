@@ -121,7 +121,6 @@ export const saveNewBean = createAsyncThunk(
       [descriptorNameEnum.ROAST]: newBean[descriptorNameEnum.ROAST],
     };
     if (snapshot.empty) {
-      console.log("update bean");
       beansCollection.doc(beanId).set(bean);
     }
     const userBeanId = userBeansCollection.doc().id;

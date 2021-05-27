@@ -17,6 +17,7 @@ import firebase from "firebase/app";
 import { flavorData } from "../../data/flavors";
 import { makeStyles } from "@material-ui/core/styles";
 import { storage } from "../../firebase";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -168,7 +169,7 @@ export function createFlavors(flavorData) {
   return flavors;
 }
 
-export default function Expert() {
+export default function Selection() {
   const dispatch = useDispatch();
   const bean = useSelector((state) => state.bean);
   const classes = useStyles();
@@ -206,33 +207,30 @@ export default function Expert() {
   return (
     <div className={classes.root}>
       <div>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Flavors
         </Typography>
         <DescriptorSelector
-          title="Level 1"
           name={descriptorNameEnum.FLAVOR_LEVEL1_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
-        <DescriptorSelector
-          title="Level 2"
+        {/* <DescriptorSelector
           name={descriptorNameEnum.FLAVOR_LEVEL2_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 1)}
         />
         <DescriptorSelector
-          title="Level 3"
           name={descriptorNameEnum.FLAVOR_LEVEL3_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 2)}
-        />
+        /> */}
       </div>
       <div>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Clean cup
         </Typography>
         <Slider name={descriptorNameEnum.CLEAN_CUP} marks={marks.cleanCup} />
       </div>
       <div>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Mouse feel
         </Typography>
         <Slider
@@ -253,7 +251,7 @@ export default function Expert() {
         />
       </div>
       <div>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Acidity
         </Typography>
         <Slider name={descriptorNameEnum.ACIDITY1} marks={marks.acidity1} />
@@ -264,7 +262,7 @@ export default function Expert() {
         />
       </div>
       <div>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Sweetness
         </Typography>
         <Slider name={descriptorNameEnum.SWEETNESS1} marks={marks.sweetness1} />
@@ -275,7 +273,7 @@ export default function Expert() {
         />
       </div>
       <div>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           After taste
         </Typography>
         <Slider
@@ -296,72 +294,50 @@ export default function Expert() {
         />
       </div>
       <div>
-        <Typography variant="h1" gutterBottom>
-          Harmony
-        </Typography>
         <Typography variant="h2" gutterBottom>
-          Too much
+          Harmony
         </Typography>
         <DescriptorSelector
           name={descriptorNameEnum.HARMONY_TOO_MUCH_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
-        <Typography variant="h2" gutterBottom>
-          Poor
-        </Typography>
         <DescriptorSelector
           name={descriptorNameEnum.HARMONY_POOR_DESCRIPTORS}
           options={flavors.filter((flavor) => flavor.level == 0)}
         />
       </div>
       <div>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Overall
         </Typography>
         <Rating name={descriptorNameEnum.OVERALL} />
       </div>
-      <div>
-        <Typography variant="h1" gutterBottom>
-          Store
-        </Typography>
-        <Autocomplete name={descriptorNameEnum.STORE} options={[]} />
-      </div>
-      <div>
-        <Typography variant="h1" gutterBottom>
-          Country
-        </Typography>
-        <Autocomplete
-          name={descriptorNameEnum.COUNTRY}
-          options={["Ethiopia", "Brazil"]}
-        />
-      </div>
-      <div>
-        <Typography variant="h1" gutterBottom>
-          Region
-        </Typography>
-        <Autocomplete name={descriptorNameEnum.REGION} options={[]} />
-      </div>
-      <div>
-        <Typography variant="h1" gutterBottom>
-          Farm
-        </Typography>
-        <Autocomplete name={descriptorNameEnum.FARM} options={[]} />
-      </div>
-      <div>
-        <Typography variant="h1" gutterBottom>
-          Process
-        </Typography>
-        <Autocomplete
-          name={descriptorNameEnum.PROCESS}
-          options={["Washed", "Natural"]}
-        />
-      </div>
-      <div>
-        <Typography variant="h1" gutterBottom>
-          Store
-        </Typography>
-        <Autocomplete name={descriptorNameEnum.GRIND} options={[]} />
-      </div>
+      <Grid container spacing={10}>
+        <Grid item xs>
+          <Autocomplete name={descriptorNameEnum.STORE} options={[]} />
+        </Grid>
+        <Grid item xs>
+          <Autocomplete
+            name={descriptorNameEnum.COUNTRY}
+            options={["Ethiopia", "Brazil"]}
+          />
+        </Grid>
+        <Grid item xs>
+          <Autocomplete name={descriptorNameEnum.REGION} options={[]} />
+        </Grid>
+        <Grid item xs>
+          <Autocomplete name={descriptorNameEnum.FARM} options={[]} />
+        </Grid>
+        <Grid item xs>
+          <Autocomplete
+            name={descriptorNameEnum.PROCESS}
+            options={["Washed", "Natural"]}
+          />
+        </Grid>
+        <Grid item xs>
+          <Autocomplete name={descriptorNameEnum.GRIND} options={[]} />
+        </Grid>
+      </Grid>
       <div>
         <input
           accept="image/*"
