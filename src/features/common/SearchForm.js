@@ -37,11 +37,7 @@ function Highlights(props) {
         options={props.list}
         getOptionLabel={(option) => option}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search"
-            margin="normal"
-          />
+          <TextField {...params} label="Search" margin="normal" />
         )}
         onInputChange={(event, newInputValue) => {
           props.addKey(newInputValue);
@@ -86,51 +82,46 @@ export default function SearchForm(props) {
 
   let resultList = [];
 
-		cards.map((card) => {
-				let flavors = card.flavorLevel1Descriptors;
-				let country = card.country;
-				let store = card.store;
-				let process = card.process;
-				switch (props.name) {
-						case "Flavor":
+  cards.map((card) => {
+    let flavors = card.flavorLevel1Descriptors;
+    let country = card.country;
+    let store = card.store;
+    let process = card.process;
+    switch (props.name) {
+      case "Flavor":
+        if (flavors != undefined) {
+          card.flavorLevel1Descriptors.map((flavor) => {
+            resultList.push(flavor);
+          });
+        }
+        break;
 
-								if(flavors!= undefined) {
-										card.flavorLevel1Descriptors.map((flavor) => {
-												resultList.push(flavor);
-										});
-								}
-								break;
+      case "Country":
+        if (country != undefined) {
+          resultList.push(card.country);
+        }
+        break;
 
-						case "Country":
+      case "Shop":
+        if (store != undefined) {
+          resultList.push(card.store);
+        }
+        break;
 
-								if(country != undefined) {
-										resultList.push(card.country);
-								}
-								break;
+      case "Process":
+        if (process != undefined) {
+          resultList.push(card.process);
+        }
+        break;
 
-						case "Shop":
+      default:
+        console.log("Bugs are discovered.");
+        break;
+    }
 
-								if(store != undefined) {
-										resultList.push(card.store);
-								}
-								break;
-
-						case "Process":
-
-								if(process != undefined) {
-										resultList.push(card.process);
-								}
-								break;
-
-						default:
-
-								console.log("Bugs are discovered.");
-								break;
-				}
-
-				let set = new Set(resultList);
-				resultList = Array.from(set);
-		});
+    let set = new Set(resultList);
+    resultList = Array.from(set);
+  });
 
   function setSearch() {
     return (

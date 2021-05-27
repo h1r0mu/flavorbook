@@ -63,22 +63,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const BeanListItem = ({ bean, editable}) => {
+const BeanListItem = ({ bean, editable }) => {
   const classes = useStyles();
-		//const bean = useSelector((state) => selectBeanById(state, id));
+  //const bean = useSelector((state) => selectBeanById(state, id));
   const [imageSrc, setImageSrc] = useState(null);
   const dispatch = useDispatch();
-		console.log(bean)
+  console.log(bean);
 
   useEffect(() => {
-
     const fetchImageSrc = async (url) => {
       const imageSrc = await storage.child(url).getDownloadURL();
       setImageSrc(imageSrc);
     };
 
     if (bean != undefined) {
-						console.log(bean.pictureURL);
+      console.log(bean.pictureURL);
       fetchImageSrc("member/" + bean.pictureURL);
     }
   }, []);
@@ -94,7 +93,7 @@ const BeanListItem = ({ bean, editable}) => {
   const onDelete = async () => {
     await dispatch(deleteBean(bean.beanId));
   };
-		console.log(bean.pictureUrl)
+  console.log(bean.pictureUrl);
 
   return (
     <Card className={classes.root} key={bean.beanId}>
@@ -124,13 +123,13 @@ const BeanListItem = ({ bean, editable}) => {
               <Chip name={flavor} color="primary" key={index} />
             ))}
           </div>
-										<Typography
-												variant="subtitle1"
-												color="textSecondary"
-												className={classes.time}
-										>
-												2001-3-14
-										</Typography>
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            className={classes.time}
+          >
+            2001-3-14
+          </Typography>
         </CardContent>
         <CardActions>
           {editable ? (

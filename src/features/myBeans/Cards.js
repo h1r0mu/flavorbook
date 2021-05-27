@@ -167,8 +167,7 @@ export default function Cards(props) {
                   variant="subtitle1"
                   color="textSecondary"
                   className={classes.time}
-                >
-                </Typography>
+                ></Typography>
               </div>
             </CardContent>
           </div>

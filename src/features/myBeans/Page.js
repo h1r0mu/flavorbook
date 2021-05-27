@@ -62,8 +62,7 @@ export const Page = () => {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={1}>
-								</Grid>
+        <Grid item xs={1}></Grid>
         <Grid item xs={3}>
           <SearchForm name="Flavor" addKey={addKey} />
           <SearchForm name="Country" addKey={addKey} />
@@ -77,8 +76,7 @@ export const Page = () => {
           </div>
         </Grid>
       </Grid>
-						<Grid item xs={1}>
-						</Grid>
+      <Grid item xs={1}></Grid>
     </div>
   );
 };
