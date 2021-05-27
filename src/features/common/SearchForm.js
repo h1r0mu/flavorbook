@@ -14,17 +14,17 @@ import { db } from "../../firebase.js";
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginTop: 40,
+    marginTop: 100,
   },
   wrap: {
-    marginLeft: 30,
+    marginLeft: 100,
   },
   chips: {
     marginTop: 20,
   },
   icon: {
-    fontSize: 50,
-    marginLeft: 30,
+    fontSize: 30,
+    marginRight: 30,
   },
 }));
 
@@ -37,12 +37,7 @@ function Highlights(props) {
         options={props.list}
         getOptionLabel={(option) => option}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search"
-            variant="outlined"
-            margin="normal"
-          />
+          <TextField {...params} label="Search" margin="normal" />
         )}
         onInputChange={(event, newInputValue) => {
           props.addKey(newInputValue);
@@ -74,7 +69,7 @@ export default function SearchForm(props) {
   const classes = useStyles();
   useEffect(() => {
     const fetchData = async () => {
-      const ref = db.collection("beans");
+      const ref = db.collection("userBeans");
       const snapShot = await ref.get();
       const _cards = snapShot.docs.map((doc) => {
         const item = doc.data();
@@ -88,21 +83,37 @@ export default function SearchForm(props) {
   let resultList = [];
 
   cards.map((card) => {
+    let flavors = card.flavorLevel1Descriptors;
+    let country = card.country;
+    let store = card.store;
+    let process = card.process;
     switch (props.name) {
       case "Flavor":
-        card.flavorLevel1Descriptors.map((flavor) => {
-          resultList.push(flavor);
-        });
+        if (flavors != undefined) {
+          card.flavorLevel1Descriptors.map((flavor) => {
+            resultList.push(flavor);
+          });
+        }
         break;
+
       case "Country":
-        resultList.push(card.country);
+        if (country != undefined) {
+          resultList.push(card.country);
+        }
         break;
+
       case "Shop":
-        resultList.push(card.store);
+        if (store != undefined) {
+          resultList.push(card.store);
+        }
         break;
+
       case "Process":
-        resultList.push(card.process);
+        if (process != undefined) {
+          resultList.push(card.process);
+        }
         break;
+
       default:
         console.log("Bugs are discovered.");
         break;
@@ -140,9 +151,9 @@ export default function SearchForm(props) {
   return (
     <div className={classes.root}>
       <div className={classes.wrap}>
-        <Typography variant="h2">
-          {props.name}
+        <Typography variant="h4">
           {setIcon(props.name)}
+          {props.name}
         </Typography>
         {setSearch()}
       </div>

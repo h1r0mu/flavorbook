@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { deleteBean, selectBeanById } from "./beansSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { deleteBean } from "./beansSlice";
+//import { deleteBean, selectBeanById } from "./beansSlice";
+//import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Avatar from "./Avatar";
 import Button from "@material-ui/core/Button";
@@ -17,12 +19,13 @@ import { storage } from "../../firebase";
 
 const useStyles = makeStyles(() => ({
   root: {
-    maxWidth: 1000,
+    width: 800,
     display: "flex",
     margin: "auto",
-    marginTop: "10px",
+    marginTop: 10,
+    marginLeft: 20,
     backgroundColor: "white",
-    borderRadius: 40,
+    borderRadius: 8,
   },
   details: {
     display: "flex",
@@ -33,9 +36,9 @@ const useStyles = makeStyles(() => ({
   },
   cover: {
     margin: 20,
-    maxWidth: 200,
-    maxHeight: 200,
-    borderRadius: 20,
+    width: 150,
+    height: 200,
+    borderRadius: 5,
   },
   coffeeName: {
     display: "flex",
@@ -52,20 +55,19 @@ const useStyles = makeStyles(() => ({
   chips: {
     display: "flex",
     flexWrap: "no-wrap",
-    marginTop: 30,
+    marginTop: 20,
   },
   time: {
     marginTop: 20,
-    marginLeft: 200,
+    marginRight: 100,
   },
 }));
 
-const BeanListItem = ({ id, editable, keyWords }) => {
+const BeanListItem = ({ bean, editable }) => {
   const classes = useStyles();
-  const bean = useSelector((state) => selectBeanById(state, id));
+  //const bean = useSelector((state) => selectBeanById(state, id));
   const [imageSrc, setImageSrc] = useState(null);
   const dispatch = useDispatch();
-  console.log(keyWords);
   console.log(bean);
 
   useEffect(() => {
@@ -73,8 +75,10 @@ const BeanListItem = ({ id, editable, keyWords }) => {
       const imageSrc = await storage.child(url).getDownloadURL();
       setImageSrc(imageSrc);
     };
-    if (bean.pictureUrl) {
-      fetchImageSrc("member/" + bean.pictureUrl);
+
+    if (bean != undefined) {
+      console.log(bean.pictureURL);
+      fetchImageSrc("member/" + bean.pictureURL);
     }
   }, []);
 
@@ -87,15 +91,16 @@ const BeanListItem = ({ id, editable, keyWords }) => {
   }
 
   const onDelete = async () => {
-    await dispatch(deleteBean(bean.id));
+    await dispatch(deleteBean(bean.beanId));
   };
+  console.log(bean.pictureUrl);
 
   return (
-    <Card className={classes.root} key={id}>
+    <Card className={classes.root} key={bean.beanId}>
       <img
-        id={bean.picture_url}
+        id={bean.pictureUrl}
         src={imageSrc}
-        alt={bean.picture_url}
+        alt={bean.pictureUrl}
         className={classes.cover}
       />
       <div className={classes.details}>
@@ -117,14 +122,14 @@ const BeanListItem = ({ id, editable, keyWords }) => {
             {bean.flavorLevel1Descriptors.map((flavor, index) => (
               <Chip name={flavor} color="primary" key={index} />
             ))}
-            <Typography
-              variant="subtitle1"
-              color="textSecondary"
-              className={classes.time}
-            >
-              2001-3-14
-            </Typography>
           </div>
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            className={classes.time}
+          >
+            2001-3-14
+          </Typography>
         </CardContent>
         <CardActions>
           {editable ? (
@@ -145,7 +150,7 @@ const BeanListItem = ({ id, editable, keyWords }) => {
 };
 
 BeanListItem.propTypes = {
-  id: PropTypes.string,
+  bean: PropTypes.obj,
   editable: PropTypes.bool,
   keyWords: PropTypes.array,
 };

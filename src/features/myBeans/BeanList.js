@@ -5,77 +5,114 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import Chips from "./Chips";
 import { db } from "../../firebase.js";
+import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  root: {},
+  cards: {},
+  chips: {
+    display: "flex",
+    flexWrap: "wrap",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+}));
 
 const BeanList = ({ keyWords }) => {
+  const classes = useStyles();
   const [beans, setBeans] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      let snapShot_store = "";
-      let snapShot_country = "";
-      let snapShot_flavor = "";
-      let snapShot_roast = "";
+    console.log(keyWords);
+    if (keyWords != " ") {
+      const fetchData = async () => {
+        let snapShot_store = "";
+        let snapShot_country = "";
+        let snapShot_flavor = "";
+        let snapShot_roast = "";
 
-      snapShot_roast = await db
-        .collection("beans")
-        .where("process", "in", keyWords)
-        .get();
-      snapShot_store = await db
-        .collection("beans")
-        .where("store", "in", keyWords)
-        .get();
-      snapShot_country = await db
-        .collection("beans")
-        .where("country", "in", keyWords)
-        .get();
-      snapShot_flavor = await db
-        .collection("beans")
-        .where("flavorLevel1Descriptors", "array-contains-any", keyWords)
-        .get();
+        snapShot_roast = await db
+          .collection("userBeans")
+          .where("process", "in", keyWords)
+          .get();
+        snapShot_store = await db
+          .collection("userBeans")
+          .where("store", "in", keyWords)
+          .get();
+        snapShot_country = await db
+          .collection("userBeans")
+          .where("country", "in", keyWords)
+          .get();
+        snapShot_flavor = await db
+          .collection("userBeans")
+          .where("flavorLevel1Descriptors", "array-contains-any", keyWords)
+          .get();
 
-      const beans_store = snapShot_store.docs.map((doc) => {
-        const item = doc.data();
-        return item;
-      });
-      const beans_country = snapShot_country.docs.map((doc) => {
-        const item = doc.data();
-        return item;
-      });
-      const beans_flavor = snapShot_flavor.docs.map((doc) => {
-        const item = doc.data();
-        return item;
-      });
-      const beans_roast = snapShot_roast.docs.map((doc) => {
-        const item = doc.data();
-        return item;
-      });
+        const beans_store = snapShot_store.docs.map((doc) => {
+          const item = doc.data();
+          return item;
+        });
+        const beans_country = snapShot_country.docs.map((doc) => {
+          const item = doc.data();
+          return item;
+        });
+        const beans_flavor = snapShot_flavor.docs.map((doc) => {
+          const item = doc.data();
+          return item;
+        });
+        const beans_roast = snapShot_roast.docs.map((doc) => {
+          const item = doc.data();
+          return item;
+        });
 
-      let beans = beans_store
-        .concat(beans_country)
-        .concat(beans_flavor)
-        .concat(beans_roast);
+        let beans = beans_store
+          .concat(beans_country)
+          .concat(beans_flavor)
+          .concat(beans_roast);
 
-      const resultbeans = Array.from(
-        beans
-          .reduce(
-            (map, currentitem) => map.set(currentitem.beanId, currentitem),
-            new Map()
-          )
-          .values()
-      );
+        const resultbeans = Array.from(
+          beans
+            .reduce(
+              (map, currentitem) => map.set(currentitem.beanId, currentitem),
+              new Map()
+            )
+            .values()
+        );
 
-      setBeans(resultbeans);
-    };
-    fetchData();
+        setBeans(resultbeans);
+      };
+      fetchData();
+    } else {
+      const fetchData = async () => {
+        let snapShot = "";
+
+        snapShot = await db.collection("userBeans").get();
+
+        const beans = snapShot.docs.map((doc) => {
+          const item = doc.data();
+          return item;
+        });
+
+        const resultbeans = Array.from(
+          beans
+            .reduce(
+              (map, currentitem) => map.set(currentitem.beanId, currentitem),
+              new Map()
+            )
+            .values()
+        );
+
+        setBeans(resultbeans);
+      };
+      fetchData();
+    }
   }, [keyWords]);
 
-  // const beanIds = useSelector(selectBeanIds);
-  console.log(beans);
-  const beanIds = beans.map((bean) => bean.beanId);
   const [editable, setEditable] = useState(false);
 
-  const renderedListItems = beanIds.map((beanId) => {
-    return <BeanListItem key={beanId} id={beanId} editable={editable} />;
+  const renderedListItems = beans.map((bean) => {
+    return <BeanListItem key={bean.beanId} bean={bean} editable={editable} />;
   });
 
   const handleClick = () => {
@@ -84,7 +121,7 @@ const BeanList = ({ keyWords }) => {
 
   const loadingStatus = useSelector((state) => state.beans.status);
 
-  const editButtonLabel = !editable ? "Edit" : "Done";
+  const editButtonLabel = !editable ? "Edit beans" : "Done";
 
   if (loadingStatus === "loading") {
     return (
@@ -96,12 +133,17 @@ const BeanList = ({ keyWords }) => {
 
   return (
     <div>
-      <Chips
-        name={editButtonLabel}
-        pattern="Edit"
-        color="secondry"
-        onClick={handleClick}
-      />
+      <div className={classes.chips}>
+        <Link to="/selection">
+          <Chips name="Register beans" pattern="Create" color="primary" />
+        </Link>
+        <Chips
+          name={editButtonLabel}
+          pattern="Edit"
+          color="secondry"
+          onClick={handleClick}
+        />
+      </div>
       <ul className="bean-list">{renderedListItems}</ul>
     </div>
   );
