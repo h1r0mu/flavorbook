@@ -47,7 +47,7 @@ const useStyles = makeStyles(() => ({
   chips: {
     display: "flex",
     flexWrap: "no-wrap",
-    marginTop: 20,
+    marginTop: 30,
   },
   time: {
     marginTop: 20,
@@ -167,7 +167,9 @@ export default function Cards(props) {
                   variant="subtitle1"
                   color="textSecondary"
                   className={classes.time}
-                ></Typography>
+                >
+                  2001-3-14
+                </Typography>
               </div>
             </CardContent>
           </div>

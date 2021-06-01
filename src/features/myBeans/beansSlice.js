@@ -57,9 +57,11 @@ export const { beanDeleted } = beansSlice.actions;
 
 export default beansSlice.reducer;
 
-export const { selectAll: selectBeans, selectById: selectBeanById } =
-  beansAdapter.getSelectors((state) => state.beans);
+export const {
+  selectAll: selectBeans,
+  selectById: selectBeanById,
+} = beansAdapter.getSelectors((state) => state.beans);
 
 export const selectBeanIds = createSelector(selectBeans, (beans) =>
-  beans.map((bean) => bean.beanId)
+  beans.map((bean) => bean.id)
 );
