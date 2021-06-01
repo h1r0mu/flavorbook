@@ -33,8 +33,8 @@ const useStyles = makeStyles(() => ({
   },
   cover: {
     margin: 20,
-    maxwidth: 200,
-    maxheight: 200,
+    maxWidth: 200,
+    maxHeight: 200,
     borderRadius: 20,
   },
   coffeeName: {
@@ -91,9 +91,9 @@ const BeanListItem = ({ id, editable }) => {
   return (
     <Card className={classes.root} key={id}>
       <img
-        id={bean.pictureURL}
+        id={bean.picture_url}
         src={imageSrc}
-        alt={bean.pictureURL}
+        alt={bean.picture_url}
         className={classes.cover}
       />
       <div className={classes.details}>

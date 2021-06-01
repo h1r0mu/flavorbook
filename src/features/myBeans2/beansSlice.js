@@ -21,12 +21,12 @@ const serialize = (data) => {
   return serializedData;
 };
 export const fetchBeans = createAsyncThunk("beans/fetchBeans", async () => {
-  const snapshot = await db.collection("beans").get();
+  const snapshot = await db.collection("userBeans").get();
   return snapshot.docs.map((doc) => ({ id: doc.id, ...serialize(doc.data()) }));
 });
 
 export const deleteBean = createAsyncThunk("beans/deleteBean", async (id) => {
-  await db.collection("beans").doc(id).delete();
+  await db.collection("userBeans").doc(id).delete();
   return id;
 });
 

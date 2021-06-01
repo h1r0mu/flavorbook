@@ -1,9 +1,9 @@
 import { React, useState } from "react";
 
 import BeanListItem from "./BeanListItem";
-import Button from "@material-ui/core/Button";
 import { selectBeanIds } from "./beansSlice";
 import { useSelector } from "react-redux";
+import Chips from "./Chips";
 
 const BeanList = () => {
   const beanIds = useSelector(selectBeanIds);
@@ -31,9 +31,12 @@ const BeanList = () => {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClick}>
-        {editButtonLabel}
-      </Button>
+      <Chips
+        name={editButtonLabel}
+        pattern="Edit"
+        color="secondry"
+        onClick={handleClick}
+      />
       <ul className="bean-list">{renderedListItems}</ul>
     </div>
   );
