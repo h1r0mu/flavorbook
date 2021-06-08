@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexWrap: "wrap",
       width: 400,
-						margin:'auto',
-						marginTop:100
+      margin: "auto",
+      marginTop: 100,
     },
     signupBtn: {
       marginTop: theme.spacing(2),
@@ -114,7 +114,6 @@ const reducer = (state: State, action: Action): State => {
 };
 
 const Signup = () => {
-
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { signup } = useAuth();
@@ -123,7 +122,6 @@ const Signup = () => {
   const { register, handleSubmit, errors, trigger } = useForm();
 
   useEffect(() => {
-
     // stateのemail,password,passwordconfirmが変化した時のみ再びレンダー
 
     if (state.password.trim() !== state.passwordconfirm.trim()) {
@@ -169,13 +167,10 @@ const Signup = () => {
       });
 
       setSuccessMessage("アカウントの作成に成功しました");
-
     } catch (e) {
-
       console.log(e);
 
       switch (e.code) {
-
         case "auth/network-request-failed":
           setError(
             "通信がエラーになったのか、またはタイムアウトになりました。通信環境がいいところでやり直してください"
@@ -205,7 +200,6 @@ const Signup = () => {
         type: "setIsButtonDisabled",
         payload: false,
       });
-
     }
   }
 
@@ -312,9 +306,9 @@ const Signup = () => {
               onKeyPress={handleKeyPress}
             />
           </div>
-										<div className={classes.toLogin}>
-          もしアカウントがあるなら<Link to="/login">ログイン</Link>
-										</div>
+          <div className={classes.toLogin}>
+            もしアカウントがあるなら<Link to="/login">ログイン</Link>
+          </div>
         </CardContent>
         <CardActions>
           <Button
@@ -325,7 +319,7 @@ const Signup = () => {
             onClick={handleSubmit(handleSignup)}
             disabled={state.isButtonDisabled}
           >
-            新規登録 
+            新規登録
           </Button>
         </CardActions>
       </Card>

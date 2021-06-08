@@ -42,16 +42,16 @@ export function AuthProvider(props) {
     return currentUser.sendEmailVerification(actionCodeSettings);
   }
 
-  function updatePassword() {
-    return currentUser.updateEmail();
+  function updatePassword(password) {
+    return currentUser.updatePassword(password);
   }
 
   function updateEmail(email) {
     return currentUser.updateEmail(email);
   }
 
-  function updateProfile(profiledata) {
-    return currentUser.updateProfile(profiledata);
+  function updateProfile(profileData) {
+    return currentUser.updateProfile(profileData);
   }
 
   const value = {

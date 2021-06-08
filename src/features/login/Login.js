@@ -15,30 +15,30 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     width: 500,
-				margin:'auto',
-				marginTop:100
+    margin: "auto",
+    marginTop: 100,
   },
   loginBtn: {
     marginTop: theme.spacing(2),
     flexGrow: 1,
-				background: "#5f4e44",
+    background: "#5f4e44",
     color: "#fff",
   },
   header: {
     textAlign: "center",
-				background: "#5f4e44",
+    background: "#5f4e44",
     color: "#fff",
   },
   card: {
     marginTop: theme.spacing(10),
   },
-		toSignUp: {
-				marginTop: 20,
-				marginLeft: 30,
-		},
+  toSignUp: {
+    marginTop: 20,
+    marginLeft: 30,
+  },
   toForget: {
-				marginTop: 20,
-				marginLeft: 30,
+    marginTop: 20,
+    marginLeft: 30,
   },
 }));
 
@@ -165,16 +165,13 @@ export default function Login() {
       switch (e.code) {
         case "auth/network-request-failed":
           setError(
-            "通信がエラーになったのか、またはタイムアウトになりました。通信環境がいいところでやり直してください"
+            "通信がエラー、またはタイムアウトになりました。通信環境がいいところでやり直してください"
           );
-          break;
-        case "auth/weak-password":
-          setError("パスワードが短すぎます。6文字以上を入力してください。");
           break;
         case "auth/invalid-email":
           setError("メールアドレスまたはパスワードが正しくありません");
           break;
-        case "auth/wrong-passsword":
+        case "auth/wrong-password":
           setError("メールアドレスまたはパスワードが正しくありません");
           break;
         case "auth/user-disabled":
@@ -185,7 +182,7 @@ export default function Login() {
           break;
         default:
           setError(
-            "アカウントの作成に失敗しました。通信環境にいい所でやりなしてください。"
+            "ログインに失敗しました。通信環境にいい所でやりなしてください。"
           );
       }
       dispatch({
@@ -278,12 +275,12 @@ export default function Login() {
               </div>
             )}
           </div>
-										<div className={classes.toSignUp}>
-          アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
-										</div>
-										<div className={classes.toForget}>
-          パスワードを忘れた場合は<Link to="/forget">こちら</Link>
-										</div>
+          <div className={classes.toSignUp}>
+            アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
+          </div>
+          <div className={classes.toForget}>
+            パスワードを忘れた場合は<Link to="/forget">こちら</Link>
+          </div>
         </CardContent>
         <CardActions>
           <Button
