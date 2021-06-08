@@ -2,11 +2,20 @@ import { React, useState } from "react";
 
 import BeanListItem from "./BeanListItem";
 import Button from "@material-ui/core/Button";
-import { selectBeanIds } from "./beansSlice";
+// import { selectFilteredBeans } from "./beansSlice";
 import { useSelector } from "react-redux";
 
 const BeanList = () => {
-  const beanIds = useSelector(selectBeanIds);
+  const beanIds = useSelector((state) => {
+    const ids = [];
+    Object.values(state.beans.entities).forEach((bean) => {
+      if (bean.id == "eBkrtAGIgYVP4P2wahiF") {
+        ids.push(bean.id);
+      }
+    });
+    return ids;
+  });
+  console.log(beanIds);
   const [editable, setEditable] = useState(false);
 
   const renderedListItems = beanIds.map((beanId) => {

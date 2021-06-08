@@ -34,13 +34,18 @@ function Highlights(props) {
       <Autocomplete
         id="highlights-demo"
         style={{ maxWidth: 300 }}
-        options={props.list}
+        options={["ttmBCPrkeKDhVcFjGdj7"]}
         getOptionLabel={(option) => option}
         renderInput={(params) => (
           <TextField {...params} label="Search" margin="normal" />
         )}
         onInputChange={(event, newInputValue) => {
-          props.addKey(newInputValue);
+          console.log("event", event);
+          console.log("input", newInputValue);
+          console.log(props.addKey);
+          if (event.type === "keydown" || event.type === "click") {
+            props.addKey(newInputValue);
+          }
         }}
         renderOption={(option, { inputValue }) => {
           const matches = match(option, inputValue);

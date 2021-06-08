@@ -2,88 +2,80 @@ import BeanList from "./BeanList";
 import Chips from "./Chips";
 import Grid from "@material-ui/core/Grid";
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
 import Cards from "./Cards";
-import { Link } from "react-router-dom";
+import { beanIdFilterChanged } from "./beansFiltersSlice";
 
 const useStyles = makeStyles(() => ({
   root: {},
   cards: {},
   chips: {
     display: "flex",
-    flexWrap: "wrap",
+    maxWidth: 1000,
   },
   chipButton: {
     display: "flex",
     marginLeft: "auto",
-    flexWrap: "wrap",
   },
 }));
 
 export const Page = () => {
-  const classes = useStyles();
-  const [key, setKey] = useState([" "]);
+  const dispatch = useDispatch();
 
-  const addKey = (str) => {
-    return setKey(Array.from(new Set([...key, str])));
+  const classes = useStyles();
+  const [key] = useState([""]);
+
+  const onColorChange = (color) => {
+    return dispatch(beanIdFilterChanged(color, "added"));
   };
 
-  const setCards = (key) => {
+  // const addKey = (str) => {
+  //   return setKey(Array.from(new Set([...key, str])));
+  // };
+
+  const setKeyWords = (key) => {
     return <Cards val={key} />;
   };
 
-  const setChips = (key) => {
-    const chipItems = key.map((word) => {
-      return word != " " ? (
-        <Chips
-          name={word}
-          pattern="Close"
-          color="secondry"
-          key={word}
-          onClick={() => removeChips(key, word)}
-        />
-      ) : (
-        <> </>
-      );
-    });
-    return <div className={classes.chips}>{chipItems}</div>;
-  };
-
-  const removeChips = (list, remove_word) => {
-    setKey(list.filter((word) => word !== remove_word));
-  };
-
   useEffect(() => {
-    setKey(key);
-    setCards(key);
-    setChips(key);
+    setKeyWords(key);
   }, [key]);
-
-  console.log('key');
-  console.log(key);
 
   return (
     <div className={classes.root}>
       <Grid container>
+        <Grid item xs={3}></Grid>
+        <Grid item xs={10}>
+          <div className={classes.chips}>
+            <Chips
+              name="CREATE"
+              pattern="Create"
+              color="primary"
+              className={classes.chipButton}
+            />
+            <Chips
+              name="EDIT"
+              pattern="Edit"
+              color="secondry"
+              className={classes.chipButton}
+            />
+          </div>
+        </Grid>
+      </Grid>
+      <Grid container>
         <Grid item xs={3}>
-          <SearchForm name="Flavor" addKey={addKey} />
-          <SearchForm name="Country" addKey={addKey} />
-          <SearchForm name="Shop" addKey={addKey} />
-          <SearchForm name="Process" addKey={addKey} />
+          <SearchForm name="Flavor" addKey={onColorChange} />
+          <SearchForm name="Country" addKey={onColorChange} />
+          <SearchForm name="Shop" addKey={onColorChange} />
+          <SearchForm name="Roast" addKey={onColorChange} />
         </Grid>
         <Grid item xs={9}>
-          <div>{setChips(key)}</div>
-          <div className={classes.chips}>
-            <Link to="/selection">
-              <Chips
-                name="Create"
-                pattern="Create"
-                color="primary"
-                className={classes.chipButton}
-              />
-            </Link>
-            <BeanList keyWords={key} />
+          <div className={classes.cards}>
+            <p>{key}</p>
+            <div>{setKeyWords(key)}</div>
+            <BeanList />
           </div>
         </Grid>
       </Grid>

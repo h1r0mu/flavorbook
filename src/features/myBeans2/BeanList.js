@@ -1,12 +1,13 @@
 import { React, useState } from "react";
 
 import BeanListItem from "./BeanListItem";
-import { selectBeanIds } from "./beansSlice";
+import Button from "@material-ui/core/Button";
+// import { selectFilteredBeans } from "./beansSlice";
 import { useSelector } from "react-redux";
-import Chips from "./Chips";
+import { selectFilteredBeanIds } from "./beansSlice";
 
 const BeanList = () => {
-  const beanIds = useSelector(selectBeanIds);
+  const beanIds = useSelector(selectFilteredBeanIds);
   const [editable, setEditable] = useState(false);
 
   const renderedListItems = beanIds.map((beanId) => {
@@ -31,12 +32,9 @@ const BeanList = () => {
 
   return (
     <div>
-      <Chips
-        name={editButtonLabel}
-        pattern="Edit"
-        color="secondry"
-        onClick={handleClick}
-      />
+      <Button variant="contained" onClick={handleClick}>
+        {editButtonLabel}
+      </Button>
       <ul className="bean-list">{renderedListItems}</ul>
     </div>
   );

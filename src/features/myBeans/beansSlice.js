@@ -21,12 +21,12 @@ const serialize = (data) => {
   return serializedData;
 };
 export const fetchBeans = createAsyncThunk("beans/fetchBeans", async () => {
-  const snapshot = await db.collection("beans").get();
+  const snapshot = await db.collection("userBeans").get();
   return snapshot.docs.map((doc) => ({ id: doc.id, ...serialize(doc.data()) }));
 });
 
 export const deleteBean = createAsyncThunk("beans/deleteBean", async (id) => {
-  await db.collection("beans").doc(id).delete();
+  await db.collection("userBeans").doc(id).delete();
   return id;
 });
 
@@ -57,11 +57,20 @@ export const { beanDeleted } = beansSlice.actions;
 
 export default beansSlice.reducer;
 
-export const {
-  selectAll: selectBeans,
-  selectById: selectBeanById,
-} = beansAdapter.getSelectors((state) => state.beans);
+export const { selectAll: selectBeans, selectById: selectBeanById } =
+  beansAdapter.getSelectors((state) => state.beans);
 
 export const selectBeanIds = createSelector(selectBeans, (beans) =>
   beans.map((bean) => bean.id)
+);
+
+export const selectFilteredBeans = createSelector(
+  selectBeans,
+  (state) => {
+    return Object.values(state.beans.entities);
+  },
+  (beans) => {
+    console.log(beans);
+    return beans.map((bean) => bean.id);
+  }
 );
