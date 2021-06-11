@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
 import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
@@ -17,7 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexWrap: "wrap",
       width: 400,
-      margin: `${theme.spacing(0)} auto`,
+      margin: "auto",
+      marginTop: 100,
     },
     forgotpasswordBtn: {
       marginTop: theme.spacing(2),
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
       textAlign: "center",
-      background: "#212121",
+      background: "#5f4e44",
       color: "#fff",
     },
     card: {
@@ -194,7 +194,6 @@ export default function ForgetPassword() {
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="ForgotPassword" />
         <CardContent>
           <div>
             {error && <div variant="danger">{error}</div>}
@@ -232,7 +231,7 @@ export default function ForgetPassword() {
             onClick={handleSubmit(handleForgotPassword)}
             disabled={state.isButtonDisabled}
           >
-            ForgotPassword
+            パスワードを初期化
           </Button>
         </CardActions>
       </Card>

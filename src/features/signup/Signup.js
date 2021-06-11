@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
 import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
@@ -17,24 +16,30 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexWrap: "wrap",
       width: 400,
-      margin: `${theme.spacing(0)} auto`,
+      margin: "auto",
+      marginTop: 100,
     },
     signupBtn: {
       marginTop: theme.spacing(2),
       flexGrow: 1,
+      background: "#5f4e44",
     },
     header: {
       textAlign: "center",
-      background: "#212121",
+      background: "#5f4e44",
       color: "#fff",
     },
     card: {
       marginTop: theme.spacing(10),
     },
+    toLogin: {
+      marginTop: 20,
+      marginLeft: 30,
+    },
   })
 );
 
-//state type
+//ステートの型指定
 type State = {
   email: string,
   password: string,
@@ -44,6 +49,7 @@ type State = {
   isError: boolean,
 };
 
+//ステートの初期値入力
 const initialState: State = {
   email: "",
   password: "",
@@ -53,6 +59,7 @@ const initialState: State = {
   isError: false,
 };
 
+// アクションの型指定
 type Action =
   | { type: "setEmail", payload: string }
   | { type: "setPassword", payload: string }
@@ -188,6 +195,7 @@ const Signup = () => {
             "アカウントの作成に失敗しました。通信環境にいい所でやりなしてください。"
           );
       }
+
       dispatch({
         type: "setIsButtonDisabled",
         payload: false,
@@ -242,7 +250,6 @@ const Signup = () => {
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Sign UP " />
         <CardContent>
           <div>
             {error && <div variant="danger">{error}</div>}
@@ -299,7 +306,9 @@ const Signup = () => {
               onKeyPress={handleKeyPress}
             />
           </div>
-          もしアカウントがあるなら<Link to="/login"> Log In</Link>
+          <div className={classes.toLogin}>
+            もしアカウントがあるなら<Link to="/login">ログイン</Link>
+          </div>
         </CardContent>
         <CardActions>
           <Button
@@ -310,7 +319,7 @@ const Signup = () => {
             onClick={handleSubmit(handleSignup)}
             disabled={state.isButtonDisabled}
           >
-            Signup
+            新規登録
           </Button>
         </CardActions>
       </Card>

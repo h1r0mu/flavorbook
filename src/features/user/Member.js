@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { db } from "../../firebase.js";
 import { useAuth } from "../../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Member() {
   const { currentUser, logout, sendEmailVerification } = useAuth();
@@ -65,7 +65,7 @@ export default function Member() {
           <strong>Email:</strong> {currentUser.email}
         </div>
         <div>
-          <strong>ハンドル名:</strong> {currentUser.displayName}
+          <strong>表示名:</strong> {currentUser.displayName}
         </div>
         <div>
           <strong>履歴</strong>
@@ -77,12 +77,14 @@ export default function Member() {
         {!currentUser.emailVerified && (
           <div>
             メールアドレスが有効化されていません{" "}
-            <Button
-              color="primary"
-              onClick={handleSendEmailVerification}
-            ></Button>
+            <Button color="primary" onClick={handleSendEmailVerification}>
+              メールアドレスを有効化
+            </Button>
           </div>
         )}
+        <h2>
+          <Link to="/updateProfile">プロフィール変更</Link>
+        </h2>
       </div>
     </div>
   );

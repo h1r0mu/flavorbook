@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../../contexts/AuthContext";
@@ -15,20 +14,31 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexWrap: "wrap",
-    width: 400,
-    margin: `${theme.spacing(0)} auto`,
+    width: 500,
+    margin: "auto",
+    marginTop: 100,
   },
   loginBtn: {
     marginTop: theme.spacing(2),
     flexGrow: 1,
+    background: "#5f4e44",
+    color: "#fff",
   },
   header: {
     textAlign: "center",
-    background: "#212121",
+    background: "#5f4e44",
     color: "#fff",
   },
   card: {
     marginTop: theme.spacing(10),
+  },
+  toSignUp: {
+    marginTop: 20,
+    marginLeft: 30,
+  },
+  toForget: {
+    marginTop: 20,
+    marginLeft: 30,
   },
 }));
 
@@ -150,29 +160,29 @@ export default function Login() {
       setSuccessMessage("ログインに成功しました");
       history.push("/member");
     } catch (e) {
-      console.log(e);
+      console.log(e.code);
 
       switch (e.code) {
         case "auth/network-request-failed":
           setError(
-            "通信がエラーになったのか、またはタイムアウトになりました。通信環境がいいところでやり直してください"
+            "通信がエラー、またはタイムアウトになりました。通信環境がいいところでやり直してください"
           );
-          break;
-        case "auth/weak-password":
-          setError("パスワードが短すぎます。6文字以上を入力してください。");
           break;
         case "auth/invalid-email":
           setError("メールアドレスまたはパスワードが正しくありません");
           break;
-        case "auth/wrong-passsword":
+        case "auth/wrong-password":
           setError("メールアドレスまたはパスワードが正しくありません");
           break;
         case "auth/user-disabled":
           setError("入力されたメールアドレスは無効になってます。");
           break;
+        case "auth/user-not-found":
+          setError("入力されたメールアドレスに該当するユーザはいません");
+          break;
         default:
           setError(
-            "アカウントの作成に失敗しました。通信環境にいい所でやりなしてください。"
+            "ログインに失敗しました。通信環境にいい所でやりなしてください。"
           );
       }
       dispatch({
@@ -221,7 +231,6 @@ export default function Login() {
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Login" />
         <CardContent>
           <div>
             {error && <div variant="danger">{error}</div>}
@@ -266,14 +275,17 @@ export default function Login() {
               </div>
             )}
           </div>
-          アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
-          パスワードを忘れた場合は<Link to="/forget">こちら</Link>
+          <div className={classes.toSignUp}>
+            アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
+          </div>
+          <div className={classes.toForget}>
+            パスワードを忘れた場合は<Link to="/forget">こちら</Link>
+          </div>
         </CardContent>
         <CardActions>
           <Button
             variant="contained"
             size="large"
-            color="secondary"
             className={classes.loginBtn}
             onClick={handleSubmit(handleLogin)}
             disabled={state.isButtonDisabled}

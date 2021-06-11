@@ -108,7 +108,6 @@ const UpdateProfile = () => {
   currentUser.displayName
     ? (initialState = { ...initialState, displayName: currentUser.displayName })
     : (initialState = { ...initialState, displayName: "" });
-
   initialState = { ...initialState, username: currentUser.email };
 
   const [state, dispatch] = useReducer(reducer, {
@@ -152,7 +151,7 @@ const UpdateProfile = () => {
 
   async function handleUpdateProfile() {
     setError("");
-    setSuccessMessage("");
+    setSuccessMessage("プロフェールを更新しました");
     //sing up ボタンの無効化
     dispatch({
       type: "setIsButtonDisabled",
@@ -167,17 +166,18 @@ const UpdateProfile = () => {
       console.log("updatePassword");
       promises.push(updatePassword(state.password));
     }
+
     if (state.email !== currentUser.email) {
       console.log("updateEmail");
       promises.push(updateEmail(state.email));
     }
     if (state.displayName !== currentUser.displayName) {
-      let updatProfileData = {};
-      updatProfileData = {
-        ...updatProfileData,
+      let updateProfileData = {};
+      updateProfileData = {
+        ...updateProfileData,
         displayName: state.displayName,
       };
-      promises.push(updateProfile(updatProfileData));
+      promises.push(updateProfile(updateProfileData));
     }
 
     Promise.all(promises)
@@ -190,7 +190,6 @@ const UpdateProfile = () => {
           type: "setIsButtonDisabled",
           payload: false,
         });
-        //history.push("/")
         setTimeout(function () {
           console.log("リダレクト処理");
           history.push("/member");

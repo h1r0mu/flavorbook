@@ -100,7 +100,7 @@ export default function App() {
                 </Route>
                 <AuthFireRoute path="/member" component={Member} />
                 <AuthFireRoute
-                  path="/update-profile"
+                  path="/updateProfile"
                   component={UpdateProfile}
                 />
               </Switch>
