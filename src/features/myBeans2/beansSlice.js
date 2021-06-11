@@ -60,17 +60,38 @@ export default beansSlice.reducer;
 export const { selectAll: selectBeans, selectById: selectBeanById } =
   beansAdapter.getSelectors((state) => state.beans);
 
-export const selectBeanIds = createSelector(selectBeans, (beans) =>
-  beans.map((bean) => bean.id)
-);
+export const selectBeanIds = createSelector(selectBeans, (beans) => {
+  console.log("1", beans);
+  return beans.map((bean) => bean.id);
+});
 
 export const selectFilteredBeans = createSelector(
+  // First input selector: all beans
   selectBeans,
-  (state) => {
-    return Object.values(state.beans.entities);
-  },
-  (beans) => {
-    console.log(beans);
-    return beans.map((bean) => bean.id);
+  // Second input selector: all filter values
+  (state) => state.beansFilters,
+  // Output selector: receives both values
+  (beans, filters) => {
+    console.log("2", beans);
+    const { beanIds } = filters;
+    // const showAllCompletions = status === StatusFilters.All
+    // if (showAllCompletions && colors.length === 0) {
+    //   return beans
+    // }
+
+    // Return either active or completed beans based on filter
+    return beans.filter((bean) => {
+      console.log(bean, filters);
+      const countryMatches = beanIds.includes(bean.beanId);
+      return countryMatches;
+      // return statusMatches && colorMatches
+    });
   }
+);
+
+export const selectFilteredBeanIds = createSelector(
+  // Pass our other memoized selector as an input
+  selectFilteredBeans,
+  // And derive data in the output selector
+  (filteredBeans) => filteredBeans.map((bean) => bean.id)
 );

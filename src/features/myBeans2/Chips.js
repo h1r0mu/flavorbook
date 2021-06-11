@@ -7,6 +7,7 @@ import {
 import Chip from "@material-ui/core/Chip";
 import CreateIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Create";
+import CloseIcon from "@material-ui/icons/Close";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -46,6 +47,8 @@ export default function Chips(props) {
         return <CreateIcon />;
       case "Edit":
         return <EditIcon />;
+      case "Close":
+        return <CloseIcon />;
       default:
         return <p>no icon</p>;
     }
@@ -59,6 +62,7 @@ export default function Chips(props) {
           label={props.name}
           clickable
           color={props.color}
+          onClick={props.onClick}
         />
       </div>
     </MuiThemeProvider>
@@ -69,4 +73,5 @@ Chips.propTypes = {
   pattern: PropTypes.string,
   name: PropTypes.string,
   color: PropTypes.string,
+  onClick: PropTypes.func,
 };
