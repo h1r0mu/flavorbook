@@ -61,7 +61,6 @@ export const { selectAll: selectBeans, selectById: selectBeanById } =
   beansAdapter.getSelectors((state) => state.beans);
 
 export const selectBeanIds = createSelector(selectBeans, (beans) => {
-  console.log("1", beans);
   return beans.map((bean) => bean.id);
 });
 
@@ -72,16 +71,17 @@ export const selectFilteredBeans = createSelector(
   (state) => state.beansFilters,
   // Output selector: receives both values
   (beans, filters) => {
-    console.log("2", beans);
     const { beanIds } = filters;
     // const showAllCompletions = status === StatusFilters.All
     // if (showAllCompletions && colors.length === 0) {
     //   return beans
     // }
+    if (beanIds.length === 0) {
+      return beans
+    }
 
     // Return either active or completed beans based on filter
     return beans.filter((bean) => {
-      console.log(bean, filters);
       const countryMatches = beanIds.includes(bean.beanId);
       return countryMatches;
       // return statusMatches && colorMatches

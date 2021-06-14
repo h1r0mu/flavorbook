@@ -8,7 +8,7 @@ import ForgetPassword from "./features/forgetPassword/ForgetPassword.js";
 import Home from "./features/home/Home.js";
 import Login from "./features/login/Login";
 import Member from "./features/user/Member.js";
-import { Page as MyBeans } from "./features/myBeans/Page.js";
+import { Page as MyBeans } from "./features/myBeans2/Page.js";
 import PropTypes from "prop-types";
 import React from "react";
 import Signup from "./features/signup/Signup.js";
