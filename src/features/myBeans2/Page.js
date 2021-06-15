@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
 import Cards from "./Cards";
 import { beanIdFilterChanged } from "./beansFiltersSlice";
-import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -28,12 +27,6 @@ export const Page = () => {
 
   const classes = useStyles();
   const [key] = useState([""]);
-  const [editable, setEditable] = useState(false);
-  const editButtonLabel = !editable ? "Edit beans" : "Done";
-
-  const handleClick = () => {
-    setEditable(!editable);
-  };
 
   const onColorChange = (color) => {
     return dispatch(beanIdFilterChanged(color, "added"));
@@ -73,7 +66,6 @@ export const Page = () => {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={1}></Grid>
         <Grid item xs={3}>
           <SearchForm name="Flavor" addKey={onColorChange} />
           <SearchForm name="Country" addKey={onColorChange} />
@@ -81,17 +73,7 @@ export const Page = () => {
           <SearchForm name="Roast" addKey={onColorChange} />
         </Grid>
         <Grid item xs={7}>
-          <div>{setChips(key)}</div>
           <div className={classes.chips}>
-            <Link to="/selection">
-              <Chips name="Register beans" pattern="Create" color="primary" />
-            </Link>
-            <Chips
-                name={editButtonLabel}
-                pattern="Edit"
-                color="secondry"
-                onClick={handleClick}
-            />
           </div>
           <div className={classes.chips}>
             <BeanList />

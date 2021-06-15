@@ -17,12 +17,13 @@ import { storage } from "../../firebase";
 
 const useStyles = makeStyles(() => ({
   root: {
-    maxWidth: 1000,
+    width: 800,
     display: "flex",
     margin: "auto",
-    marginTop: "10px",
+    marginTop: 10,
+    marginLeft: 20,
     backgroundColor: "white",
-    borderRadius: 40,
+    borderRadius: 8,
   },
   details: {
     display: "flex",
@@ -33,9 +34,9 @@ const useStyles = makeStyles(() => ({
   },
   cover: {
     margin: 20,
-    maxWidth: 200,
-    maxHeight: 200,
-    borderRadius: 20,
+    width: 150,
+    height: 200,
+    borderRadius: 5,
   },
   coffeeName: {
     display: "flex",
@@ -52,11 +53,11 @@ const useStyles = makeStyles(() => ({
   chips: {
     display: "flex",
     flexWrap: "no-wrap",
-    marginTop: 30,
+    marginTop: 20,
   },
   time: {
     marginTop: 20,
-    marginLeft: 200,
+    marginRight: 100,
   },
 }));
 

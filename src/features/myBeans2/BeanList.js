@@ -1,43 +1,65 @@
-import { React, useState } from "react";
+import {React, useState} from "react";
 
 import BeanListItem from "./BeanListItem";
-import Button from "@material-ui/core/Button";
 // import { selectFilteredBeans } from "./beansSlice";
-import { useSelector } from "react-redux";
-import { selectFilteredBeanIds } from "./beansSlice";
+import {useSelector} from "react-redux";
+import {selectFilteredBeanIds} from "./beansSlice";
+import {Link} from "react-router-dom";
+import Chips from "./Chips";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+  root: {},
+  cards: {},
+  chips: {
+    display: "flex",
+    flexWrap: "wrap",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+}));
 
 const BeanList = () => {
-  const beanIds = useSelector(selectFilteredBeanIds);
-  const [editable, setEditable] = useState(false);
+    const classes = useStyles();
+    const beanIds = useSelector(selectFilteredBeanIds);
+    const [editable, setEditable] = useState(false);
 
-  const renderedListItems = beanIds.map((beanId) => {
-    return <BeanListItem key={beanId} id={beanId} editable={editable} />;
-  });
+    const renderedListItems = beanIds.map((beanId) => {
+        return <BeanListItem key={beanId} id={beanId} editable={editable}/>;
+    });
 
-  const handleClick = () => {
-    setEditable(!editable);
-  };
+    const handleClick = () => {
+        setEditable(!editable);
+    };
 
-  const loadingStatus = useSelector((state) => state.beans.status);
+    const loadingStatus = useSelector((state) => state.beans.status);
 
-  const editButtonLabel = !editable ? "Edit" : "Done";
+    const editButtonLabel = !editable ? "Edit" : "Done";
 
-  if (loadingStatus === "loading") {
+    if (loadingStatus === "loading") {
+        return (
+            <div>
+                <div className="loader"/>
+            </div>
+        );
+    }
+
     return (
-      <div>
-        <div className="loader" />
-      </div>
+        <div>
+            <div className={classes.chips}>
+                <Link to="/selection">
+                    <Chips name="Register beans" pattern="Create" color="primary"/>
+                </Link>
+                <Chips
+                    name={editButtonLabel}
+                    pattern="Edit"
+                    color="secondry"
+                    onClick={handleClick}
+                />
+            </div>
+            <ul className="bean-list">{renderedListItems}</ul>
+        </div>
     );
-  }
-
-  return (
-    <div>
-      <Button variant="contained" onClick={handleClick}>
-        {editButtonLabel}
-      </Button>
-      <ul className="bean-list">{renderedListItems}</ul>
-    </div>
-  );
 };
 
 export default BeanList;
