@@ -9,8 +9,10 @@ import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
 import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
+import {selectBeanIds} from "./beansSlice";
 import PropTypes from "prop-types";
 import { db } from "../../firebase.js";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,12 +31,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Highlights(props) {
+  const beanIds = useSelector(selectBeanIds);
   return (
     <>
       <Autocomplete
         id="highlights-demo"
         style={{ maxWidth: 300 }}
-        options={["ttmBCPrkeKDhVcFjGdj7"]}
+        options={beanIds}
         getOptionLabel={(option) => option}
         renderInput={(params) => (
           <TextField {...params} label="Search" margin="normal" />

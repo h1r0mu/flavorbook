@@ -61,7 +61,7 @@ export const { selectAll: selectBeans, selectById: selectBeanById } =
   beansAdapter.getSelectors((state) => state.beans);
 
 export const selectBeanIds = createSelector(selectBeans, (beans) => {
-  return beans.map((bean) => bean.id);
+  return beans.map((bean) => bean.beanId);
 });
 
 export const selectFilteredBeans = createSelector(
