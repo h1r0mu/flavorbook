@@ -4,18 +4,10 @@ import BeanListItem from "./BeanListItem";
 import Button from "@material-ui/core/Button";
 // import { selectFilteredBeans } from "./beansSlice";
 import { useSelector } from "react-redux";
+import { selectFilteredBeanIds } from "./beansSlice";
 
 const BeanList = () => {
-  const beanIds = useSelector((state) => {
-    const ids = [];
-    Object.values(state.beans.entities).forEach((bean) => {
-      if (bean.id == "eBkrtAGIgYVP4P2wahiF") {
-        ids.push(bean.id);
-      }
-    });
-    return ids;
-  });
-  console.log(beanIds);
+  const beanIds = useSelector(selectFilteredBeanIds);
   const [editable, setEditable] = useState(false);
 
   const renderedListItems = beanIds.map((beanId) => {
