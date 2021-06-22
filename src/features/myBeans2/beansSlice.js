@@ -13,6 +13,7 @@ const fetchBean = async (beanId) => {
   const doc = await db.collection("beans").doc(beanId).get();
   return doc.exists ? doc : {};
 };
+
 export const fetchBeans = createAsyncThunk("beans/fetchBeans", async () => {
   const snapshot = await db.collection("userBeans").get();
   let userBeans = snapshot.docs;
