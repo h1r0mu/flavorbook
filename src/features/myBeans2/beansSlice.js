@@ -11,12 +11,12 @@ const beansAdapter = createEntityAdapter();
 
 const fetchBean = async (beanId) => {
   const doc = await db.collection("beans").doc(beanId).get();
-  return doc.exists ? doc : {};
+  return doc.exists ? doc.data() : {};
 };
 
 export const fetchBeans = createAsyncThunk("beans/fetchBeans", async () => {
   const snapshot = await db.collection("userBeans").get();
-  let userBeans = snapshot.docs;
+  let userBeans = snapshot.docs.map((doc) => doc.data());
   userBeans = await Promise.all(
     userBeans.map(async (userBean) => {
       const bean = await fetchBean(userBean.beanId);
