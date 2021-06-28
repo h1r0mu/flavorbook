@@ -90,7 +90,7 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-export default function ForgetPassword() {
+export default function ForgetPassword(props) {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { resetPassword } = useAuth();
@@ -191,50 +191,54 @@ export default function ForgetPassword() {
     });
   };
 
-  return (
-    <form className={classes.container} noValidate autoComplete="off">
-      <Card className={classes.card}>
-        <CardContent>
-          <div>
-            {error && <div variant="danger">{error}</div>}
-            {successMessage && <div variant="danger">{successMessage}</div>}
-            <TextField
-              error={state.isError}
-              fullWidth
-              id="email"
-              name="email"
-              type="email"
-              label="Email"
-              placeholder="Email"
-              margin="normal"
-              onChange={handleEmailChange}
-              onKeyPress={handleKeyPress}
-              inputRef={register({
-                pattern:
-                  /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
-              })}
-            />
-            {errors.email?.type === "pattern" && (
-              <div style={{ color: "red" }}>
-                メールアドレスの形式で入力されていません
-              </div>
-            )}
-          </div>
-          アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
-        </CardContent>
-        <CardActions>
-          <Button
-            variant="contained"
-            size="large"
-            color="secondary"
-            className={classes.forgotpasswordBtn}
-            onClick={handleSubmit(handleForgotPassword)}
-            disabled={state.isButtonDisabled}
-          >
-            パスワードを初期化
-          </Button>
-        </CardActions>
-      </Card>
-    </form>
-  );
+  if (props.isOpen == true) {
+    return (
+      <form className={classes.container} noValidate autoComplete="off">
+        <Card className={classes.card}>
+          <CardContent>
+            <div>
+              {error && <div variant="danger">{error}</div>}
+              {successMessage && <div variant="danger">{successMessage}</div>}
+              <TextField
+                error={state.isError}
+                fullWidth
+                id="email"
+                name="email"
+                type="email"
+                label="Email"
+                placeholder="Email"
+                margin="normal"
+                onChange={handleEmailChange}
+                onKeyPress={handleKeyPress}
+                inputRef={register({
+                  pattern:
+                    /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
+                })}
+              />
+              {errors.email?.type === "pattern" && (
+                <div style={{ color: "red" }}>
+                  メールアドレスの形式で入力されていません
+                </div>
+              )}
+            </div>
+            アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
+          </CardContent>
+          <CardActions>
+            <Button
+              variant="contained"
+              size="large"
+              color="secondary"
+              className={classes.forgotpasswordBtn}
+              onClick={handleSubmit(handleForgotPassword)}
+              disabled={state.isButtonDisabled}
+            >
+              パスワードを初期化
+            </Button>
+          </CardActions>
+        </Card>
+      </form>
+    );
+  } else {
+    console.log("このパスワード変更の画面は表示されません");
+  }
 }

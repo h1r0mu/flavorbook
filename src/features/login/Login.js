@@ -1,46 +1,58 @@
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import React, { useEffect, useReducer, useState } from "react";
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
+import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
+import PropTypes from "prop-types";
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    width: 500,
-    margin: "auto",
-    marginTop: 100,
-  },
-  loginBtn: {
-    marginTop: theme.spacing(2),
-    flexGrow: 1,
-    background: "#5f4e44",
-    color: "#fff",
-  },
-  header: {
-    textAlign: "center",
-    background: "#5f4e44",
-    color: "#fff",
-  },
-  card: {
-    marginTop: theme.spacing(10),
-  },
-  toSignUp: {
-    marginTop: 20,
-    marginLeft: 30,
-  },
-  toForget: {
-    marginTop: 20,
-    marginLeft: 30,
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+      width: 800,
+      margin: "auto",
+      marginTop: 100,
+    },
+    details: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    cover: {
+      width: 400,
+    },
+    loginBtn: {
+      margin: "auto",
+      marginTop: theme.spacing(2),
+      maxWidth: 200,
+      background: "#5f4e44",
+    },
+    header: {
+      textAlign: "center",
+      background: "#5f4e44",
+      color: "#fff",
+    },
+    card: {
+      marginTop: theme.spacing(10),
+      display: "flex",
+    },
+    toSignUp: {
+      marginTop: 20,
+      marginLeft: 30,
+    },
+    toForget: {
+      marginTop: 20,
+      marginLeft: 30,
+    },
+  })
+);
 
 type State = {
   email: string,
@@ -113,7 +125,7 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-export default function Login() {
+const Login = (props) => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { login } = useAuth();
@@ -227,73 +239,107 @@ export default function Login() {
       payload: event.target.value,
     });
   };
+  const toSignUp = () => {
+    props.setSignupIsOpen(true);
+    props.setLoginIsOpen(false);
+    props.setForgetIsOpen(false);
+  };
 
-  return (
-    <form className={classes.container} noValidate autoComplete="off">
-      <Card className={classes.card}>
-        <CardContent>
-          <div>
-            {error && <div variant="danger">{error}</div>}
-            {successMessage && <div variant="danger">{successMessage}</div>}
-            <TextField
-              error={state.isError}
-              fullWidth
-              id="email"
-              name="email"
-              type="email"
-              label="Email"
-              placeholder="Email"
-              margin="normal"
-              onChange={handleEmailChange}
-              onKeyPress={handleKeyPress}
-              inputRef={register({
-                pattern:
-                  /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
-              })}
-            />
-            {errors.email?.type === "pattern" && (
-              <div style={{ color: "red" }}>
-                メールアドレスの形式で入力されていません
+  const toForget = () => {
+    props.setForgetIsOpen(true);
+    props.setLoginIsOpen(false);
+    props.setSignupIsOpen(false);
+  };
+
+  if (props.isOpen == true) {
+    return (
+      <form className={classes.container} noValidate autoComplete="off">
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.cover}
+            image="./static/coffee_login.jpg"
+            title="Login"
+          />
+          <div className={classes.details}>
+            <CardContent>
+              <div>
+                {error && <div variant="danger">{error}</div>}
+                {successMessage && <div variant="danger">{successMessage}</div>}
+                <TextField
+                  error={state.isError}
+                  fullWidth
+                  id="email"
+                  name="email"
+                  type="email"
+                  label="Email"
+                  placeholder="Email"
+                  margin="normal"
+                  onChange={handleEmailChange}
+                  onKeyPress={handleKeyPress}
+                  inputRef={register({
+                    pattern:
+                      /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
+                  })}
+                />
+                {errors.email?.type === "pattern" && (
+                  <div style={{ color: "red" }}>
+                    メールアドレスの形式で入力されていません
+                  </div>
+                )}
+                <TextField
+                  error={state.isError}
+                  fullWidth
+                  id="password"
+                  name="password"
+                  type="password"
+                  label="Password"
+                  placeholder="Password"
+                  margin="normal"
+                  helperText={state.helperText}
+                  onChange={handlePasswordChange}
+                  onKeyPress={handleKeyPress}
+                />
+                {errors.password?.type === "minLength" && (
+                  <div style={{ color: "red" }}>
+                    パスワードは6文字以上で入力してください
+                  </div>
+                )}
               </div>
-            )}
-            <TextField
-              error={state.isError}
-              fullWidth
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="Password"
-              margin="normal"
-              helperText={state.helperText}
-              onChange={handlePasswordChange}
-              onKeyPress={handleKeyPress}
-            />
-            {errors.password?.type === "minLength" && (
-              <div style={{ color: "red" }}>
-                パスワードは6文字以上で入力してください
+              <div className={classes.toSignUp}>
+                アカウントがない場合は
+                <button onClick={() => toSignUp()}>こちら</button>
+                から作成する
               </div>
-            )}
+              <div className={classes.toForget}>
+                パスワードを忘れた場合は
+                <button onClick={() => toForget()}>こちら</button>
+              </div>
+            </CardContent>
+            <CardActions>
+              <Button
+                variant="contained"
+                size="large"
+                className={classes.loginBtn}
+                onClick={handleSubmit(handleLogin)}
+                disabled={state.isButtonDisabled}
+              >
+                ログイン
+              </Button>
+            </CardActions>
           </div>
-          <div className={classes.toSignUp}>
-            アカウントがない場合は<Link to="/sign-up">こちら</Link>から作成する
-          </div>
-          <div className={classes.toForget}>
-            パスワードを忘れた場合は<Link to="/forget">こちら</Link>
-          </div>
-        </CardContent>
-        <CardActions>
-          <Button
-            variant="contained"
-            size="large"
-            className={classes.loginBtn}
-            onClick={handleSubmit(handleLogin)}
-            disabled={state.isButtonDisabled}
-          >
-            Login
-          </Button>
-        </CardActions>
-      </Card>
-    </form>
-  );
-}
+        </Card>
+      </form>
+    );
+  } else {
+    console.log("else");
+    console.log(props.isOpen);
+  }
+};
+
+Login.propTypes = {
+  isLoginIsOpen: PropTypes.func,
+  isSignupIsOpen: PropTypes.func,
+  isForgetIsOpen: PropTypes.func,
+};
+
+export default Login;
