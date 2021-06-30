@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
 import Cards from "./Cards";
-import { beanIdFilterChanged } from "./beansFiltersSlice";
+import { beanIdFilterChanged, countryFilterChanged, shopFilterChanged, roastFilterChanged } from "./beansFiltersSlice";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -28,8 +28,20 @@ export const Page = () => {
   const classes = useStyles();
   const [key] = useState([""]);
 
-  const onColorChange = (color) => {
+  const onBeanIdChange = (color) => {
     return dispatch(beanIdFilterChanged(color, "added"));
+  };
+
+  const onCountryChange = (color) => {
+    return dispatch(countryFilterChanged(color, "added"));
+  };
+
+  const onShopChange = (color) => {
+    return dispatch(shopFilterChanged(color, "added"));
+  };
+
+  const onRoastChange = (color) => {
+    return dispatch(roastFilterChanged(color, "added"));
   };
 
   const setCards = (key) => {
@@ -67,10 +79,10 @@ export const Page = () => {
     <div className={classes.root}>
       <Grid container>
         <Grid item xs={3}>
-          <SearchForm name="Flavor" addKey={onColorChange} />
-          <SearchForm name="Country" addKey={onColorChange} />
-          <SearchForm name="Shop" addKey={onColorChange} />
-          <SearchForm name="Roast" addKey={onColorChange} />
+          <SearchForm name="Flavor" addKey={onBeanIdChange} />
+          <SearchForm name="Country" addKey={onCountryChange} />
+          <SearchForm name="Shop" addKey={onShopChange} />
+          <SearchForm name="Roast" addKey={onRoastChange} />
         </Grid>
         <Grid item xs={7}>
           <div className={classes.chips}>

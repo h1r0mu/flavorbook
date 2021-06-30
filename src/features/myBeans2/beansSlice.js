@@ -73,6 +73,14 @@ export const selectBeanCountries = createSelector(selectBeans, (beans) => {
   return beans.map((bean) => bean.country);
 });
 
+export const selectBeanShops = createSelector(selectBeans, (beans) => {
+  return beans.map((bean) => bean.shop);
+});
+
+export const selectBeanRoasts = createSelector(selectBeans, (beans) => {
+  return beans.map((bean) => bean.roast);
+});
+
 export const selectFilteredBeans = createSelector(
   selectBeans,
   (state) => state.beansFilters,

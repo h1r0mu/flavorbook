@@ -2,7 +2,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom";
-import { fetchBeans } from "./features/myBeans/beansSlice";
+import { fetchBeans } from "./features/myBeans2/beansSlice";
 import store from "./store";
 
 store.dispatch(fetchBeans());

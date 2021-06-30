@@ -18,10 +18,16 @@ const filtersSlice = createSlice({
         countryFilterChanged(state, action) {
             state.countries = action.payload;
         },
+        shopFilterChanged(state, action) {
+            state.shops = action.payload;
+        },
+        roastFilterChanged(state, action) {
+            state.roasts = action.payload;
+        },
     },
 });
 
-export const {beanIdFilterChanged, countryFilterChanged, statusFilterChanged} =
+export const {beanIdFilterChanged, countryFilterChanged, shopFilterChanged, roastFilterChanged, statusFilterChanged} =
     filtersSlice.actions;
 
 export default filtersSlice.reducer;

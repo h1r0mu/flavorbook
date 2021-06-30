@@ -9,7 +9,7 @@ import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
 import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
-import {selectBeanIds} from "./beansSlice";
+import {selectBeanBeanIds} from "./beansSlice";
 import PropTypes from "prop-types";
 import { db } from "../../firebase.js";
 import {useSelector} from "react-redux";
@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Highlights(props) {
-  const beanIds = useSelector(selectBeanIds);
+  const beanIds = useSelector(selectBeanBeanIds);
   return (
     <>
       <Autocomplete
