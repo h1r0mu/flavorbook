@@ -17,7 +17,6 @@ import { storage } from "../../firebase";
 
 const useStyles = makeStyles(() => ({
   root: {
-    maxWidth: 1000,
     display: "flex",
     margin: "auto",
     marginTop: "10px",
@@ -109,7 +108,7 @@ const BeanListItem = ({ id, editable }) => {
             </Typography>
           </div>
           <Typography variant="subtitle1" color="textSecondary">
-            subtitle
+            {bean.country}
           </Typography>
           <div className={classes.chips}>
             {bean.flavorLevel1Descriptors.map((flavor, index) => (
@@ -120,7 +119,7 @@ const BeanListItem = ({ id, editable }) => {
               color="textSecondary"
               className={classes.time}
             >
-              2001-3-14
+              作成日 {bean.createdAt.toDate().toLocaleString()}
             </Typography>
           </div>
         </CardContent>

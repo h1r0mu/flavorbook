@@ -2,11 +2,23 @@ import { React, useState } from "react";
 
 import BeanListItem from "./BeanListItem";
 import Button from "@material-ui/core/Button";
-// import { selectFilteredBeans } from "./beansSlice";
 import { useSelector } from "react-redux";
 import { selectFilteredBeanIds } from "./beansSlice";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '80%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
+
 
 const BeanList = () => {
+  const classes = useStyles();
   const beanIds = useSelector(selectFilteredBeanIds);
   const [editable, setEditable] = useState(false);
 
@@ -24,8 +36,8 @@ const BeanList = () => {
 
   if (loadingStatus === "loading") {
     return (
-      <div>
-        <div className="loader" />
+      <div className={classes.root}>
+        <CircularProgress />
       </div>
     );
   }
@@ -35,7 +47,7 @@ const BeanList = () => {
       <Button variant="contained" onClick={handleClick}>
         {editButtonLabel}
       </Button>
-      <ul className="bean-list">{renderedListItems}</ul>
+      <ul className={classes.root}>{renderedListItems}</ul>
     </div>
   );
 };
