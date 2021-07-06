@@ -5,17 +5,30 @@ import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
 import { selectFilteredBeanIds } from "./beansSlice";
 import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Link } from "react-router-dom";
+import CreateIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Create";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '80%',
-    '& > * + *': {
+    width: "80%",
+    "& > * + *": {
       marginTop: theme.spacing(2),
     },
   },
+  chips: {
+    display: "flex",
+    maxWidth: 1000,
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        borderRadius: 8,
+      },
+    },
+  },
 }));
-
 
 const BeanList = () => {
   const classes = useStyles();
@@ -32,8 +45,6 @@ const BeanList = () => {
 
   const loadingStatus = useSelector((state) => state.beans.status);
 
-  const editButtonLabel = !editable ? "Edit" : "Done";
-
   if (loadingStatus === "loading") {
     return (
       <div className={classes.root}>
@@ -44,9 +55,16 @@ const BeanList = () => {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClick}>
-        {editButtonLabel}
-      </Button>
+      <div className={classes.chips}>
+        <Link to="/selection">
+          <Button variant="contained" onClick={handleClick}>
+            <CreateIcon />
+          </Button>
+        </Link>
+        <Button variant="contained" onClick={handleClick}>
+          <EditIcon />
+        </Button>
+      </div>
       <ul className={classes.root}>{renderedListItems}</ul>
     </div>
   );

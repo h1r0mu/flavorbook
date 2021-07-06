@@ -1,5 +1,4 @@
 import BeanList from "./BeanList";
-import Chips from "./Chips";
 import Grid from "@material-ui/core/Grid";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -54,25 +53,6 @@ export const Page = () => {
 
   return (
     <div className={classes.root}>
-      <Grid container>
-        <Grid item xs={3}></Grid>
-        <Grid item xs={10}>
-          <div className={classes.chips}>
-            <Chips
-              name="CREATE"
-              pattern="Create"
-              color="primary"
-              className={classes.chipButton}
-            />
-            <Chips
-              name="EDIT"
-              pattern="Edit"
-              color="secondry"
-              className={classes.chipButton}
-            />
-          </div>
-        </Grid>
-      </Grid>
       <Grid container>
         <Grid item xs={3}>
           <SearchForm
