@@ -9,7 +9,6 @@ import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
 import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
-import {selectBeanBeanIds} from "./beansSlice";
 import PropTypes from "prop-types";
 import { db } from "../../firebase.js";
 import {useSelector} from "react-redux";
@@ -30,25 +29,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Highlights(props) {
-  const beanIds = useSelector(selectBeanBeanIds);
+function Highlights({selector, onChange}) {
+  const options = useSelector(selector);
+
   return (
     <>
       <Autocomplete
         id="highlights-demo"
         style={{ maxWidth: 300 }}
-        options={beanIds}
+        options={options.filter(option => option !== null)}
         getOptionLabel={(option) => option}
         renderInput={(params) => (
           <TextField {...params} label="Search" margin="normal" />
         )}
-        onInputChange={(event, newInputValue) => {
-          console.log("event", event);
-          console.log("input", newInputValue);
-          console.log(props.addKey);
-          if (event.type === "keydown" || event.type === "click") {
-            props.addKey(newInputValue);
-          }
+        onChange={(event, newInputValue) => {
+          onChange(newInputValue);
         }}
         renderOption={(option, { inputValue }) => {
           const matches = match(option, inputValue);
@@ -72,69 +67,15 @@ function Highlights(props) {
   );
 }
 
-export default function SearchForm(props) {
-  const [cards, setCards] = useState([]);
+export default function SearchForm({label, icon, onChange, selector}) {
   const classes = useStyles();
-  useEffect(() => {
-    const fetchData = async () => {
-      const ref = db.collection("userBeans");
-      const snapShot = await ref.get();
-      const _cards = snapShot.docs.map((doc) => {
-        const item = doc.data();
-        return item;
-      });
-      setCards(_cards);
-    };
-    fetchData();
-  }, []);
-
-  let resultList = [];
-
-  cards.map((card) => {
-    let flavors = card.flavorLevel1Descriptors;
-    let country = card.country;
-    let store = card.store;
-    let process = card.process;
-    switch (props.name) {
-      case "Flavor":
-        if (flavors != undefined) {
-          card.flavorLevel1Descriptors.map((flavor) => {
-            resultList.push(flavor);
-          });
-        }
-        break;
-
-      case "Country":
-        if (country != undefined) {
-          resultList.push(card.country);
-        }
-        break;
-
-      case "Shop":
-        if (store != undefined) {
-          resultList.push(card.store);
-        }
-        break;
-
-      case "Process":
-        if (process != undefined) {
-          resultList.push(card.process);
-        }
-        break;
-
-      default:
-        console.log("Bugs are discovered.");
-        break;
-    }
-
-    let set = new Set(resultList);
-    resultList = Array.from(set);
-  });
 
   function setSearch() {
     return (
       <Highlights
         className={classes.highlight}
+        onChange={onChange}
+        selector={selector}
         list={resultList}
         addKey={props.addKey}
       />
@@ -170,11 +111,13 @@ export default function SearchForm(props) {
 }
 
 SearchForm.propTypes = {
-  name: PropTypes.string,
-  addKey: PropTypes.function,
+  label: PropTypes.string,
+  icon: PropTypes.element,
+  onChange: PropTypes.function,
+  selector: PropTypes.function,
 };
 
 Highlights.propTypes = {
-  list: PropTypes.array,
-  addKey: PropTypes.function,
+  onChange: PropTypes.function,
+  selector: PropTypes.function,
 };

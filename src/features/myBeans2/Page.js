@@ -7,6 +7,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
 import Cards from "./Cards";
 import { beanIdFilterChanged, countryFilterChanged, shopFilterChanged, roastFilterChanged } from "./beansFiltersSlice";
+import {selectBeanBeanIds, selectBeanCountries, selectBeanRoasts, selectBeanShops} from "./beansSlice";
+import PublicIcon from "@material-ui/icons/Public";
+import StoreIcon from "@material-ui/icons/Store";
+import SportsRugbyIcon from "@material-ui/icons/SportsRugby";
+import LocalCafeIcon from "@material-ui/icons/LocalCafe";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -79,10 +84,30 @@ export const Page = () => {
     <div className={classes.root}>
       <Grid container>
         <Grid item xs={3}>
-          <SearchForm name="Flavor" addKey={onBeanIdChange} />
-          <SearchForm name="Country" addKey={onCountryChange} />
-          <SearchForm name="Shop" addKey={onShopChange} />
-          <SearchForm name="Roast" addKey={onRoastChange} />
+          <SearchForm
+              label="Flavor"
+              icon={<LocalCafeIcon className={classes.icon} />}
+              onChange={onBeanIdChange}
+              selector={selectBeanBeanIds}
+          />
+          <SearchForm
+              label="Country"
+              icon={<PublicIcon className={classes.icon} />}
+              onChange={onCountryChange}
+              selector={selectBeanCountries}
+          />
+          <SearchForm
+              label="Shop"
+              icon={<StoreIcon className={classes.icon} />}
+              onChange={onShopChange}
+              selector={selectBeanShops}
+          />
+          <SearchForm
+              label="Roast"
+              icon={<SportsRugbyIcon className={classes.icon} />}
+              onChange={onRoastChange}
+              selector={selectBeanRoasts}
+          />
         </Grid>
         <Grid item xs={7}>
           <div className={classes.chips}>
