@@ -125,7 +125,10 @@ export default function Cards(props) {
       .child("member/" + card.pictureURL)
       .getDownloadURL()
       .then((url) => {
-        document.getElementById(card.pictureURL).src = url;
+        let pictureURL = document.getElementById(card.pictureURL);
+        if (pictureURL != null) {
+          pictureURL.src = url;
+        }
       });
 
     return (
