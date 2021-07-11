@@ -92,7 +92,7 @@ export default function App() {
                 <Route path="/forget">
                   <ForgetPassword />
                 </Route>
-                <Route path="/member-test">
+                <Route path="/mybeans">
                   <MyBeans />
                 </Route>
                 <Route path="/selection">
