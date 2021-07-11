@@ -1,7 +1,6 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import React, { useEffect, useReducer, useState } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
-
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,46 +9,48 @@ import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
-import PropTypes from "prop-types";
+import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       display: "flex",
       flexWrap: "wrap",
-      width: 800,
+      width: 900,
+      height: 400,
       margin: "auto",
       marginTop: 100,
+    },
+    card: {
+      marginTop: theme.spacing(10),
+      display: "flex",
+    },
+    cover: {
+      width: 450,
     },
     details: {
       display: "flex",
       flexDirection: "column",
-    },
-    cover: {
-      width: 400,
+      margin: "auto",
     },
     loginBtn: {
       margin: "auto",
       marginTop: theme.spacing(2),
       maxWidth: 200,
       background: "#5f4e44",
-    },
-    header: {
-      textAlign: "center",
-      background: "#5f4e44",
       color: "#fff",
     },
-    card: {
-      marginTop: theme.spacing(10),
-      display: "flex",
+    links: {
+      width: 400,
+      textAlign: "right",
     },
     toSignUp: {
-      marginTop: 20,
-      marginLeft: 30,
+      width: 400,
+      marginTop: 50,
     },
     toForget: {
-      marginTop: 20,
-      marginLeft: 30,
+      width: 400,
+      marginTop: 10,
     },
   })
 );
@@ -125,7 +126,7 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const Login = (props) => {
+const Login = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { login } = useAuth();
@@ -239,21 +240,10 @@ const Login = (props) => {
       payload: event.target.value,
     });
   };
-  const toSignUp = () => {
-    props.setSignupIsOpen(true);
-    props.setLoginIsOpen(false);
-    props.setForgetIsOpen(false);
-  };
 
-  const toForget = () => {
-    props.setForgetIsOpen(true);
-    props.setLoginIsOpen(false);
-    props.setSignupIsOpen(false);
-  };
-
-  if (props.isOpen == true) {
-    return (
-      <form className={classes.container} noValidate autoComplete="off">
+  return (
+    <form className={classes.container} noValidate autoComplete="off">
+      <Fade in={true} timeout={2000}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.cover}
@@ -305,15 +295,6 @@ const Login = (props) => {
                   </div>
                 )}
               </div>
-              <div className={classes.toSignUp}>
-                アカウントがない場合は
-                <button onClick={() => toSignUp()}>こちら</button>
-                から作成する
-              </div>
-              <div className={classes.toForget}>
-                パスワードを忘れた場合は
-                <button onClick={() => toForget()}>こちら</button>
-              </div>
             </CardContent>
             <CardActions>
               <Button
@@ -326,20 +307,21 @@ const Login = (props) => {
                 ログイン
               </Button>
             </CardActions>
+            <CardContent className={classes.links}>
+              <div className={classes.toSignUp}>
+                アカウントがない場合は
+                <Link to="sign-up">こちら</Link>
+              </div>
+              <div className={classes.toForget}>
+                パスワードを忘れた場合は
+                <Link to="forget">こちら</Link>
+              </div>
+            </CardContent>
           </div>
         </Card>
-      </form>
-    );
-  } else {
-    console.log("else");
-    console.log(props.isOpen);
-  }
-};
-
-Login.propTypes = {
-  isLoginIsOpen: PropTypes.func,
-  isSignupIsOpen: PropTypes.func,
-  isForgetIsOpen: PropTypes.func,
+      </Fade>
+    </form>
+  );
 };
 
 export default Login;

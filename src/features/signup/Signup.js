@@ -10,41 +10,40 @@ import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { useAuth } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
+import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       display: "flex",
       flexWrap: "wrap",
-      width: 800,
+      width: 900,
+      height: 400,
       margin: "auto",
       marginTop: 100,
+    },
+    card: {
+      marginTop: theme.spacing(10),
+      display: "flex",
+    },
+    cover: {
+      width: 450,
     },
     details: {
       display: "flex",
       flexDirection: "column",
-    },
-    cover: {
-      width: 400,
+      margin: "auto",
     },
     signupBtn: {
       margin: "auto",
       marginTop: theme.spacing(2),
       maxWidth: 200,
       background: "#5f4e44",
-    },
-    header: {
-      textAlign: "center",
-      background: "#5f4e44",
       color: "#fff",
-    },
-    card: {
-      marginTop: theme.spacing(10),
-      display: "flex",
     },
     toLogin: {
       marginTop: 20,
-      marginLeft: 30,
+      textAlign: "right",
     },
   })
 );
@@ -259,87 +258,91 @@ const Signup = () => {
 
   return (
     <form className={classes.container} noValidate autoComplete="off">
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.cover}
-          image="./static/coffee_signup.jpg"
-          title="Sign Up"
-        />
-        <div className={classes.details}>
-          <CardContent>
-            <div>
-              {error && <div variant="danger">{error}</div>}
-              {successMessage && <div variant="danger">{successMessage}</div>}
-              <TextField
-                error={state.isError}
-                fullWidth
-                id="email"
-                name="email"
-                type="email"
-                label="Email"
-                placeholder="Email"
-                margin="normal"
-                onChange={handleEmailChange}
-                onKeyPress={handleKeyPress}
-                inputRef={register({
-                  pattern:
-                    /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
-                })}
-              />
-              {errors.email?.type === "pattern" && (
-                <div style={{ color: "red" }}>
-                  メールアドレスの形式で入力されていません
-                </div>
-              )}
-              <TextField
-                error={state.isError}
-                fullWidth
-                id="password"
-                name="password"
-                type="password"
-                label="Password"
-                placeholder="Password"
-                margin="normal"
-                helperText={state.helperText}
-                onChange={handlePasswordChange}
-                onKeyPress={handleKeyPress}
-              />
-              {errors.password?.type === "minLength" && (
-                <div style={{ color: "red" }}>
-                  パスワードは6文字以上で入力してください
-                </div>
-              )}
-              <TextField
-                error={state.isError}
-                fullWidth
-                id="password-confirm"
-                type="password"
-                label="Password-confirm"
-                placeholder="Password-confirm"
-                margin="normal"
-                helperText={state.helperText}
-                onChange={handlePasswordConfirmChange}
-                onKeyPress={handleKeyPress}
-              />
-            </div>
-            <div className={classes.toLogin}>
-              もしアカウントがあるなら<Link to="/login">ログイン</Link>
-            </div>
-          </CardContent>
-          <CardActions>
-            <Button
-              variant="contained"
-              size="large"
-              color="secondary"
-              className={classes.signupBtn}
-              onClick={handleSubmit(handleSignup)}
-              disabled={state.isButtonDisabled}
-            >
-              新規登録
-            </Button>
-          </CardActions>
-        </div>
-      </Card>
+      <Fade in={true} timeout={2000}>
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.cover}
+            image="./static/coffee_signup.jpg"
+            title="Sign Up"
+          />
+          <div className={classes.details}>
+            <CardContent>
+              <div>
+                {error && <div variant="danger">{error}</div>}
+                {successMessage && <div variant="danger">{successMessage}</div>}
+                <TextField
+                  error={state.isError}
+                  fullWidth
+                  id="email"
+                  name="email"
+                  type="email"
+                  label="Email"
+                  placeholder="Email"
+                  margin="normal"
+                  onChange={handleEmailChange}
+                  onKeyPress={handleKeyPress}
+                  inputRef={register({
+                    pattern:
+                      /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
+                  })}
+                />
+                {errors.email?.type === "pattern" && (
+                  <div style={{ color: "red" }}>
+                    メールアドレスの形式で入力されていません
+                  </div>
+                )}
+                <TextField
+                  error={state.isError}
+                  fullWidth
+                  id="password"
+                  name="password"
+                  type="password"
+                  label="Password"
+                  placeholder="Password"
+                  margin="normal"
+                  helperText={state.helperText}
+                  onChange={handlePasswordChange}
+                  onKeyPress={handleKeyPress}
+                />
+                {errors.password?.type === "minLength" && (
+                  <div style={{ color: "red" }}>
+                    パスワードは6文字以上で入力してください
+                  </div>
+                )}
+                <TextField
+                  error={state.isError}
+                  fullWidth
+                  id="password-confirm"
+                  type="password"
+                  label="Password(もう一度入力してください)"
+                  placeholder="Password-confirm"
+                  margin="normal"
+                  helperText={state.helperText}
+                  onChange={handlePasswordConfirmChange}
+                  onKeyPress={handleKeyPress}
+                />
+              </div>
+            </CardContent>
+            <CardActions>
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                className={classes.signupBtn}
+                onClick={handleSubmit(handleSignup)}
+                disabled={state.isButtonDisabled}
+              >
+                新規登録
+              </Button>
+            </CardActions>
+            <CardContent>
+              <div className={classes.toLogin}>
+                もしアカウントがあるなら<Link to="/login">ログイン</Link>
+              </div>
+            </CardContent>
+          </div>
+        </Card>
+      </Fade>
     </form>
   );
 };
