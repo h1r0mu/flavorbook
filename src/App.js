@@ -78,8 +78,8 @@ export default function App() {
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <AuthProvider>
             <div>
-              <AppBar />
               <Switch>
+																<AppBar />
                 <Route exact path="/">
                   <Home />
                 </Route>
