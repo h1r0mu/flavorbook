@@ -16,9 +16,11 @@ import {
   Menu as MenuIcon,
   Share as ShareIcon,
   Store as StoreIcon,
+  AccountCircle as AccountCircle,
 } from "@material-ui/icons";
 import React, { useState } from "react";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -50,12 +52,16 @@ const useStyles = makeStyles(() =>
       marginLeft: 20,
       fontSize: 20,
     },
+    link: {
+      color: "#fff",
+    },
   })
 );
 
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -73,6 +79,16 @@ export default function ButtonAppBar() {
             Coffee Flavors
             <EmojiFoodBeverageIcon className={classes.coffee} />
           </Typography>
+          <Link to="/login" className={classes.link}>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer

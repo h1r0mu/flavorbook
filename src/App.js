@@ -7,11 +7,11 @@ import Selection from "./features/newBean/Selection.js";
 import ForgetPassword from "./features/forgetPassword/ForgetPassword.js";
 import Home from "./features/home/Home.js";
 import Login from "./features/login/Login";
+import Signup from "./features/signup/Signup";
 import Member from "./features/user/Member.js";
 import { Page as MyBeans } from "./features/myBeans/Page.js";
 import PropTypes from "prop-types";
 import React from "react";
-import Signup from "./features/signup/Signup.js";
 import { ThemeProvider } from "@material-ui/styles";
 import UpdateProfile from "./features/user/UpdateProfile.js";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -78,19 +78,19 @@ export default function App() {
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <AuthProvider>
             <div>
-              <AppBar />
               <Switch>
+                <AppBar />
                 <Route exact path="/">
                   <Home />
                 </Route>
                 <Route path="/login">
                   <Login />
                 </Route>
-                <Route path="/sign-up">
-                  <Signup />
-                </Route>
                 <Route path="/forget">
                   <ForgetPassword />
+                </Route>
+                <Route path="/sign-up">
+                  <Signup />
                 </Route>
                 <Route path="/mybeans">
                   <MyBeans />
