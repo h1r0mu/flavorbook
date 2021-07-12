@@ -9,20 +9,21 @@ import { db } from "../../firebase";
 
 const beansAdapter = createEntityAdapter();
 
-const serialize = (data) => {
-  const serializedData = {};
-  Object.entries(data).map(([key, value]) => {
-    if (value instanceof Date) {
-      serializedData[key] = value.toString();
-    } else {
-      serializedData[key] = value;
-    }
-  });
-  return serializedData;
+const fetchBean = async (beanId) => {
+  const doc = await db.collection("beans").doc(beanId).get();
+  return doc.exists ? doc.data() : {};
 };
+
 export const fetchBeans = createAsyncThunk("beans/fetchBeans", async () => {
   const snapshot = await db.collection("userBeans").get();
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...serialize(doc.data()) }));
+  let userBeans = snapshot.docs.map((doc) => doc.data());
+  userBeans = await Promise.all(
+    userBeans.map(async (userBean) => {
+      const bean = await fetchBean(userBean.beanId);
+      return { ...bean, ...userBean };
+    })
+  );
+  return userBeans;
 });
 
 export const deleteBean = createAsyncThunk("beans/deleteBean", async (id) => {
@@ -60,17 +61,37 @@ export default beansSlice.reducer;
 export const { selectAll: selectBeans, selectById: selectBeanById } =
   beansAdapter.getSelectors((state) => state.beans);
 
-export const selectBeanIds = createSelector(selectBeans, (beans) =>
-  beans.map((bean) => bean.id)
-);
+export const selectBeanIds = createSelector(selectBeans, (beans) => {
+  return beans.map((bean) => bean.id);
+});
+
+export const selectBeanBeanIds = createSelector(selectBeans, (beans) => {
+  return beans.map((bean) => bean.beanId);
+});
+
+export const selectBeanCountries = createSelector(selectBeans, (beans) => {
+  return beans.map((bean) => bean.country);
+});
 
 export const selectFilteredBeans = createSelector(
   selectBeans,
-  (state) => {
-    return Object.values(state.beans.entities);
-  },
-  (beans) => {
-    console.log(beans);
-    return beans.map((bean) => bean.id);
+  (state) => state.beansFilters,
+  (beans, filters) => {
+    const { beanIds, countries } = filters;
+
+    return beans.filter((bean) => {
+      const beanIdMatches =
+        beanIds.length === 0 || beanIds.includes(bean.beanId);
+      const countryMatches =
+        countries.length === 0 || countries.includes(bean.country);
+      return countryMatches && beanIdMatches;
+    });
   }
+);
+
+export const selectFilteredBeanIds = createSelector(
+  // Pass our other memoized selector as an input
+  selectFilteredBeans,
+  // And derive data in the output selector
+  (filteredBeans) => filteredBeans.map((bean) => bean.id)
 );
