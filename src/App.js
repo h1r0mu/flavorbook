@@ -79,7 +79,7 @@ export default function App() {
           <AuthProvider>
             <div>
               <Switch>
-																<AppBar />
+                <AppBar />
                 <Route exact path="/">
                   <Home />
                 </Route>
