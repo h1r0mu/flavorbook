@@ -44,6 +44,7 @@ export const descriptorNameEnum = Object.freeze({
 });
 
 const initialState = {
+  id: null,
   [descriptorNameEnum.FLAVOR_LEVEL1_DESCRIPTORS]: [],
   [descriptorNameEnum.FLAVOR_LEVEL2_DESCRIPTORS]: [],
   [descriptorNameEnum.FLAVOR_LEVEL3_DESCRIPTORS]: [],
@@ -123,7 +124,7 @@ export const saveNewBean = createAsyncThunk(
     if (snapshot.empty) {
       beansCollection.doc(beanId).set(bean);
     }
-    const userBeanId = userBeansCollection.doc().id;
+    const userBeanId = newBean.id ? newBean.id : userBeansCollection.doc().id;
     const userBean = {
       id: userBeanId,
       beanId: beanId,
@@ -174,7 +175,11 @@ const beanSlice = createSlice({
   name: "bean",
   initialState,
   reducers: {
-    descriptorUpdate: {
+    updateAll(state, action) {
+      console.log(action.payload);
+      Object.keys(state).forEach((key) => (state[key] = action.payload[key]));
+    },
+    update: {
       reducer(state, action) {
         const { key, value } = action.payload;
         state[key] = value;
@@ -191,7 +196,7 @@ const beanSlice = createSlice({
   },
 });
 
-export const { descriptorUpdate } = beanSlice.actions;
+export const { update, updateAll } = beanSlice.actions;
 
 export const selectDescriptorByName = (state, name) => state.bean[name];
 

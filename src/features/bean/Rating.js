@@ -9,7 +9,7 @@ import {
 import { Rating as MuiRating } from "@material-ui/lab";
 import PropTypes from "prop-types";
 import React from "react";
-import { descriptorUpdate } from "./beanSlice.js";
+import { update } from "./beanSlice.js";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 
@@ -59,7 +59,7 @@ export default function Slider({ name }) {
       defaultValue={0}
       getLabelText={(value) => customIcons[value].label}
       IconContainerComponent={IconContainer}
-      onChange={(event, value) => dispatch(descriptorUpdate(name, value))}
+      onChange={(event, value) => dispatch(update(name, value))}
       size="large"
     />
   );

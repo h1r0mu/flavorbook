@@ -2,7 +2,7 @@ import {
   CheckBox as CheckBoxIcon,
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
 } from "@material-ui/icons";
-import { Checkbox, TextField, Typography } from "@material-ui/core";
+import { Checkbox, TextField } from "@material-ui/core";
 
 import Chip from "./Chip.js";
 import { Autocomplete as MuiAutocomplete } from "@material-ui/lab";
@@ -12,21 +12,26 @@ import React from "react";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function Autocomplete(props) {
+const Autocomplete = ({
+  title,
+  options,
+  label,
+  getChipProps,
+  onChange,
+  children,
+  value,
+}) => {
   return (
     <div>
       <div>
-        <Typography variant="h2" gutterBottom>
-          {props.title}
-        </Typography>
         <MuiAutocomplete
           multiple
           clearOnBlur={true}
-          id={props.title}
-          options={props.options}
+          id={title}
+          options={options}
           disableCloseOnSelect
-          getOptionLabel={props.getOptionLabel}
-          onChange={props.onChange}
+          value={value}
+          onChange={onChange}
           renderOption={(option, { selected }) => (
             <React.Fragment>
               <Checkbox
@@ -34,7 +39,7 @@ export default function Autocomplete(props) {
                 checkedIcon={checkedIcon}
                 checked={selected}
               />
-              {props.getOptionLabel(option)}
+              {option}
             </React.Fragment>
           )}
           renderTags={(value, getTagProps) =>
@@ -42,27 +47,27 @@ export default function Autocomplete(props) {
               <Chip
                 key={index}
                 {...getTagProps({ index })}
-                {...props.getChipProps(option)}
+                {...getChipProps(option)}
                 variant="outlined"
               />
             ))
           }
-          renderInput={(params) => (
-            <TextField {...params} label={props.label} />
-          )}
+          renderInput={(params) => <TextField {...params} label={label} />}
         />
       </div>
-      {props.children}
+      {children}
     </div>
   );
-}
+};
 
 Autocomplete.propTypes = {
   children: PropTypes.element,
-  getOptionLabel: PropTypes.func.isRequired,
   getChipProps: PropTypes.func,
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
   title: PropTypes.string,
   label: PropTypes.string,
+  value: PropTypes.array,
 };
+
+export default Autocomplete;

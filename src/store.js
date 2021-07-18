@@ -1,4 +1,4 @@
-import beanReducer from "./features/newBean/beanSlice";
+import beanReducer from "./features/bean/beanSlice";
 import beansReducer from "./features/myBeans/beansSlice";
 import beansFiltersReducer from "./features/myBeans/beansFiltersSlice";
 import { configureStore } from "@reduxjs/toolkit";
