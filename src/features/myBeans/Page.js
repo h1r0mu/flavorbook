@@ -1,10 +1,9 @@
 import BeanList from "./BeanList";
 import Grid from "@material-ui/core/Grid";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
-import Cards from "./Cards";
 import { beanIdFilterChanged, countryFilterChanged } from "./beansFiltersSlice";
 import {
   selectBeanIds,
@@ -29,7 +28,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const Page = () => {
+const Page = () => {
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -42,14 +41,6 @@ export const Page = () => {
   const onCountryChange = (country) => {
     return dispatch(countryFilterChanged(country));
   };
-
-  const setKeyWords = (key) => {
-    return <Cards val={key} />;
-  };
-
-  useEffect(() => {
-    setKeyWords(key);
-  }, [key]);
 
   return (
     <div className={classes.root}>
@@ -83,7 +74,6 @@ export const Page = () => {
         <Grid item xs={9}>
           <div className={classes.cards}>
             <p>{key}</p>
-            <div>{setKeyWords(key)}</div>
             <BeanList />
           </div>
         </Grid>
@@ -91,3 +81,4 @@ export const Page = () => {
     </div>
   );
 };
+export default Page;

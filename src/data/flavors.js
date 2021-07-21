@@ -1,4 +1,4 @@
-export const flavorData = [
+export const flavorDescriptorData = [
   ["野菜", 0, null, "./static/Big/green_vegetative.jpg"],
   ["酸味／発酵", 0, null, "./static/Big/sour_fermented.jpeg"],
   ["フルーツ", 0, null, "./static/Big/fruity.jpg"],
@@ -110,3 +110,23 @@ export const flavorData = [
   ["ダンボール", 2, "紙／カビ", "./static/Small/cardboard.jpg"],
   ["カビたパン", 2, "紙／カビ", "./static/Small/stale.jpeg"],
 ];
+
+export function createFlavorDescriptors(flavorData) {
+  const flavors = {};
+  flavorData.forEach(([name, level, parentName, imageUrl]) => {
+    flavors[name] = {
+      name: name,
+      level: level,
+      key: `${name}${level}`,
+      imageUrl: imageUrl,
+      parentName: parentName,
+      // parent: flavors.find(
+      //   (flavor) => flavor.name === parentName && flavor.level === level - 1
+      // ),
+      description: name,
+    };
+  });
+  return flavors;
+}
+
+export const flavorDescriptors = createFlavorDescriptors(flavorDescriptorData);

@@ -7,8 +7,9 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Chip from "./Chips";
+import Chip from "../common/Chip";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Typography from "@material-ui/core/Typography";
@@ -88,56 +89,58 @@ const BeanListItem = ({ id, editable }) => {
   };
 
   return (
-    <Card className={classes.root} key={id}>
-      <img
-        id={bean.picture_url}
-        src={imageSrc}
-        alt={bean.picture_url}
-        className={classes.cover}
-      />
-      <div className={classes.details}>
-        <CardContent className={classes.content}>
-          <Typography variant="subtitle1" color="textSecondary">
-            {bean.store ? bean.store : ""}
-            <ShoppingCartIcon />
-          </Typography>
-          <div className={classes.coffee}>
-            <Avatar className={classes.avatar} />
-            <Typography component="h3" variant="h5" className={classes.bold}>
-              {bean.coffee ? bean.coffee : ""}
+    <Link to={`/bean/${id}`}>
+      <Card className={classes.root} key={id}>
+        <img
+          id={bean.picture_url}
+          src={imageSrc}
+          alt={bean.picture_url}
+          className={classes.cover}
+        />
+        <div className={classes.details}>
+          <CardContent className={classes.content}>
+            <Typography variant="subtitle1" color="textSecondary">
+              {bean.store ? bean.store : ""}
+              <ShoppingCartIcon />
             </Typography>
-          </div>
-          <Typography variant="subtitle1" color="textSecondary">
-            {bean.country}
-          </Typography>
-          <div className={classes.chips}>
-            {bean.flavorLevel1Descriptors.map((flavor, index) => (
-              <Chip name={flavor} color="primary" key={index} />
-            ))}
-            <Typography
-              variant="subtitle1"
-              color="textSecondary"
-              className={classes.time}
-            >
-              作成日 {bean.createdAt.toDate().toLocaleString()}
+            <div className={classes.coffee}>
+              <Avatar className={classes.avatar} />
+              <Typography component="h3" variant="h5" className={classes.bold}>
+                {bean.coffee ? bean.coffee : ""}
+              </Typography>
+            </div>
+            <Typography variant="subtitle1" color="textSecondary">
+              {bean.country}
             </Typography>
-          </div>
-        </CardContent>
-        <CardActions>
-          {editable ? (
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-              startIcon={<DeleteIcon />}
-              onClick={onDelete}
-            >
-              Delete
-            </Button>
-          ) : null}
-        </CardActions>
-      </div>
-    </Card>
+            <div className={classes.chips}>
+              {bean.flavorLevel1Descriptors.map((flavor, index) => (
+                <Chip name={flavor} color="primary" key={index} />
+              ))}
+              <Typography
+                variant="subtitle1"
+                color="textSecondary"
+                className={classes.time}
+              >
+                作成日 {bean.createdAt.toDate().toLocaleString()}
+              </Typography>
+            </div>
+          </CardContent>
+          <CardActions>
+            {editable ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                startIcon={<DeleteIcon />}
+                onClick={onDelete}
+              >
+                Delete
+              </Button>
+            ) : null}
+          </CardActions>
+        </div>
+      </Card>
+    </Link>
   );
 };
 

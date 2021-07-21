@@ -3,11 +3,6 @@
 exports[`renders correctly 1`] = `
 <div>
   <div>
-    <h2
-      className="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom"
-    >
-      title
-    </h2>
     <div
       aria-expanded={false}
       aria-owns={null}
@@ -132,11 +127,6 @@ exports[`renders correctly 1`] = `
 exports[`renders correctly when minimal props are given 1`] = `
 <div>
   <div>
-    <h2
-      className="MuiTypography-root MuiTypography-h2 MuiTypography-gutterBottom"
-    >
-      title
-    </h2>
     <div
       aria-expanded={false}
       aria-owns={null}

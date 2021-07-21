@@ -56,7 +56,7 @@ const BeanList = () => {
   return (
     <div>
       <div className={classes.chips}>
-        <Link to="/selection">
+        <Link to="/bean">
           <Button variant="contained" onClick={handleClick}>
             <CreateIcon />
           </Button>
